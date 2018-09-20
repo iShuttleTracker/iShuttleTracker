@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
+		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
 		92A3623521519BF700B7B33B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623421519BF700B7B33B /* ViewController.swift */; };
 		92A3623821519BF700B7B33B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623621519BF700B7B33B /* Main.storyboard */; };
@@ -33,7 +35,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		38F700D2215340D9005D3607 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3623221519BF700B7B33B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92A3623421519BF700B7B33B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +95,7 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				38F700CF215340D9005D3607 /* Mapbox.framework */,
 				92A3623121519BF700B7B33B /* ShuttleTrackeriOS */,
 				92A3624621519BF800B7B33B /* ShuttleTrackeriOSTests */,
 				92A3625121519BF800B7B33B /* ShuttleTrackeriOSUITests */,
@@ -135,6 +154,8 @@
 				92A3622B21519BF700B7B33B /* Sources */,
 				92A3622C21519BF700B7B33B /* Frameworks */,
 				92A3622D21519BF700B7B33B /* Resources */,
+				38F700D2215340D9005D3607 /* Embed Frameworks */,
+				38F700D3215340F0005D3607 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +271,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		38F700D3215340F0005D3607 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		92A3622B21519BF700B7B33B /* Sources */ = {
@@ -433,6 +474,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ShuttleTrackeriOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,6 +495,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ShuttleTrackeriOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
