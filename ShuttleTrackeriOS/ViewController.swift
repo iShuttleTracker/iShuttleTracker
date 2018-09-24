@@ -19,6 +19,7 @@ class ViewController: UIViewController {
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.setCenter(CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788), zoomLevel: 9, animated: false)
         view.addSubview(mapView)
+        vehicleInformation();
     }
 
 

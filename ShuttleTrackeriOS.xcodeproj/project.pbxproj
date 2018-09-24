@@ -16,6 +16,7 @@
 		92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */; };
 		92A3624821519BF800B7B33B /* ShuttleTrackeriOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3624721519BF800B7B33B /* ShuttleTrackeriOSTests.swift */; };
 		92A3625321519BF800B7B33B /* ShuttleTrackeriOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */; };
+		92BC99A121540181007CAB32 /* getInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BC99A021540181007CAB32 /* getInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		92A3624E21519BF800B7B33B /* ShuttleTrackeriOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShuttleTrackeriOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleTrackeriOSUITests.swift; sourceTree = "<group>"; };
 		92A3625421519BF800B7B33B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92BC99A021540181007CAB32 /* getInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
+				92BC99A021540181007CAB32 /* getInfo.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 			files = (
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				92BC99A121540181007CAB32 /* getInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
