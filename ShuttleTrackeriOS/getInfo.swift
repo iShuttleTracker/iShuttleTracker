@@ -12,7 +12,7 @@ func vehicleInformation(){
     
     //the url
     
-    let address = URL(string: "https://shuttles.rpi.edu/vehicles")!;
+    let address = URL(string: "https://shuttles.rpi.edu/routes")!;
     
     let urlRequest = URLRequest(url: address);
     
@@ -28,10 +28,18 @@ func vehicleInformation(){
      */
     
     let task = URLSession.shared.dataTask(with: urlRequest){
-        data, response, error in
-        guard data != nil else { return }
-        print("\(response) anddddd \(type(of: data))");
-        let contents = String(data:data!, encoding: .ascii);
+        toParse, response, error in
+        guard toParse != nil else { return }
+        
+        let json = try? JSONSerialization.jsonObject(with: toParse!, options: []);
+        print(json);
+        
+        let route = Route();
+//        print("\(response) anddddd \(type(of: toParse))");c
+//
+//        let contents = String(data:toParse!, encoding: .ascii);
+//
+//        print(contents);
     }
     
     //keep it running when it's done
