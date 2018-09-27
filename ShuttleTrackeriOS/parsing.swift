@@ -28,13 +28,13 @@ extension Route{
         else{
             return nil;
         }
-        var points: [Point]=[];
-        for string in pointsJSON{
-            guard let point = Point(latitude: Double, longitude: Double)
-                else{
-                    return nil;
-            }
-        }
+//        var points: [Point]=[];
+//        for string in pointsJSON{
+//            guard let point = Point(latitude: Double, longitude: Double)
+//                else{
+//                    return nil;
+//            }
+//        }
         
         self.id = id;
         self.name = name;

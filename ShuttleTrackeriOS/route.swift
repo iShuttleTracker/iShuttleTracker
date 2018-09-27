@@ -8,6 +8,23 @@
 
 import Foundation
 
+/*
+ Route struct:
+ color: String
+ created: String (time object)
+ description: String
+ enabled: Bool (int rep)
+ id: Int
+ name: String
+ points: Array:
+    latitude: Double
+    longitude: Double
+ stop_ids: Ints? (empty)
+ updated: String (time object)
+ width: Int
+ 
+ ^^ order in which webpage displays it
+ */
 
 struct Route{
     
