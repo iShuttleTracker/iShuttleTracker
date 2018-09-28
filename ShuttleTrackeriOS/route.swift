@@ -28,29 +28,30 @@ import Foundation
 
 struct Route{
     
-    let id: Int;
-    let name: String;
-    let description: String;
-    let enabled: Bool;
-    let color: String;
-    let width: Int;
-    var stopIDs: [Int]?;
-    let created: String; //need to make time.Time for this
-    var updated: String; //need to make time.Time for this
+    var color: String;
+    var created: String;
+    var description: String;
+    var enabled: Bool;
+    var id: Int;
+    var name: String;
     var points: [Point];
+    var stop_ids: [Int];
+    var updated: String;
+    var width: Int;
+    
 //
-    init(){
-        self.id=1;
-        self.name="asdf";
-        self.description="asdf";
-        self.enabled=false;
-        self.color="Black";
-        self.width=1;
-        self.stopIDs=[1,2,3];
-        self.created="10";
-        self.updated="10";
-        self.points=[Point()];
-    }
+//    init(){
+//        self.id=1;
+//        self.name="asdf";
+//        self.description="asdf";
+//        self.enabled=false;
+//        self.color="Black";
+//        self.width=1;
+//        self.stop_ids=[1,2,3];
+//        self.created="10";
+//        self.updated="10";
+//        self.points=[Point()];
+//    }
     
     //to add points to
     mutating func addPoint(p: Point){
