@@ -34,6 +34,9 @@ func vehicleInformation(){
         guard toParse != nil else { return }
         
         let json = try? JSONSerialization.jsonObject(with: toParse!, options: []) as! NSArray;
+        
+        
+        let rou = Route(json: json!);
 //        print(json);
 //        print(type(of: json));
         for tempobject in json!  {

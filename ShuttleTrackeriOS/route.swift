@@ -54,8 +54,8 @@ struct Route{
 //    }
     
     //to add points to
-    mutating func addPoint(p: Point){
-        self.points.append(p);
-    }
+//    mutating func addPoint(p: Point){
+//        self.points.append(p);
+//    }
     
 }
