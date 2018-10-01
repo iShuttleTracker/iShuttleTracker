@@ -28,34 +28,33 @@ import Foundation
 
 struct Route{
     
-    var color: String;
-    var created: String;
-    var description: String;
-    var enabled: Bool;
-    var id: Int;
-    var name: String;
-    var points: [Point];
-    var stop_ids: [Int];
-    var updated: String;
-    var width: Int;
+    //default init
+    var color = "";
+    var created = "";
+    var description = "";
+    var enabled = false;
+    var id = 0;
+    var name = "";
+    var points: [Point] = [];
+    var stop_ids: [Int] = [];
+    var updated = "";
+    var width = 0;
     
-//
-//    init(){
-//        self.id=1;
-//        self.name="asdf";
-//        self.description="asdf";
-//        self.enabled=false;
-//        self.color="Black";
-//        self.width=1;
-//        self.stop_ids=[1,2,3];
-//        self.created="10";
-//        self.updated="10";
-//        self.points=[Point()];
-//    }
     
-    //to add points to
-//    mutating func addPoint(p: Point){
-//        self.points.append(p);
-//    }
-    
+    func routeInfo(){
+        print("Color: \(self.color)");
+        print("Created: \(self.created)");
+        print("Description: \(self.description)");
+        print("Enabled: \(self.enabled)");
+        print("Id: \(self.id)");
+        print("Name: \(self.name)");
+        
+        //create a prettier way of printing the points
+        print("Points: \(self.points)");
+        //--------------------------------
+        
+        print("Stop_IDs: \(self.stop_ids)");
+        print("Updated: \(self.updated)");
+        print("Width: \(self.width)");
+    }
 }

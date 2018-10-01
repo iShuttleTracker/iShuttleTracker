@@ -28,38 +28,21 @@ func vehicleInformation(){
      Working with NSArray instead of a parsed [String: Any] Dictionary????
     
      */
-    
+    var differentRoutes:[Route] = [];
     let task = URLSession.shared.dataTask(with: urlRequest){
         toParse, response, error in
         guard toParse != nil else { return }
         
         let json = try? JSONSerialization.jsonObject(with: toParse!, options: []) as! NSArray;
         
-        
-        let rou = Route(json: json!);
-//        print(json);
-//        print(type(of: json));
-        for tempobject in json!  {
-            let tempobject = tempobject as! NSDictionary;
-            for (id, key) in tempobject{
-        
-                //need to cast id to NSString since it's an Any object
-                if((id as? NSString) == NSString(string: "points")){
-                    print("Loop through lat and long here, NSArray");
-                }
-            }
-//            for id in tempobject{
-//                NSLog("\(id)");
-//            }
+        //for each route, initialize a new route with the parameters in the unique dic
+        for unique in json! {
+            print("creating new route...");
+            let r = Route(json:unique as! NSDictionary);
+            r?.routeInfo();
+            differentRoutes.append(r!);
+//            differentRoutes.append(Route(json:(unique as! NSDictionary))!);
         }
-//        let route = Route(json: NSArray);
-        
-//        let route = Route(json: json!);
-//        print("\(response) anddddd \(type(of: toParse))");c
-//
-//        let contents = String(data:toParse!, encoding: .ascii);
-//
-//        print(contents);
     }
     
     //keep it running when it's done
