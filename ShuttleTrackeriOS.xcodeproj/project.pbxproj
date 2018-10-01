@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
+		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		928A17AB215C0B7F00A862B2 /* route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* route.swift */; };
+		928A17AD215C0CE800A862B2 /* point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* point.swift */; };
+		928A17AF215C8C6400A862B2 /* parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AE215C8C6400A862B2 /* parsing.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
 		92A3623521519BF700B7B33B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623421519BF700B7B33B /* ViewController.swift */; };
 		92A3623821519BF700B7B33B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623621519BF700B7B33B /* Main.storyboard */; };
@@ -14,6 +19,7 @@
 		92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */; };
 		92A3624821519BF800B7B33B /* ShuttleTrackeriOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3624721519BF800B7B33B /* ShuttleTrackeriOSTests.swift */; };
 		92A3625321519BF800B7B33B /* ShuttleTrackeriOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */; };
+		92BC99A121540181007CAB32 /* getInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92BC99A021540181007CAB32 /* getInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +39,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		38F700D2215340D9005D3607 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
+		928A17AA215C0B7F00A862B2 /* route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = route.swift; sourceTree = "<group>"; };
+		928A17AC215C0CE800A862B2 /* point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = point.swift; sourceTree = "<group>"; };
+		928A17AE215C8C6400A862B2 /* parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parsing.swift; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3623221519BF700B7B33B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92A3623421519BF700B7B33B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +71,7 @@
 		92A3624E21519BF800B7B33B /* ShuttleTrackeriOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShuttleTrackeriOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleTrackeriOSUITests.swift; sourceTree = "<group>"; };
 		92A3625421519BF800B7B33B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92BC99A021540181007CAB32 /* getInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +103,7 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				38F700CF215340D9005D3607 /* Mapbox.framework */,
 				92A3623121519BF700B7B33B /* ShuttleTrackeriOS */,
 				92A3624621519BF800B7B33B /* ShuttleTrackeriOSTests */,
 				92A3625121519BF800B7B33B /* ShuttleTrackeriOSUITests */,
@@ -103,6 +130,10 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
+				92BC99A021540181007CAB32 /* getInfo.swift */,
+				928A17AA215C0B7F00A862B2 /* route.swift */,
+				928A17AC215C0CE800A862B2 /* point.swift */,
+				928A17AE215C8C6400A862B2 /* parsing.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -135,6 +166,8 @@
 				92A3622B21519BF700B7B33B /* Sources */,
 				92A3622C21519BF700B7B33B /* Frameworks */,
 				92A3622D21519BF700B7B33B /* Resources */,
+				38F700D2215340D9005D3607 /* Embed Frameworks */,
+				38F700D3215340F0005D3607 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -251,13 +284,37 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		38F700D3215340F0005D3607 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		92A3622B21519BF700B7B33B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				928A17AF215C8C6400A862B2 /* parsing.swift in Sources */,
+				928A17AD215C0CE800A862B2 /* point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
+				928A17AB215C0B7F00A862B2 /* route.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				92BC99A121540181007CAB32 /* getInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +490,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ShuttleTrackeriOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,6 +511,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ShuttleTrackeriOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
