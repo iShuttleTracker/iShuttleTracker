@@ -21,7 +21,8 @@ class ViewController: UIViewController {
         view.addSubview(mapView)
         vehicleInformation();
         // TODO: Right place to be calling this?
-        fetchVehicles()
+        let vehicles = fetchVehicles()
+        let updates = fetchUpdates()
     }
 
 

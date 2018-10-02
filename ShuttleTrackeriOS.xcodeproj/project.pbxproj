@@ -11,6 +11,8 @@
 		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
 		551344E521640DCC009618D0 /* VehicleParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E421640DCC009618D0 /* VehicleParsing.swift */; };
+		551344E7216417CC009618D0 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E6216417CC009618D0 /* Update.swift */; };
+		551344E921641C68009618D0 /* UpdateParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E821641C68009618D0 /* UpdateParsing.swift */; };
 		928A17AB215C0B7F00A862B2 /* route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* route.swift */; };
 		928A17AD215C0CE800A862B2 /* point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* point.swift */; };
 		928A17AF215C8C6400A862B2 /* parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AE215C8C6400A862B2 /* parsing.swift */; };
@@ -59,6 +61,8 @@
 		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		551344E421640DCC009618D0 /* VehicleParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleParsing.swift; sourceTree = "<group>"; };
+		551344E6216417CC009618D0 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		551344E821641C68009618D0 /* UpdateParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateParsing.swift; sourceTree = "<group>"; };
 		928A17AA215C0B7F00A862B2 /* route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = point.swift; sourceTree = "<group>"; };
 		928A17AE215C8C6400A862B2 /* parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parsing.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				928A17AE215C8C6400A862B2 /* parsing.swift */,
 				551344E22163098A009618D0 /* Vehicle.swift */,
 				551344E421640DCC009618D0 /* VehicleParsing.swift */,
+				551344E6216417CC009618D0 /* Update.swift */,
+				551344E821641C68009618D0 /* UpdateParsing.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -318,11 +324,13 @@
 				928A17AF215C8C6400A862B2 /* parsing.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
+				551344E7216417CC009618D0 /* Update.swift in Sources */,
 				551344E521640DCC009618D0 /* VehicleParsing.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
 				92BC99A121540181007CAB32 /* getInfo.swift in Sources */,
+				551344E921641C68009618D0 /* UpdateParsing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
