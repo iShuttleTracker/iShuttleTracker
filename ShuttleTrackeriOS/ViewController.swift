@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         mapView.setCenter(CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788), zoomLevel: 9, animated: false)
         view.addSubview(mapView)
         vehicleInformation();
+        // TODO: Right place to be calling this?
+        fetchVehicles()
     }
 
 
