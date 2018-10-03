@@ -37,13 +37,13 @@ func fetchVehicles() -> [Vehicle] {
                 print(error!)
             } else {
                 if let usableData = data {
-                    let json = try? JSONSerialization.jsonObject(with: usableData, options: []) as! NSArray;
+                    let json = try? JSONSerialization.jsonObject(with: usableData, options: []) as! NSArray
 
                     for unique in json! {
-                        print("Creating new vehicle...");
-                        let vehicle = Vehicle(json:unique as! NSDictionary);
-                        vehicle?.printVehicle();
-                        vehicles.append(vehicle!);
+                        print("Creating new vehicle...")
+                        let vehicle = Vehicle(json:unique as! NSDictionary)
+                        vehicle?.printVehicle()
+                        vehicles.append(vehicle!)
                     }
                 }
             }

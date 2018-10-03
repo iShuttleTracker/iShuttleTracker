@@ -9,9 +9,9 @@
 import Foundation
 
 // Read in Vehicle object given the JSON data
-extension Vehicle{
+extension Vehicle {
     
-    init?(json: NSDictionary){
+    init?(json: NSDictionary) {
         // Catch vehicle data
         for (key, value) in json {
             switch key as? NSString {
