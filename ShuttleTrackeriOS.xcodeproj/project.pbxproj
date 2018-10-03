@@ -14,6 +14,8 @@
 		928A17AB215C0B7F00A862B2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* Route.swift */; };
 		928A17AD215C0CE800A862B2 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* Point.swift */; };
 		928A17AF215C8C6400A862B2 /* RouteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AE215C8C6400A862B2 /* RouteJSON.swift */; };
+		929A0E042165251E0097E92B /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929A0E032165251E0097E92B /* Update.swift */; };
+		929A0E062165257F0097E92B /* UpdateParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929A0E052165257F0097E92B /* UpdateParsing.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
 		92A3623521519BF700B7B33B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623421519BF700B7B33B /* ViewController.swift */; };
 		92A3623821519BF700B7B33B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623621519BF700B7B33B /* Main.storyboard */; };
@@ -62,6 +64,8 @@
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		928A17AE215C8C6400A862B2 /* RouteJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteJSON.swift; sourceTree = "<group>"; };
+		929A0E032165251E0097E92B /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		929A0E052165257F0097E92B /* UpdateParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateParsing.swift; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3623221519BF700B7B33B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92A3623421519BF700B7B33B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
+				929A0E032165251E0097E92B /* Update.swift */,
+				929A0E052165257F0097E92B /* UpdateParsing.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -330,7 +336,9 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				929A0E042165251E0097E92B /* Update.swift in Sources */,
 				92BC99A121540181007CAB32 /* RouteParsing.swift in Sources */,
+				929A0E062165257F0097E92B /* UpdateParsing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

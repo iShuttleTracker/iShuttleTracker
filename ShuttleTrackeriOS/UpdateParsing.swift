@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Matt Czyr on 10/2/18.
-//  Copyright © 2018 WTG. All rights reserved.
+//  Copyright ¬© 2018 WTG. All rights reserved.
 //
 
 import Foundation
@@ -34,7 +34,11 @@ extension Update {
             case "vehicle_id":
                 self.vehicle_id=(value as! Int)
             case "route_id":
-                self.route_id=(value as! Int)
+                if let id=value as? Int{
+                    self.route_id=id;
+                } else{
+                    self.route_id = -1;
+                }
             default:
                 // This should never happen
                 print("\(key)")
