@@ -8,7 +8,7 @@
 
 import Foundation
 
-func vehicleInformation(){
+func RouteInformation(){
     
     //the url
     
