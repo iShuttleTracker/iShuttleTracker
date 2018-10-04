@@ -111,6 +111,8 @@
 		9217F39E21644762008C847A /* Parse */ = {
 			isa = PBXGroup;
 			children = (
+				929A0E032165251E0097E92B /* Update.swift */,
+				929A0E052165257F0097E92B /* UpdateParsing.swift */,
 				92BC99A021540181007CAB32 /* RouteParsing.swift */,
 				928A17AA215C0B7F00A862B2 /* Route.swift */,
 				928A17AC215C0CE800A862B2 /* Point.swift */,
@@ -152,8 +154,6 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
-				929A0E032165251E0097E92B /* Update.swift */,
-				929A0E052165257F0097E92B /* UpdateParsing.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
