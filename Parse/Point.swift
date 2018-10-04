@@ -14,8 +14,8 @@ struct Point {
     var longitude: Double
     
     init(latitude: Double, longitude: Double) {
-        self.latitude = latitude;
-        self.longitude = longitude;
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     func printPoint() {
