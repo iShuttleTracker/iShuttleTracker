@@ -19,13 +19,13 @@ struct Stop {
     var description = ""
     
     func printStop() {
-        print("ID: \(self.id)");
-        print("Latitude: \(self.latitude)");
-        print("Longitude: \(self.longitude)");
-        print("Created: \(self.created)");
-        print("Updated: \(self.updated)");
-        print("Name: \(self.name)");
-        print("Description: \(self.description)");
+        print("ID: \(self.id)")
+        print("Latitude: \(self.latitude)")
+        print("Longitude: \(self.longitude)")
+        print("Created: \(self.created)")
+        print("Updated: \(self.updated)")
+        print("Name: \(self.name)")
+        print("Description: \(self.description)")
     }
 }
 

@@ -18,12 +18,12 @@ struct Vehicle {
     var tracker_id = ""
     
     func printVehicle() {
-        print("ID: \(self.id)");
-        print("Name: \(self.name)");
-        print("Created: \(self.created)");
-        print("Updated: \(self.updated)");
-        print("Enabled: \(self.enabled)");
-        print("Tracker ID: \(self.tracker_id)");
+        print("ID: \(self.id)")
+        print("Name: \(self.name)")
+        print("Created: \(self.created)")
+        print("Updated: \(self.updated)")
+        print("Enabled: \(self.enabled)")
+        print("Tracker ID: \(self.tracker_id)")
     }
 }
 

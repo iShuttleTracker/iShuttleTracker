@@ -8,14 +8,19 @@
 
 import Foundation
 
-
-struct Point{
+struct Point {
     
-    var latitude: Double;
-    var longitude: Double;
+    var latitude: Double
+    var longitude: Double
     
-    init(latitude: Double, longitude: Double){
-        self.latitude=latitude;
-        self.longitude=longitude;
+    init(latitude: Double, longitude: Double) {
+        self.latitude = latitude;
+        self.longitude = longitude;
     }
+    
+    func printPoint() {
+        print("Latitude: \(self.latitude)")
+        print("Longitude: \(self.longitude)")
+    }
+
 }
