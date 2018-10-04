@@ -11,9 +11,10 @@
 		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
 		551344E521640DCC009618D0 /* VehicleParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E421640DCC009618D0 /* VehicleParsing.swift */; };
+		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
+		55BB26A02166C48500BBC615 /* StopParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269F2166C48500BBC615 /* StopParsing.swift */; };
 		928A17AB215C0B7F00A862B2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* Route.swift */; };
 		928A17AD215C0CE800A862B2 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* Point.swift */; };
-		928A17AF215C8C6400A862B2 /* RouteJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AE215C8C6400A862B2 /* RouteJSON.swift */; };
 		929A0E042165251E0097E92B /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929A0E032165251E0097E92B /* Update.swift */; };
 		929A0E062165257F0097E92B /* UpdateParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929A0E052165257F0097E92B /* UpdateParsing.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
@@ -61,9 +62,10 @@
 		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		551344E421640DCC009618D0 /* VehicleParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleParsing.swift; sourceTree = "<group>"; };
+		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		55BB269F2166C48500BBC615 /* StopParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopParsing.swift; sourceTree = "<group>"; };
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
-		928A17AE215C8C6400A862B2 /* RouteJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteJSON.swift; sourceTree = "<group>"; };
 		929A0E032165251E0097E92B /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		929A0E052165257F0097E92B /* UpdateParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateParsing.swift; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,9 +118,10 @@
 				92BC99A021540181007CAB32 /* RouteParsing.swift */,
 				928A17AA215C0B7F00A862B2 /* Route.swift */,
 				928A17AC215C0CE800A862B2 /* Point.swift */,
-				928A17AE215C8C6400A862B2 /* RouteJSON.swift */,
 				551344E22163098A009618D0 /* Vehicle.swift */,
 				551344E421640DCC009618D0 /* VehicleParsing.swift */,
+				55BB269F2166C48500BBC615 /* StopParsing.swift */,
+				55BB269D2166C28000BBC615 /* Stop.swift */,
 			);
 			path = Parse;
 			sourceTree = "<group>";
@@ -329,13 +332,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				928A17AF215C8C6400A862B2 /* RouteJSON.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				551344E521640DCC009618D0 /* VehicleParsing.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
+				55BB26A02166C48500BBC615 /* StopParsing.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,
 				929A0E042165251E0097E92B /* Update.swift in Sources */,
 				92BC99A121540181007CAB32 /* RouteParsing.swift in Sources */,
 				929A0E062165257F0097E92B /* UpdateParsing.swift in Sources */,

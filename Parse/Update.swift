@@ -22,16 +22,16 @@ struct Update {
     var route_id = 0
     
     func printUpdate() {
-        print("ID: \(self.id)");
-        print("Tracker ID: \(self.tracker_id)");
-        print("Latitude: \(self.latitude)");
-        print("Longitude: \(self.longitude)");
-        print("Heading: \(self.heading)");
-        print("Speed: \(self.speed)");
-        print("Time: \(self.time)");
-        print("Created: \(self.created)");
-        print("Vehicle ID: \(self.vehicle_id)");
-        print("Route ID: \(self.route_id)");
+        print("ID: \(self.id)")
+        print("Tracker ID: \(self.tracker_id)")
+        print("Latitude: \(self.latitude)")
+        print("Longitude: \(self.longitude)")
+        print("Heading: \(self.heading)")
+        print("Speed: \(self.speed)")
+        print("Time: \(self.time)")
+        print("Created: \(self.created)")
+        print("Vehicle ID: \(self.vehicle_id)")
+        print("Route ID: \(self.route_id)")
     }
 }
 
