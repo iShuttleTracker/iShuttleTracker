@@ -34,7 +34,7 @@ struct Stop {
                 self.updated = (value as! String)
             case "name":
                 self.name = (value as! String)
-            case "desc":
+            case "description":
                 self.desc = (value as! String)
             default:
                 // This should never happen

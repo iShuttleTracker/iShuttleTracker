@@ -34,7 +34,7 @@ struct Route {
                 self.color = (value as! String)
             case "created":
                 self.created = (value as! String)
-            case "desc":
+            case "description":
                 self.desc = (value as! String)
             case "enabled":
                 self.enabled = (value as! Bool)
