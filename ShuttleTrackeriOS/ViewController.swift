@@ -26,7 +26,6 @@ class ViewController: UIViewController {
         
         mapView.styleURL = MGLStyle.lightStyleURL
         
-        RouteInformation();
         // TODO: Right place to be calling this?
         let vehicles = fetchVehicles()
         let updates = fetchUpdates()
