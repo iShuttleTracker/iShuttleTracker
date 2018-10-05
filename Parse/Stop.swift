@@ -16,7 +16,7 @@ struct Stop {
     var created = ""
     var updated = ""
     var name = ""
-    var description = ""
+    var desc = ""
     
     init?(json: NSDictionary) {
         // Catch stop data
@@ -35,7 +35,7 @@ struct Stop {
             case "name":
                 self.name = (value as! String)
             case "description":
-                self.description = (value as! String)
+                self.desc = (value as! String)
             default:
                 // This should never happen
                 print("\(key)")
@@ -44,14 +44,20 @@ struct Stop {
         print("Finished JSON initialization for stop \(self.id)")
     }
     
-    func printStop() {
-        print("ID: \(self.id)")
-        print("Latitude: \(self.latitude)")
-        print("Longitude: \(self.longitude)")
-        print("Created: \(self.created)")
-        print("Updated: \(self.updated)")
-        print("Name: \(self.name)")
-        print("Description: \(self.description)")
+    
+}
+
+extension Stop: CustomStringConvertible{
+    var description: String{
+        return """
+                 ID: \(self.id)
+                 Latitude: \(self.latitude)
+                 Logitude: \(self.longitude)
+                 Created: \(self.created)
+                 Updated: \(self.updated)
+                 Name: \(self.name)
+                 Description: \(self.desc)
+                 """
     }
 }
 
@@ -70,7 +76,7 @@ func fetchStops() -> [Stop] {
                     for unique in json! {
                         print("Creating new stop...")
                         let stop = Stop(json:unique as! NSDictionary)
-                        stop?.printStop()
+                        print(stop!)
                         stops.append(stop!)
                     }
                 }
