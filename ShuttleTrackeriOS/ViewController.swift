@@ -25,6 +25,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         mapView.styleURL = MGLStyle.lightStyleURL
+        //mapView.delegate = self as! MGLMapViewDelegate
+        mapView.showsUserLocation = true
         
         // TODO: Right place to be calling this?
         let vehicles = fetchVehicles()
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
         let stops = fetchStops()
         let routes = fetchRoutes()
         
-        allCoordinates = coordinates()
+        //allCoordinates = coordinates()
     }
     
     
@@ -47,6 +49,12 @@ class ViewController: UIViewController {
         point.title = "Name: \(name)"
         mapView.addAnnotation(point)
     }
+    
+    /*
+     1. Default: shows west and east routes
+     2. Add buttons: show west/east route
+     3. Late night route
+     */
     
     // Display routes
     func displayRoute(to style: MGLStyle){
@@ -85,7 +93,7 @@ class ViewController: UIViewController {
         // Create a subarray of locations up to the current index.
         let coordinates = Array(allCoordinates[0..<currentIndex])
         
-        // Update our MGLShapeSource with the current locations.
+        // Update MGLShapeSource with the current locations.
         updateRouteWithCoordinates(coordinates: coordinates)
         
         currentIndex += 1
@@ -102,8 +110,8 @@ class ViewController: UIViewController {
     }
     
     // Change a list into CLLocationCooridinate2D
-    // TODO: Input should be in the form of [(x1, y1), (x2, y2), ...]
-    func coordinates() -> [CLLocationCoordinate2D] {
+    // TODO: Input should be in the form of [(x1, y1), (x2, y2), ...]; and the name of the route
+    func coordinates(name: String) -> [CLLocationCoordinate2D] {
         
         return [(0,0)].map({CLLocationCoordinate2D(latitude: $0.1, longitude: $0.0)})
     }
