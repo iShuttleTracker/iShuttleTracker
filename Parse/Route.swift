@@ -12,7 +12,7 @@ struct Route {
     
     var color = ""
     var created = ""
-    var description = ""
+    var desc = ""
     var enabled = false
     var id = 0
     var name = ""
@@ -34,8 +34,8 @@ struct Route {
                 self.color = (value as! String)
             case "created":
                 self.created = (value as! String)
-            case "description":
-                self.description = (value as! String)
+            case "desc":
+                self.desc = (value as! String)
             case "enabled":
                 self.enabled = (value as! Bool)
             case "id":
@@ -74,24 +74,23 @@ struct Route {
         print("Finished JSON initialization for route \(self.id)")
     }
     
-    func printRoute(){
-        print("Color: \(self.color)")
-        print("Created: \(self.created)")
-        print("Description: \(self.description)")
-        print("Enabled: \(self.enabled)")
-        print("Id: \(self.id)")
-        print("Name: \(self.name)")
-        printPoints()
-        print("Stop IDs: \(self.stop_ids)")
-        print("Updated: \(self.updated)")
-        print("Width: \(self.width)")
-    }
+
     
-    func printPoints() {
-        for i in 0...self.points.count - 1 {
-            print("Point #\(i):")
-            self.points[i].printPoint()
-        }
+}
+extension Route:CustomStringConvertible{
+    var description: String{
+        return  """
+                  Color: \(self.color)
+                  Created: \(self.created)
+                  Description: \(self.desc)
+                  Enabled: \(self.enabled)
+                  ID: \(self.id)
+                  Name: \(self.name)
+                  Points: \(self.points)
+                  Stop IDs: \(self.stop_ids)
+                  Updated: \(self.updated)
+                  Width: \(self.width)
+                  """
     }
 }
 
@@ -120,7 +119,7 @@ func fetchRoutes() -> [Route] {
         for unique in json! {
             print("Creating new route...")
             let r = Route(json:unique as! NSDictionary)
-            r?.printRoute()
+            print(r!)
             routes.append(r!)
             // differentRoutes.append(Route(json:(unique as! NSDictionary))!);
         }

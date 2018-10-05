@@ -18,9 +18,13 @@ struct Point {
         self.longitude = longitude
     }
     
-    func printPoint() {
-        print("Latitude: \(self.latitude)")
-        print("Longitude: \(self.longitude)")
-    }
 
+}
+
+extension Point:CustomStringConvertible{
+    var description:String{
+        return """
+                 (latitude \(self.latitude), longitude \(self.longitude))\n
+                 """
+    }
 }

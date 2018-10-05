@@ -41,13 +41,17 @@ struct Vehicle {
         print("Finished JSON initialization for vehicle \(self.id)")
     }
     
-    func printVehicle() {
-        print("ID: \(self.id)")
-        print("Name: \(self.name)")
-        print("Created: \(self.created)")
-        print("Updated: \(self.updated)")
-        print("Enabled: \(self.enabled)")
-        print("Tracker ID: \(self.tracker_id)")
+}
+extension Vehicle:CustomStringConvertible{
+    var description:String{
+        return  """
+                  ID: \(self.id)
+                  Name: \(self.name)
+                  Created: \(self.created)
+                  Updated: \(self.updated)
+                  Enabled: \(self.enabled)
+                  Tracker ID: \(self.tracker_id)
+                  """
     }
 }
 
@@ -66,7 +70,7 @@ func fetchVehicles() -> [Vehicle] {
                     for unique in json! {
                         print("Creating new vehicle...")
                         let vehicle = Vehicle(json:unique as! NSDictionary)
-                        vehicle?.printVehicle()
+                        print(vehicle!)
                         vehicles.append(vehicle!)
                     }
                 }

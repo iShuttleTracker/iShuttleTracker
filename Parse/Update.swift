@@ -57,17 +57,22 @@ struct Update {
         print("Finished JSON initialization for update \(self.id)")
     }
     
-    func printUpdate() {
-        print("ID: \(self.id)")
-        print("Tracker ID: \(self.tracker_id)")
-        print("Latitude: \(self.latitude)")
-        print("Longitude: \(self.longitude)")
-        print("Heading: \(self.heading)")
-        print("Speed: \(self.speed)")
-        print("Time: \(self.time)")
-        print("Created: \(self.created)")
-        print("Vehicle ID: \(self.vehicle_id)")
-        print("Route ID: \(self.route_id)")
+}
+
+extension Update:CustomStringConvertible{
+    var description:String{
+        return """
+                 ID: \(self.id)
+                 Tracker ID: \(self.tracker_id)
+                 Latitude: \(self.latitude)
+                 Longitude: \(self.longitude)
+                 Heading: \(self.heading)
+                 Speed: \(self.speed)
+                 Time: \(self.time)
+                 Created: \(self.created)
+                 Vehicle ID: \(self.vehicle_id)
+                 Route ID: \(self.route_id)
+                 """
     }
 }
 
@@ -86,7 +91,7 @@ func fetchUpdates() -> [Update] {
                     for unique in json! {
                         print("Creating new update...")
                         let update = Update(json:unique as! NSDictionary)
-                        update?.printUpdate()
+                        print(update!)
                         updates.append(update!)
                     }
                 }
