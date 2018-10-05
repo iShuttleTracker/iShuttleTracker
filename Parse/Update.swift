@@ -21,17 +21,53 @@ struct Update {
     var vehicle_id = 0
     var route_id = 0
     
+    init?(json: NSDictionary){
+        // Catch update data
+        for (key, value) in json {
+            switch key as? NSString {
+            case "id":
+                self.id = (value as! Int)
+            case "tracker_id":
+                self.tracker_id = (value as! String)
+            case "latitude":
+                self.latitude = (value as! Double)
+            case "longitude":
+                self.longitude = (value as! Double)
+            case "heading":
+                self.heading = (value as! Int)
+            case "speed":
+                self.speed = (value as! Double)
+            case "time":
+                self.time = (value as! String)
+            case "created":
+                self.created = (value as! String)
+            case "vehicle_id":
+                self.vehicle_id = (value as! Int)
+            case "route_id":
+                if let id = value as? Int {
+                    self.route_id = id
+                } else {
+                    self.route_id = -1
+                }
+            default:
+                // This should never happen
+                print("\(key)")
+            }
+        }
+        print("Finished JSON initialization for update \(self.id)")
+    }
+    
     func printUpdate() {
-        print("ID: \(self.id)");
-        print("Tracker ID: \(self.tracker_id)");
-        print("Latitude: \(self.latitude)");
-        print("Longitude: \(self.longitude)");
-        print("Heading: \(self.heading)");
-        print("Speed: \(self.speed)");
-        print("Time: \(self.time)");
-        print("Created: \(self.created)");
-        print("Vehicle ID: \(self.vehicle_id)");
-        print("Route ID: \(self.route_id)");
+        print("ID: \(self.id)")
+        print("Tracker ID: \(self.tracker_id)")
+        print("Latitude: \(self.latitude)")
+        print("Longitude: \(self.longitude)")
+        print("Heading: \(self.heading)")
+        print("Speed: \(self.speed)")
+        print("Time: \(self.time)")
+        print("Created: \(self.created)")
+        print("Vehicle ID: \(self.vehicle_id)")
+        print("Route ID: \(self.route_id)")
     }
 }
 

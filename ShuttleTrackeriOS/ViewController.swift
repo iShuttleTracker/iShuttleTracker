@@ -30,6 +30,8 @@ class ViewController: UIViewController {
         // TODO: Right place to be calling this?
         let vehicles = fetchVehicles()
         let updates = fetchUpdates()
+        let stops = fetchStops()
+        let routes = fetchRoutes()
         
         allCoordinates = coordinates()
     }
@@ -128,5 +130,6 @@ class ViewController: UIViewController {
         return true
     }
     
-}
+        
 
+}
