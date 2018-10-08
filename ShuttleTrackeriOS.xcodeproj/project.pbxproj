@@ -63,6 +63,7 @@
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		92A359F021670E0900DB3E2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3623221519BF700B7B33B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92A3623421519BF700B7B33B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,9 +118,18 @@
 			path = Parse;
 			sourceTree = "<group>";
 		};
+		92A359EF21670DFD00DB3E2B /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				92A359F021670E0900DB3E2B /* README.md */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				92A359EF21670DFD00DB3E2B /* Documentation */,
 				9217F39E21644762008C847A /* Parse */,
 				38F700CF215340D9005D3607 /* Mapbox.framework */,
 				92A3623121519BF700B7B33B /* ShuttleTrackeriOS */,
