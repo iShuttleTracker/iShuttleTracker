@@ -29,10 +29,15 @@ class ViewController: UIViewController {
         mapView.showsUserLocation = true
         
         // TODO: Right place to be calling this?
-        let vehicles = fetchVehicles()
-        let updates = fetchUpdates()
-        let stops = fetchStops()
-        let routes = fetchRoutes()
+        let vehicles = initVehicles()
+        let updates = initUpdates()
+        let stops = initStops()
+        let routes = initRoutes()
+        
+        print("Initialized \(vehicles.count) vehicles")
+        print("Initialized \(updates.count) updates")
+        print("Initialized \(stops.count) stops")
+        print("Initialized \(routes.count) routes")
         
         //allCoordinates = coordinates()
     }

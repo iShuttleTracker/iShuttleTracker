@@ -9,20 +9,20 @@
 import Foundation
 
 struct Point {
-    
+
     var latitude: Double
     var longitude: Double
     
+    // Initialize point data
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }
-    
 
 }
 
-extension Point:CustomStringConvertible{
-    var description:String{
+extension Point:CustomStringConvertible {
+    var description:String {
         return """
                  (latitude \(self.latitude), longitude \(self.longitude))\n
                  """

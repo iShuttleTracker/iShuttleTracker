@@ -17,8 +17,8 @@ struct Vehicle {
     var enabled = false
     var tracker_id = ""
     
+    // Initialize vehicle data from JSON dictionary
     init?(json: NSDictionary) {
-        // Catch vehicle data
         for (key, value) in json {
             switch key as? NSString {
             case "id":
@@ -42,8 +42,8 @@ struct Vehicle {
     }
     
 }
-extension Vehicle:CustomStringConvertible{
-    var description:String{
+extension Vehicle:CustomStringConvertible {
+    var description:String {
         return  """
                   ID: \(self.id)
                   Name: \(self.name)
@@ -55,28 +55,40 @@ extension Vehicle:CustomStringConvertible{
     }
 }
 
-func fetchVehicles() -> [Vehicle] {
-    var vehicles:[Vehicle] = [];
+// Fetches vehicle data from shuttles.rpi.edu/vehicles and returns
+// the raw data.
+func fetchVehicles() -> Data {
     let urlString = URL(string: "https://shuttles.rpi.edu/vehicles")
-    
+    let semaphore = DispatchSemaphore(value: 0)
+    var vehiclesData = Data()
     if let url = urlString {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!)
             } else {
                 if let usableData = data {
-                    let json = try? JSONSerialization.jsonObject(with: usableData, options: []) as! NSArray
-
-                    for unique in json! {
-                        print("Creating new vehicle...")
-                        let vehicle = Vehicle(json:unique as! NSDictionary)
-                        print(vehicle!)
-                        vehicles.append(vehicle!)
-                    }
+                    vehiclesData = usableData
+                    semaphore.signal()
                 }
             }
         }
         task.resume()
+        semaphore.wait()
+    }
+    return vehiclesData
+}
+
+// Initializes vehicles fetched through fetchVehicles() and
+// returns an array of the vehicles.
+func initVehicles() -> [Vehicle] {
+    var vehicles:[Vehicle] = []
+    let data = fetchVehicles()
+    let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    for unique in json! {
+        print("Creating new vehicle...")
+        let vehicle = Vehicle(json:unique as! NSDictionary)
+        print(vehicle!)
+        vehicles.append(vehicle!)
     }
     
     return vehicles

@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Matt Czyr on 10/2/18.
-//  Copyright ¬© 2018 WTG. All rights reserved.
+//  Copyright © 2018 WTG. All rights reserved.
 //
 
 import Foundation
@@ -21,8 +21,8 @@ struct Update {
     var vehicle_id = 0
     var route_id = 0
     
+    // Initialize update data from JSON dictionary
     init?(json: NSDictionary){
-        // Catch update data
         for (key, value) in json {
             switch key as? NSString {
             case "id":
@@ -59,45 +59,57 @@ struct Update {
     
 }
 
-extension Update:CustomStringConvertible{
-    var description:String{
+extension Update:CustomStringConvertible {
+    var description:String {
         return """
-                 ID: \(self.id)
-                 Tracker ID: \(self.tracker_id)
-                 Latitude: \(self.latitude)
-                 Longitude: \(self.longitude)
-                 Heading: \(self.heading)
-                 Speed: \(self.speed)
-                 Time: \(self.time)
-                 Created: \(self.created)
-                 Vehicle ID: \(self.vehicle_id)
-                 Route ID: \(self.route_id)
-                 """
+               ID: \(self.id)
+               Tracker ID: \(self.tracker_id)
+               Latitude: \(self.latitude)
+               Longitude: \(self.longitude)
+               Heading: \(self.heading)
+               Speed: \(self.speed)
+               Time: \(self.time)
+               Created: \(self.created)
+               Vehicle ID: \(self.vehicle_id)
+               Route ID: \(self.route_id)
+               """
     }
 }
 
-func fetchUpdates() -> [Update] {
-    var updates:[Update] = [];
+// Fetches update data from shuttles.rpi.edu/updates and returns
+// the raw data.
+func fetchUpdates() -> Data {
     let urlString = URL(string: "https://shuttles.rpi.edu/updates")
-    
+    let semaphore = DispatchSemaphore(value: 0)
+    var updatesData = Data()
     if let url = urlString {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!)
             } else {
                 if let usableData = data {
-                    let json = try? JSONSerialization.jsonObject(with: usableData, options: []) as! NSArray
-                    
-                    for unique in json! {
-                        print("Creating new update...")
-                        let update = Update(json:unique as! NSDictionary)
-                        print(update!)
-                        updates.append(update!)
-                    }
+                    updatesData = usableData
+                    semaphore.signal()
                 }
             }
         }
         task.resume()
+        semaphore.wait()
+    }
+    return updatesData
+}
+
+// Initializes vehicles fetched through fetchVehicles() and
+// returns an array of the vehicles.
+func initUpdates() -> [Update] {
+    var updates:[Update] = []
+    let data = fetchUpdates()
+    let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    for unique in json! {
+        print("Creating new update...")
+        let update = Update(json:unique as! NSDictionary)
+        print(update!)
+        updates.append(update!)
     }
     
     return updates
