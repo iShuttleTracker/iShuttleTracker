@@ -18,12 +18,12 @@ struct Stop {
     var name = ""
     var desc = ""
     
+    // Initialize stop data from JSON dictionary
     init?(json: NSDictionary) {
-        // Catch stop data
         for (key, value) in json {
             switch key as? NSString {
             case "id":
-                self.id=(value as! Int)
+                self.id = (value as! Int)
             case "latitude":
                 self.latitude = (value as! Double)
             case "longitude":
@@ -43,47 +43,65 @@ struct Stop {
         }
         print("Finished JSON initialization for stop \(self.id)")
     }
-    
-    
+
 }
 
-extension Stop: CustomStringConvertible{
-    var description: String{
+extension Stop: CustomStringConvertible {
+    var description: String {
         return """
-                 ID: \(self.id)
-                 Latitude: \(self.latitude)
-                 Logitude: \(self.longitude)
-                 Created: \(self.created)
-                 Updated: \(self.updated)
-                 Name: \(self.name)
-                 Description: \(self.desc)
-                 """
+               ID: \(self.id)
+               Latitude: \(self.latitude)
+               Logitude: \(self.longitude)
+               Created: \(self.created)
+               Updated: \(self.updated)
+               Name: \(self.name)
+               Description: \(self.desc)
+               """
     }
 }
 
-func fetchStops() -> [Stop] {
-    var stops:[Stop] = [];
+// Fetches stop data from shuttles.rpi.edu/stops and writes it
+// to stops in the application's documents directory.
+// Returns a String containing the raw JSON data fetched.
+func fetchStops() -> String {
     let urlString = URL(string: "https://shuttles.rpi.edu/stops")
-    
+    let semaphore = DispatchSemaphore(value: 0)
+    var stopsData = ""
     if let url = urlString {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!)
             } else {
                 if let usableData = data {
-                    let json = try? JSONSerialization.jsonObject(with: usableData, options: []) as! NSArray
-                    
-                    for unique in json! {
-                        print("Creating new stop...")
-                        let stop = Stop(json:unique as! NSDictionary)
-                        print(stop!)
-                        stops.append(stop!)
-                    }
+                    let dataString = String(data: usableData, encoding: .utf8)!
+                    writeJSON(filename: "stops.json", data: dataString)
+                    stopsData = dataString
+                    semaphore.signal()
                 }
             }
         }
         task.resume()
+        semaphore.wait()
+    }
+    return stopsData
+}
+
+// Initializes stops from stops.json if it exists, otherwise will
+// fetch stop data and write it to stops.json before returning an
+// array of the stops.
+func initStops() -> [Stop] {
+    var stops:[Stop] = []
+    let file = "stops.json"
+    let dataString = !fileExists(filename: file) ? fetchStops() : readJSON(filename: file)
+    let data = dataString.data(using: .utf8)!
+    let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    for unique in json! {
+        print("Creating new stop...")
+        let stop = Stop(json:unique as! NSDictionary)
+        print(stop!)
+        stops.append(stop!)
     }
     
     return stops
 }
+
