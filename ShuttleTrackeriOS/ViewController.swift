@@ -12,11 +12,6 @@ import Mapbox
 class ViewController: UIViewController, MGLMapViewDelegate {
 
     @IBOutlet var mapView: MGLMapView!
-
-    let vehicles = initVehicles()
-    let updates = initUpdates()
-    let stops = initStops()
-    let routes = initRoutes()
     
     // =================================================================
     // Probably put these variables in another file, but put them here for now
@@ -35,6 +30,11 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
+        let vehicles = initVehicles()
+        let updates = initUpdates()
+        let stops = initStops()
+        let routes = initRoutes()
+        
         print("Initialized \(vehicles.count) vehicles")
         print("Initialized \(updates.count) updates")
         print("Initialized \(stops.count) stops")
@@ -49,7 +49,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute(to: mapView.style!, UIColor.red)
-        updateRouteWithCoordinates(coordinates: eastCoordinates)
+        updateRouteWithCoordinates(coordinates: eastCoordinates, coordinates2: westCoordinates)
         
         //displayRoute(to: mapView.style!, UIColor.green)
         //updateRouteWithCoordinates(coordinates: westCoordinates)
@@ -59,12 +59,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     // =================================================================
     // Probably put these functions in another file, but put them here for now
-    
-    /*
-     1. Default: shows west and east routes
-     2. Add buttons: show west/east route
-     3. Late night route
-     */
+
     
     // Display routes
     func displayRoute(to style: MGLStyle, _ eastColor: UIColor){
@@ -85,15 +80,13 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
     
     // Draw lines
-    func updateRouteWithCoordinates(coordinates: [CLLocationCoordinate2D]) {
+    func updateRouteWithCoordinates(coordinates: [CLLocationCoordinate2D], coordinates2: [CLLocationCoordinate2D]) {
         var mutableCoordinates = coordinates
         let polyline = MGLPolylineFeature(coordinates: &mutableCoordinates, count: UInt(mutableCoordinates.count))
         eastPolylineSource?.shape = polyline
-        
     }
     
     // Parsing longitude and latitude of points into a list
-    // TODO: Function should change the input into the form of [(x1, y1), (x2, y2)]
     func parsingData(routes: [Route]) -> [String:[CLLocationCoordinate2D]]{
         var routesDic: [String:[CLLocationCoordinate2D]] = [:]
         for route in routes{
