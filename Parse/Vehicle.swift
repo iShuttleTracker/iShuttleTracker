@@ -55,8 +55,10 @@ extension Vehicle:CustomStringConvertible {
     }
 }
 
-// Fetches vehicle data from shuttles.rpi.edu/vehicles and returns
-// the raw data.
+/**
+ Fetches vehicle data from shuttles.rpi.edu/vehicles.
+ - Returns: The raw Data object fetched
+ */
 func fetchVehicles() -> Data {
     let urlString = URL(string: "https://shuttles.rpi.edu/vehicles")
     let semaphore = DispatchSemaphore(value: 0)
@@ -78,8 +80,10 @@ func fetchVehicles() -> Data {
     return vehiclesData
 }
 
-// Initializes vehicles fetched through fetchVehicles() and
-// returns an array of the vehicles.
+/**
+ Initializes vehicles fetched from fetchVehicles().
+ - Returns: An array of initialized Vehicles
+ */
 func initVehicles() -> [Vehicle] {
     var vehicles:[Vehicle] = []
     let data = fetchVehicles()

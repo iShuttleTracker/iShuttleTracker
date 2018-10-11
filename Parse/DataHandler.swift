@@ -8,9 +8,14 @@
 
 import Foundation
 
-// Returns whether or not a file with the provided filename exists in
-// the application's documents directory. If the file does not exist,
-// the data will need to be fetched and written.
+/**
+ Checks whether or not a file exists in the application's documents
+ directory.  If the file does not exist, the data will need to be
+ fetched and written.
+ - Parameter filename: The name of the file to check the existance of,
+   relative to the application's documents directory
+ - Returns: Whether or not the file exists
+ */
 func fileExists(filename: String) -> Bool {
     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = dir.appendingPathComponent(filename)
@@ -19,8 +24,13 @@ func fileExists(filename: String) -> Bool {
     return false
 }
 
-// Write JSON data to the file at the relative file path provided
-// in the application's documents directory.
+/**
+ Writes JSON data to a given file in the application's documents directory.
+ - Parameters:
+   - filename: The name of the file to write to, relative to the
+     application's documents directory
+   - data: The data to the write to the file
+ */
 func writeJSON(filename: String, data: String) {
     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = dir.appendingPathComponent(filename)
@@ -35,8 +45,13 @@ func writeJSON(filename: String, data: String) {
     }
 }
 
-// Reads JSON data from the file and returns as a String. In the case of
-// an error while writing to the file, returns an empty String.
+/**
+ Reads JSON data from the file and returns it as a String.
+ - Parameter filename: The name of the file to write to, relative to the
+   application's documents directory
+ - Returns: A String corresponding to the contents of the file. Returns an
+   empty String if there is an error reading the file.
+ */
 func readJSON(filename: String) -> String {
     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = dir.appendingPathComponent(filename)
