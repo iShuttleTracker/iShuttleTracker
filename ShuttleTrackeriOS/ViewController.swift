@@ -15,8 +15,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     // =================================================================
     // Probably put these variables in another file, but put them here for now
-    var eastPolylineSource: MGLShapeSource?
-    var westPolylineSource: MGLShapeSource?
     var eastCoordinates: [CLLocationCoordinate2D]!
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
@@ -48,13 +46,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
-        displayRoute(to: mapView.style!, UIColor.red)
-        updateRouteWithCoordinates(coordinates: eastCoordinates, coordinates2: westCoordinates)
-        
-        //displayRoute(to: mapView.style!, UIColor.green)
-        //updateRouteWithCoordinates(coordinates: westCoordinates)
+        displayRoute()
     }
-    
     
     
     // =================================================================
@@ -62,30 +55,15 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 
     
     // Display routes
-    func displayRoute(to style: MGLStyle, _ eastColor: UIColor){
-        let source = MGLShapeSource(identifier: "polyline", shape: nil, options: nil)
-        style.addSource(source)
-        eastPolylineSource = source
-        
-        // Style the line.
-        let layer = MGLLineStyleLayer(identifier: "polyline", source: source)
-        layer.lineJoin = NSExpression(forConstantValue: "round")
-        layer.lineCap = NSExpression(forConstantValue: "round")
-        layer.lineColor = NSExpression(forConstantValue: eastColor)
-        
-        // The line width should gradually increase based on the zoom level.
-        layer.lineWidth = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
-                                       [14: 5, 18: 20])
-        style.addLayer(layer)
+    func displayRoute(){
+        let westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
+        westline.color = UIColor.red
+        let eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
+        eastline.color = UIColor.green
+        mapView.addAnnotation(westline)
+        mapView.addAnnotation(eastline)
     }
-    
-    // Draw lines
-    func updateRouteWithCoordinates(coordinates: [CLLocationCoordinate2D], coordinates2: [CLLocationCoordinate2D]) {
-        var mutableCoordinates = coordinates
-        let polyline = MGLPolylineFeature(coordinates: &mutableCoordinates, count: UInt(mutableCoordinates.count))
-        eastPolylineSource?.shape = polyline
-    }
-    
+
     // Parsing longitude and latitude of points into a list
     func parsingData(routes: [Route]) -> [String:[CLLocationCoordinate2D]]{
         var routesDic: [String:[CLLocationCoordinate2D]] = [:]
@@ -98,6 +76,14 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
         return routesDic
     }
+    
+    func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
+        if let annotation = annotation as? CustomPolyline {
+            return annotation.color ?? .purple
+        }
+        
+        return mapView.tintColor
+    }
 
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
@@ -108,8 +94,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         return true
     }
     
-    // Display any points (shuttle stops, vehicles and current location)
-    // TODO: Used default annotation, need to change it later
     func displayPoint(latitude: Float, longitude: Float, name: String){
         let point = MGLPointAnnotation()
         point.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
