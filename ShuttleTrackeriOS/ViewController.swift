@@ -18,7 +18,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var eastCoordinates: [CLLocationCoordinate2D]!
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
-    var parsedRoutes: [String:[CLLocationCoordinate2D]]!
+    var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(stops.count) stops")
         print("Initialized \(routes.count) routes")
         
-        parsedRoutes = parsingData(routes: routes)
+        parsingData(routes: routes)
         
         eastCoordinates = parsedRoutes["East Campus"]!
         westCoordinates = parsedRoutes["West Campus"]!
@@ -65,23 +65,20 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
 
     // Parsing longitude and latitude of points into a list
-    func parsingData(routes: [Route]) -> [String:[CLLocationCoordinate2D]]{
-        var routesDic: [String:[CLLocationCoordinate2D]] = [:]
+    func parsingData(routes: [Route]){
         for route in routes{
             var pointArr: [CLLocationCoordinate2D] = []
             for point in route.points{
                 pointArr.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
             }
-            routesDic[route.name] = pointArr
+            parsedRoutes[route.name] = pointArr
         }
-        return routesDic
     }
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
             return annotation.color ?? .purple
         }
-        
         return mapView.tintColor
     }
 
