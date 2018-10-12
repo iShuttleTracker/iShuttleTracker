@@ -76,8 +76,10 @@ extension Update:CustomStringConvertible {
     }
 }
 
-// Fetches update data from shuttles.rpi.edu/updates and returns
-// the raw data.
+/**
+ Fetches update data from shuttles.rpi.edu/updates.
+ - Returns: The raw Data object fetched
+ */
 func fetchUpdates() -> Data {
     let urlString = URL(string: "https://shuttles.rpi.edu/updates")
     let semaphore = DispatchSemaphore(value: 0)
@@ -99,8 +101,10 @@ func fetchUpdates() -> Data {
     return updatesData
 }
 
-// Initializes vehicles fetched through fetchVehicles() and
-// returns an array of the vehicles.
+/**
+ Initializes updates fetched from fetchUpdates().
+ - Returns: An array of initialized Updates
+ */
 func initUpdates() -> [Update] {
     var updates:[Update] = []
     let data = fetchUpdates()

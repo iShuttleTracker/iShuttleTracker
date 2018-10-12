@@ -60,9 +60,11 @@ extension Stop: CustomStringConvertible {
     }
 }
 
-// Fetches stop data from shuttles.rpi.edu/stops and writes it
-// to stops in the application's documents directory.
-// Returns a String containing the raw JSON data fetched.
+/**
+ Fetches stop data from shuttles.rpi.edu/stops and writes it to
+ stops.json in the application's documents directory.
+ - Returns: A String containing the raw JSON data fetched
+ */
 func fetchStops() -> String {
     let urlString = URL(string: "https://shuttles.rpi.edu/stops")
     let semaphore = DispatchSemaphore(value: 0)
@@ -89,6 +91,11 @@ func fetchStops() -> String {
 // Initializes stops from stops.json if it exists, otherwise will
 // fetch stop data and write it to stops.json before returning an
 // array of the stops.
+/**
+ Initializes stops from stops.json if it exists, otherwise will
+ call fetchStops() fetch stop data and writes it to stops.json.
+ - Returns: An array of initialized Stops
+ */
 func initStops() -> [Stop] {
     var stops:[Stop] = []
     let file = "stops.json"

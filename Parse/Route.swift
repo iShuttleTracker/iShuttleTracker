@@ -91,19 +91,12 @@ extension Route:CustomStringConvertible {
     }
 }
 
-// Fetches route data from shuttles.rpi.edu/routes and writes it
-// to routes.json in the application's documents directory.
-// Returns a String containing the raw JSON data fetched.
+/**
+ Fetches route data from shuttles.rpi.edu/routes and writes it to
+ routes.json in the application's documents directory.
+ - Returns: A String containing the raw JSON data fetched
+ */
 func fetchRoutes() -> String {
-    /*
-     TODO:
-     
-     dataTask returns all the information in Data object,
-     figure out how to use JSONSerialization with a Data object
-     Maybe have to create a struct with the certain format of the JSON?
-     Working with NSArray instead of a parsed [String: Any] Dictionary????
-     */
-
     let urlString = URL(string: "https://shuttles.rpi.edu/routes")
     let semaphore = DispatchSemaphore(value: 0)
     var routesData = ""
@@ -126,9 +119,11 @@ func fetchRoutes() -> String {
     return routesData
 }
 
-// Initializes routes from routes.json if it exists, otherwise will
-// fetch route data and write it to routes.json before returning an
-// array of the routes.
+/**
+ Initializes routes from routes.json if it exists, otherwise will
+ call fetchRoutes() fetch route data and writes it to routes.json.
+ - Returns: An array of initialized Routes
+ */
 func initRoutes() -> [Route] {
     var routes:[Route] = []
     let file = "routes.json"
