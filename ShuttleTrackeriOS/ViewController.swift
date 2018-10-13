@@ -42,6 +42,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         eastCoordinates = parsedRoutes["East Campus"]!
         westCoordinates = parsedRoutes["West Campus"]!
+        
+        displayStops(stops: stops)
     }
     
     // Wait until the map is loaded before adding to the map.
@@ -63,6 +65,19 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.addAnnotation(westline)
         mapView.addAnnotation(eastline)
     }
+    
+    // Display stops
+    func displayStops(stops: [Stop]){
+        var count = 0
+        for stop in stops{
+            count += 1
+            let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
+            let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
+            point.reuseIdentifier = "customAnnotation\(count)"
+            point.image = dot(size:15)
+            mapView.addAnnotation(point)
+        }
+    }
 
     // Parsing longitude and latitude of points into a list
     func parsingData(routes: [Route]){
@@ -75,13 +90,35 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     
+    // Customize UIImage
+    func dot(size: Int) -> UIImage {
+        let floatSize = CGFloat(size)
+        let rect = CGRect(x: 0, y: 0, width: floatSize, height: floatSize)
+        let strokeWidth: CGFloat = 1
+        
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.main.scale)
+        
+        let ovalPath = UIBezierPath(ovalIn: rect.insetBy(dx: strokeWidth, dy: strokeWidth))
+        UIColor.darkGray.setFill()
+        ovalPath.fill()
+        
+        UIColor.white.setStroke()
+        ovalPath.lineWidth = strokeWidth
+        ovalPath.stroke()
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
             return annotation.color ?? .purple
         }
         return mapView.tintColor
     }
-
+    
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         return nil
@@ -91,11 +128,19 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         return true
     }
     
-    func displayPoint(latitude: Float, longitude: Float, name: String){
-        let point = MGLPointAnnotation()
-        point.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-        point.title = "Name: \(name)"
-        mapView.addAnnotation(point)
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        if let point = annotation as? CustomPointAnnotation,
+            let image = point.image,
+            let reuseIdentifier = point.reuseIdentifier {
+            
+            if let annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: reuseIdentifier) {
+                return annotationImage
+            } else {
+                return MGLAnnotationImage(image: image, reuseIdentifier: reuseIdentifier)
+            }
+        }
+        
+        return nil
     }
 
 }

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		380EBFD5217044A9000DBB01 /* Polyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380EBFD4217044A9000DBB01 /* Polyline.swift */; };
+		380EBFD5217044A9000DBB01 /* CustomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380EBFD4217044A9000DBB01 /* CustomSettings.swift */; };
 		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
 		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
@@ -57,7 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		380EBFD4217044A9000DBB01 /* Polyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polyline.swift; sourceTree = "<group>"; };
+		380EBFD4217044A9000DBB01 /* CustomSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSettings.swift; sourceTree = "<group>"; };
 		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
-				380EBFD4217044A9000DBB01 /* Polyline.swift */,
+				380EBFD4217044A9000DBB01 /* CustomSettings.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -336,7 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				380EBFD5217044A9000DBB01 /* Polyline.swift in Sources */,
+				380EBFD5217044A9000DBB01 /* CustomSettings.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
