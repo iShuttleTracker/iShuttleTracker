@@ -18,7 +18,10 @@ struct Stop {
     var name = ""
     var desc = ""
     
-    // Initialize stop data from JSON dictionary
+    /**
+     Initializes a new Stop.
+     - Returns: A new Stop from the data contained in the dictionary
+     */
     init?(json: NSDictionary) {
         for (key, value) in json {
             switch key as? NSString {
@@ -38,7 +41,7 @@ struct Stop {
                 self.desc = (value as! String)
             default:
                 // This should never happen
-                print("\(key)")
+                print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
         print("Finished JSON initialization for stop \(self.id)")

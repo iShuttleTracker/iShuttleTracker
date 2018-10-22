@@ -21,7 +21,10 @@ struct Route {
     var updated = ""
     var width = 0
     
-    // Initialize route data from JSON dictionary
+    /**
+     Initializes a new Route.
+     - Returns: A new Route from the data contained in the dictionary
+     */
     init?(json: NSDictionary) {
         // Need to add the points to the route
         var pointsList:[Point] = [];
@@ -63,7 +66,7 @@ struct Route {
                 }
             default:
                 // This should never happen
-                print("\(key)")
+                print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
         // Set the points at the end
