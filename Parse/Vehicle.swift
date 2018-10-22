@@ -16,8 +16,12 @@ struct Vehicle {
     var updated = ""
     var enabled = false
     var tracker_id = ""
+    var last_update = Update()!
     
-    // Initialize vehicle data from JSON dictionary
+    /**
+     Initializes a new Vehicle.
+     - Returns: A new Vehicle from the data contained in the dictionary
+     */
     init?(json: NSDictionary) {
         for (key, value) in json {
             switch key as? NSString {
@@ -35,10 +39,38 @@ struct Vehicle {
                 self.tracker_id = (value as! String)
             default:
                 // This should never happen
-                print("\(key)")
+                print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
         print("Finished JSON initialization for vehicle \(self.id)")
+    }
+    
+    /**
+     Updates the Vehicle.
+     - Parameter update: The latest Update for this Vehicle.
+     */
+    mutating func update(update: Update) {
+        last_update = update
+    }
+    
+    /**
+     Attempts to update the Vehicle.
+     - Parameter updates: An array of Updates that may contain an Update for this Vehicle.
+     */
+    mutating func updateFrom(updates: [Update]) {
+        for u in updates {
+            if u.vehicle_id == id {
+                update(update: u)
+            }
+        }
+    }
+    
+    /**
+     Gets the rotation for marker display.
+     - Returns: The Vehicle's rotation for display.
+     */
+    func getRotation() -> Int {
+        return last_update.heading - 45;
     }
     
 }
