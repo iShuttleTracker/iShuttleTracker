@@ -19,6 +19,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
     var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
+    var vehicleIcons: [Int:CustomPointAnnotation] = [:]
+    var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +41,9 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        
-        eastCoordinates = parsedRoutes["East Campus"]!
-        westCoordinates = parsedRoutes["West Campus"]!
-        
         displayStops(stops: stops)
+        grabVehicles(vehicles: vehicles)
+        //scheduledTimerWithTimeInterval()
     }
     
     // Wait until the map is loaded before adding to the map.
@@ -74,7 +74,33 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
             let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
             point.reuseIdentifier = "customAnnotation\(count)"
-            point.image = dot(size:15)
+            point.image = dot(size:15, color: UIColor.darkGray)
+            mapView.addAnnotation(point)
+        }
+    }
+    
+    func scheduledTimerWithTimeInterval(){
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateVehicles(){
+        //changeCoord()
+    }
+    
+    func changeCoord(){
+        UIView.animate(withDuration: 1.5, animations: {
+            //self.point.coordinate = CLLocationCoordinate2D(latitude: 42.73028, longitude: -73.67736+Double(self.count))
+        })
+    }
+    
+    func grabVehicles(vehicles: [Vehicle]){
+        var count = 0
+        for vehicle in vehicles{
+            count += 1
+            let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+            let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
+            point.image = dot(size:15, color: UIColor.orange)
+            vehicleIcons[vehicle.id] = point
             mapView.addAnnotation(point)
         }
     }
@@ -88,30 +114,11 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             }
             parsedRoutes[route.name] = pointArr
         }
+        eastCoordinates = parsedRoutes["East Campus"]!
+        westCoordinates = parsedRoutes["West Campus"]!
     }
     
-    // Customize UIImage
-    func dot(size: Int) -> UIImage {
-        let floatSize = CGFloat(size)
-        let rect = CGRect(x: 0, y: 0, width: floatSize, height: floatSize)
-        let strokeWidth: CGFloat = 1
-        
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.main.scale)
-        
-        let ovalPath = UIBezierPath(ovalIn: rect.insetBy(dx: strokeWidth, dy: strokeWidth))
-        UIColor.darkGray.setFill()
-        ovalPath.fill()
-        
-        UIColor.white.setStroke()
-        ovalPath.lineWidth = strokeWidth
-        ovalPath.stroke()
-        
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        return image
-    }
-    
+
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
             return annotation.color ?? .purple
