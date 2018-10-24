@@ -79,6 +79,11 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     
+    // 1. core animation
+    // 2. Add annotation and remove it
+    // 3. Icon
+    // 4. Mapbox MGLayer
+    // leaflet
     func scheduledTimerWithTimeInterval(){
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
     }
