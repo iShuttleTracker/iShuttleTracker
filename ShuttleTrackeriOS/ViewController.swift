@@ -59,9 +59,9 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     // Display routes
     func displayRoute(){
         let westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
-        westline.color = UIColor.red
+        westline.color = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
         let eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
-        eastline.color = UIColor.green
+        eastline.color = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
         mapView.addAnnotation(westline)
         mapView.addAnnotation(eastline)
     }
@@ -74,6 +74,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
             let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
             point.reuseIdentifier = "customAnnotation\(count)"
+            //point.image = dot(size:15, color: UIColor(red: 20/255, green: 80/255, blue: 200/255, alpha: 1))
             point.image = dot(size:15, color: UIColor.darkGray)
             mapView.addAnnotation(point)
         }
@@ -153,6 +154,11 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
         
         return nil
+    }
+    
+    func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
+        // Set the line width for polyline annotations
+        return 4.5
     }
 
 }
