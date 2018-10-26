@@ -21,7 +21,16 @@ struct Update {
     var vehicle_id = 0
     var route_id = 0
     
-    // Initialize update data from JSON dictionary
+    /**
+     Default constructor.
+     - Returns: A new Update with default values
+     */
+    init?() {}
+    
+    /**
+     Initializes a new Update.
+     - Returns: A new Update from the data contained in the dictionary
+     */
     init?(json: NSDictionary){
         for (key, value) in json {
             switch key as? NSString {
@@ -51,7 +60,7 @@ struct Update {
                 }
             default:
                 // This should never happen
-                print("\(key)")
+                print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
         print("Finished JSON initialization for update \(self.id)")

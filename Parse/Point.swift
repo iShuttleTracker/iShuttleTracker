@@ -13,7 +13,10 @@ struct Point {
     var latitude: Double
     var longitude: Double
     
-    // Initialize point data
+    /**
+     Initializes a new Point.
+     - Returns: A new Point with the specified latitude and longitude
+     */
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
