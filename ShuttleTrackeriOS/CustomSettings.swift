@@ -1,5 +1,4 @@
 //
-//  Polyline.swift
 //  ShuttleTrackeriOS
 //
 //  Created by Beiqi Zou on 10/11/18.
@@ -8,7 +7,8 @@
 
 import Foundation
 import Mapbox
-// TODO: customize points
+
+// Customize points
 class CustomPointAnnotation: NSObject, MGLAnnotation{
     var coordinate: CLLocationCoordinate2D
     var title: String?
@@ -24,7 +24,36 @@ class CustomPointAnnotation: NSObject, MGLAnnotation{
     
 }
 
+class CustomVehicleAnnotation: MGLPointAnnotation{
+    
+    func setCoord(coord: CLLocationCoordinate2D){
+        self.coordinate = coord
+    }
+}
+
 // Customize polyline
 class CustomPolyline: MGLPolyline {
     var color: UIColor?
+}
+
+// Customize UIImage
+func dot(size: Int, color: UIColor) -> UIImage {
+    let floatSize = CGFloat(size)
+    let rect = CGRect(x: 0, y: 0, width: floatSize, height: floatSize)
+    let strokeWidth: CGFloat = 1
+    
+    UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.main.scale)
+    
+    let ovalPath = UIBezierPath(ovalIn: rect.insetBy(dx: strokeWidth, dy: strokeWidth))
+    color.setFill()
+    ovalPath.fill()
+    
+    UIColor.white.setStroke()
+    ovalPath.lineWidth = strokeWidth
+    ovalPath.stroke()
+    
+    let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+    
+    return image
 }
