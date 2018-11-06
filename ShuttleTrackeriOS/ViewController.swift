@@ -10,8 +10,9 @@ import UIKit
 import Mapbox
 
 class ViewController: UIViewController, MGLMapViewDelegate {
-
+    
     @IBOutlet var mapView: MGLMapView!
+    
     
     // =================================================================
     // Probably put these variables in another file, but put them here for now
@@ -19,8 +20,32 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
     var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
-    var vehicleIcons: [Int:CustomPointAnnotation] = [:]
+    var vehicleIcons: [String:CustomPointAnnotation] = [:]
     var timer = Timer()
+    var eastline: CustomPolyline!
+    var westline: CustomPolyline!
+    
+    let vehicles = initVehicles()
+    let updates = initUpdates()
+    let stops = initStops()
+    let routes = initRoutes()
+    
+
+    @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            mapView.addAnnotation(eastline)
+            mapView.addAnnotation(westline)
+        case 1:
+            mapView.removeAnnotation(westline)
+            mapView.addAnnotation(eastline)
+        case 2:
+            mapView.removeAnnotation(eastline)
+            mapView.addAnnotation(westline)
+        default:
+            break
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,37 +55,33 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        let vehicles = initVehicles()
-        let updates = initUpdates()
-        let stops = initStops()
-        let routes = initRoutes()
-        
         print("Initialized \(vehicles.count) vehicles")
         print("Initialized \(updates.count) updates")
         print("Initialized \(stops.count) stops")
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        displayStops(stops: stops)
         grabVehicles(vehicles: vehicles)
-        //scheduledTimerWithTimeInterval()
+        scheduledTimerWithTimeInterval()
+        
     }
     
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
+        displayStops(stops: stops)
     }
     
     
     // =================================================================
     // Probably put these functions in another file, but put them here for now
-
+    
     
     // Display routes
     func displayRoute(){
-        let westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
+        westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
         westline.color = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
-        let eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
+        eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
         eastline.color = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
         mapView.addAnnotation(westline)
         mapView.addAnnotation(eastline)
@@ -74,7 +95,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
             let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
             point.reuseIdentifier = "customAnnotation\(count)"
-            //point.image = dot(size:15, color: UIColor(red: 20/255, green: 80/255, blue: 200/255, alpha: 1))
             point.image = dot(size:15, color: UIColor.darkGray)
             mapView.addAnnotation(point)
         }
@@ -86,11 +106,21 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     // 4. Mapbox MGLayer
     // leaflet
     func scheduledTimerWithTimeInterval(){
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
     }
     
     @objc func updateVehicles(){
         //changeCoord()
+        let updates = initUpdates()
+        for update in updates{
+            if let a = vehicleIcons[update.tracker_id]{
+                print("Prev: \(a.coordinate)")
+                a.coordinate = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
+                print("Post: \(a.coordinate)")
+            }
+        }
+        
+        
     }
     
     func changeCoord(){
@@ -106,11 +136,11 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
             let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
             point.image = dot(size:15, color: UIColor.orange)
-            vehicleIcons[vehicle.id] = point
+            vehicleIcons[vehicle.tracker_id] = point
             mapView.addAnnotation(point)
         }
     }
-
+    
     // Parsing longitude and latitude of points into a list
     func parsingData(routes: [Route]){
         for route in routes{
@@ -124,7 +154,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         westCoordinates = parsedRoutes["West Campus"]!
     }
     
-
+    
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
             return annotation.color ?? .purple
@@ -160,5 +190,5 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         // Set the line width for polyline annotations
         return 4.5
     }
-
+    
 }
