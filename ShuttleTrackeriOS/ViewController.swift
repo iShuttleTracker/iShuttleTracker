@@ -10,17 +10,68 @@ import UIKit
 import Mapbox
 
 class ViewController: UIViewController, MGLMapViewDelegate {
-
+    
     @IBOutlet var mapView: MGLMapView!
     
-    // =================================================================
-    // Probably put these variables in another file, but put them here for now
+    // Get shuttle tracker info
+    let vehicles = initVehicles()
+    let updates = initUpdates()
+    let stops = initStops()
+    let routes = initRoutes()
+    
+    // Store info
     var eastCoordinates: [CLLocationCoordinate2D]!
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
     var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
-    var vehicleIcons: [Int:CustomPointAnnotation] = [:]
-    var timer = Timer()
+    
+    // Display
+    var eastline: CustomPolyline!
+    var westline: CustomPolyline!
+    
+    // Check whether a route has been added
+    var addedRoutes: [String:CustomPolyline] = [:]
+    
+    //var timer = Timer()
+    //var vehicleIcons: [String:CustomPointAnnotation] = [:]
+    
+
+    @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            addRoutes(addRoute: "east")
+            addRoutes(addRoute: "west")
+        case 1:
+            addRoutes(addRoute: "east")
+            removeRoutes(removeRoute: "west")
+        case 2:
+            addRoutes(addRoute: "west")
+            removeRoutes(removeRoute: "east")
+        default:
+            break
+        }
+    }
+    
+    func removeRoutes(removeRoute: String){
+        if let route = addedRoutes[removeRoute] {
+            mapView.removeAnnotation(route)
+            addedRoutes.removeValue(forKey: removeRoute)
+        }
+    }
+    
+    func addRoutes(addRoute: String){
+        if let _ = addedRoutes[addRoute]{
+            
+        } else {
+            if addRoute == "east"{
+                mapView.addAnnotation(eastline)
+                addedRoutes["east"] = eastline
+            } else if addRoute == "west"{
+                mapView.addAnnotation(westline)
+                addedRoutes["west"] = westline
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,40 +81,34 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        let vehicles = initVehicles()
-        let updates = initUpdates()
-        let stops = initStops()
-        let routes = initRoutes()
-        
         print("Initialized \(vehicles.count) vehicles")
         print("Initialized \(updates.count) updates")
         print("Initialized \(stops.count) stops")
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        displayStops(stops: stops)
-        grabVehicles(vehicles: vehicles)
+        //grabVehicles(vehicles: vehicles)
         //scheduledTimerWithTimeInterval()
+        
     }
     
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
+        displayStops(stops: stops)
     }
     
-    
-    // =================================================================
-    // Probably put these functions in another file, but put them here for now
 
-    
     // Display routes
     func displayRoute(){
-        let westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
+        westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
         westline.color = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
-        let eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
+        eastline = CustomPolyline(coordinates: eastCoordinates, count: UInt(eastCoordinates.count))
         eastline.color = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
         mapView.addAnnotation(westline)
         mapView.addAnnotation(eastline)
+        addedRoutes["east"] = eastline
+        addedRoutes["west"] = westline
     }
     
     // Display stops
@@ -74,39 +119,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
             let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
             point.reuseIdentifier = "customAnnotation\(count)"
-            //point.image = dot(size:15, color: UIColor(red: 20/255, green: 80/255, blue: 200/255, alpha: 1))
             point.image = dot(size:15, color: UIColor.darkGray)
-            mapView.addAnnotation(point)
-        }
-    }
-    
-    // 1. core animation
-    // 2. Add annotation and remove it
-    // 3. Icon
-    // 4. Mapbox MGLayer
-    // leaflet
-    func scheduledTimerWithTimeInterval(){
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
-    }
-    
-    @objc func updateVehicles(){
-        //changeCoord()
-    }
-    
-    func changeCoord(){
-        UIView.animate(withDuration: 1.5, animations: {
-            //self.point.coordinate = CLLocationCoordinate2D(latitude: 42.73028, longitude: -73.67736+Double(self.count))
-        })
-    }
-    
-    func grabVehicles(vehicles: [Vehicle]){
-        var count = 0
-        for vehicle in vehicles{
-            count += 1
-            let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-            let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
-            point.image = dot(size:15, color: UIColor.orange)
-            vehicleIcons[vehicle.id] = point
             mapView.addAnnotation(point)
         }
     }
@@ -124,7 +137,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         westCoordinates = parsedRoutes["West Campus"]!
     }
     
-
+    
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
             return annotation.color ?? .purple
@@ -160,5 +173,47 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         // Set the line width for polyline annotations
         return 4.5
     }
-
+    
+    // 1. core animation
+    // 2. Add annotation and remove it
+    // 3. Icon
+    // 4. Mapbox MGLayer
+    // leaflet
+    //    func scheduledTimerWithTimeInterval(){
+    //        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
+    //    }
+    
+    //    @objc func updateVehicles(){
+    //        //changeCoord()
+    //        let updates = initUpdates()
+    //        for update in updates{
+    //            if let a = vehicleIcons[update.tracker_id]{
+    //                print("Prev: \(a.coordinate)")
+    //                a.coordinate = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
+    //                print("Post: \(a.coordinate)")
+    //            }
+    //        }
+    //
+    //
+    //    }
+    
+    //    func changeCoord(){
+    //        UIView.animate(withDuration: 1.5, animations: {
+    //            //self.point.coordinate = CLLocationCoordinate2D(latitude: 42.73028, longitude: -73.67736+Double(self.count))
+    //        })
+    //    }
+    
+    //    func grabVehicles(vehicles: [Vehicle]){
+    //        var count = 0
+    //        for vehicle in vehicles{
+    //            count += 1
+    //            let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    //            let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
+    //            point.image = dot(size:15, color: UIColor.orange)
+    //            vehicleIcons[vehicle.tracker_id] = point
+    //            mapView.addAnnotation(point)
+    //        }
+    //    }
+    
+    
 }
