@@ -13,37 +13,63 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
     
-    
-    // =================================================================
-    // Probably put these variables in another file, but put them here for now
-    var eastCoordinates: [CLLocationCoordinate2D]!
-    var westCoordinates: [CLLocationCoordinate2D]!
-    var lateNightCoordinates: [CLLocationCoordinate2D]!
-    var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
-    var vehicleIcons: [String:CustomPointAnnotation] = [:]
-    var timer = Timer()
-    var eastline: CustomPolyline!
-    var westline: CustomPolyline!
-    
+    // Get shuttle tracker info
     let vehicles = initVehicles()
     let updates = initUpdates()
     let stops = initStops()
     let routes = initRoutes()
     
+    // Store info
+    var eastCoordinates: [CLLocationCoordinate2D]!
+    var westCoordinates: [CLLocationCoordinate2D]!
+    var lateNightCoordinates: [CLLocationCoordinate2D]!
+    var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
+    
+    // Display
+    var eastline: CustomPolyline!
+    var westline: CustomPolyline!
+    
+    // Check whether a route has been added
+    var addedRoutes: [String:CustomPolyline] = [:]
+    
+    //var timer = Timer()
+    //var vehicleIcons: [String:CustomPointAnnotation] = [:]
+    
 
     @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            mapView.addAnnotation(eastline)
-            mapView.addAnnotation(westline)
+            addRoutes(addRoute: "east")
+            addRoutes(addRoute: "west")
         case 1:
-            mapView.removeAnnotation(westline)
-            mapView.addAnnotation(eastline)
+            addRoutes(addRoute: "east")
+            removeRoutes(removeRoute: "west")
         case 2:
-            mapView.removeAnnotation(eastline)
-            mapView.addAnnotation(westline)
+            addRoutes(addRoute: "west")
+            removeRoutes(removeRoute: "east")
         default:
             break
+        }
+    }
+    
+    func removeRoutes(removeRoute: String){
+        if let route = addedRoutes[removeRoute] {
+            mapView.removeAnnotation(route)
+            addedRoutes.removeValue(forKey: removeRoute)
+        }
+    }
+    
+    func addRoutes(addRoute: String){
+        if let _ = addedRoutes[addRoute]{
+            
+        } else {
+            if addRoute == "east"{
+                mapView.addAnnotation(eastline)
+                addedRoutes["east"] = eastline
+            } else if addRoute == "west"{
+                mapView.addAnnotation(westline)
+                addedRoutes["west"] = westline
+            }
         }
     }
     
@@ -61,8 +87,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        grabVehicles(vehicles: vehicles)
-        scheduledTimerWithTimeInterval()
+        //grabVehicles(vehicles: vehicles)
+        //scheduledTimerWithTimeInterval()
         
     }
     
@@ -72,11 +98,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         displayStops(stops: stops)
     }
     
-    
-    // =================================================================
-    // Probably put these functions in another file, but put them here for now
-    
-    
+
     // Display routes
     func displayRoute(){
         westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
@@ -85,6 +107,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         eastline.color = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
         mapView.addAnnotation(westline)
         mapView.addAnnotation(eastline)
+        addedRoutes["east"] = eastline
+        addedRoutes["west"] = westline
     }
     
     // Display stops
@@ -99,48 +123,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             mapView.addAnnotation(point)
         }
     }
-    
-    // 1. core animation
-    // 2. Add annotation and remove it
-    // 3. Icon
-    // 4. Mapbox MGLayer
-    // leaflet
-    func scheduledTimerWithTimeInterval(){
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
-    }
-    
-    @objc func updateVehicles(){
-        //changeCoord()
-        let updates = initUpdates()
-        for update in updates{
-            if let a = vehicleIcons[update.tracker_id]{
-                print("Prev: \(a.coordinate)")
-                a.coordinate = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
-                print("Post: \(a.coordinate)")
-            }
-        }
-        
-        
-    }
-    
-    func changeCoord(){
-        UIView.animate(withDuration: 1.5, animations: {
-            //self.point.coordinate = CLLocationCoordinate2D(latitude: 42.73028, longitude: -73.67736+Double(self.count))
-        })
-    }
-    
-    func grabVehicles(vehicles: [Vehicle]){
-        var count = 0
-        for vehicle in vehicles{
-            count += 1
-            let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-            let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
-            point.image = dot(size:15, color: UIColor.orange)
-            vehicleIcons[vehicle.tracker_id] = point
-            mapView.addAnnotation(point)
-        }
-    }
-    
+
     // Parsing longitude and latitude of points into a list
     func parsingData(routes: [Route]){
         for route in routes{
@@ -190,5 +173,47 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         // Set the line width for polyline annotations
         return 4.5
     }
+    
+    // 1. core animation
+    // 2. Add annotation and remove it
+    // 3. Icon
+    // 4. Mapbox MGLayer
+    // leaflet
+    //    func scheduledTimerWithTimeInterval(){
+    //        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.updateVehicles), userInfo: nil, repeats: true)
+    //    }
+    
+    //    @objc func updateVehicles(){
+    //        //changeCoord()
+    //        let updates = initUpdates()
+    //        for update in updates{
+    //            if let a = vehicleIcons[update.tracker_id]{
+    //                print("Prev: \(a.coordinate)")
+    //                a.coordinate = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
+    //                print("Post: \(a.coordinate)")
+    //            }
+    //        }
+    //
+    //
+    //    }
+    
+    //    func changeCoord(){
+    //        UIView.animate(withDuration: 1.5, animations: {
+    //            //self.point.coordinate = CLLocationCoordinate2D(latitude: 42.73028, longitude: -73.67736+Double(self.count))
+    //        })
+    //    }
+    
+    //    func grabVehicles(vehicles: [Vehicle]){
+    //        var count = 0
+    //        for vehicle in vehicles{
+    //            count += 1
+    //            let coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    //            let point = CustomPointAnnotation(coordinate: coordinate, title: vehicle.tracker_id, subtitle: vehicle.description)
+    //            point.image = dot(size:15, color: UIColor.orange)
+    //            vehicleIcons[vehicle.tracker_id] = point
+    //            mapView.addAnnotation(point)
+    //        }
+    //    }
+    
     
 }
