@@ -12,6 +12,7 @@ import Mapbox
 class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
+    @IBOutlet weak var Schedules: UIButton!
     
     // Get shuttle tracker info
     let vehicles = initVehicles()
