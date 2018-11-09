@@ -6,13 +6,15 @@
 //  Copyright © 2018 WTG. All rights reserved.
 //
 
+import WebKit
 import UIKit
 import Mapbox
 
 class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
-    @IBOutlet weak var Schedules: UIButton!
+//    @IBOutlet weak var Schedules: UIButton!
+//    @IBOutlet weak var displaySchedule: WKWebView!
     
     // Get shuttle tracker info
     let vehicles = initVehicles()
@@ -88,11 +90,27 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        //grabVehicles(vehicles: vehicles)
-        //scheduledTimerWithTimeInterval()
+        
+//        //responsible for displaying the schedule PDF
+//        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
+//        let req = URLRequest(url:pdf!)
+//        displaySchedule.load(req as URLRequest)
+//        displaySchedule.isHidden=true
         
     }
-    
+//    //button interaction to actually show the schedule or hide it
+//    @IBAction func showSchedule(_ sender: UIButton) {
+//
+//        if(displaySchedule.isHidden){
+//            displaySchedule.isHidden=false
+//        }
+//        else{
+//            displaySchedule.isHidden=true
+//        }
+//
+//        view.bringSubviewToFront(Schedules)
+//
+//    }
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
