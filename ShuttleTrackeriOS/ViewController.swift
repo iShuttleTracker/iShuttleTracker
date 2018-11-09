@@ -111,7 +111,9 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     @IBAction func showSchedule(_ sender: Any) {
         if(displaySchedule.isHidden){
             displaySchedule.isHidden=false
-            displaySchedule.scrollView.setZoomScale(1.5, animated: false)
+            let offset = CGPoint(x:-100 as CGFloat, y: -100 as CGFloat)
+            displaySchedule.scrollView.setContentOffset(offset, animated: true)
+            displaySchedule.scrollView.setZoomScale(1.5, animated: true)
 
         }
         else{
