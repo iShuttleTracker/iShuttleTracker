@@ -13,7 +13,9 @@ import Mapbox
 class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
-//    @IBOutlet weak var Schedules: UIButton!
+    @IBOutlet weak var Schedules: UIButton!
+    @IBOutlet weak var displaySchedule: WKWebView!
+    //    @IBOutlet weak var Schedules: UIButton!
 //    @IBOutlet weak var displaySchedule: WKWebView!
     
     // Get shuttle tracker info
@@ -91,33 +93,34 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         parsingData(routes: routes)
         
-//        //responsible for displaying the schedule PDF
-//        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
-//        let req = URLRequest(url:pdf!)
-//        displaySchedule.load(req as URLRequest)
-//        displaySchedule.isHidden=true
+        //responsible for displaying the schedule PDF
+        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
+        let req = URLRequest(url:pdf!)
+        displaySchedule.load(req as URLRequest)
+        displaySchedule.isHidden=true
         
     }
-//    //button interaction to actually show the schedule or hide it
-//    @IBAction func showSchedule(_ sender: UIButton) {
-//
-//        if(displaySchedule.isHidden){
-//            displaySchedule.isHidden=false
-//        }
-//        else{
-//            displaySchedule.isHidden=true
-//        }
-//
-//        view.bringSubviewToFront(Schedules)
-//
-//    }
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
         displayStops(stops: stops)
     }
     
+    
+    //button interaction to actually show the schedule
+    @IBAction func showSchedule(_ sender: Any) {
+        if(displaySchedule.isHidden){
+            displaySchedule.isHidden=false
+            displaySchedule.scrollView.setZoomScale(1.5, animated: false)
 
+        }
+        else{
+            displaySchedule.isHidden=true
+        }
+
+        view.bringSubviewToFront(Schedules)
+    }
+    
     // Display routes
     func displayRoute(){
         westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
