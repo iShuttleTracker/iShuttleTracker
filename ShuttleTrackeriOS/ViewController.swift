@@ -6,6 +6,7 @@
 //  Copyright © 2018 WTG. All rights reserved.
 //
 
+import WebKit
 import UIKit
 import Mapbox
 
@@ -87,18 +88,37 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(routes.count) routes")
         
         parsingData(routes: routes)
-        //grabVehicles(vehicles: vehicles)
-        //scheduledTimerWithTimeInterval()
+        
+        //responsible for displaying the schedule PDF
+//        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
+//        let req = URLRequest(url:pdf!)
+//        displaySchedule.load(req as URLRequest)
+//        displaySchedule.isHidden=true
         
     }
-    
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
         displayStops(stops: stops)
     }
     
-
+    
+    //button interaction to actually show the schedule
+//    @IBAction func showSchedule(_ sender: Any) {
+//        if(displaySchedule.isHidden){
+//            displaySchedule.isHidden=false
+//            let offset = CGPoint(x:-100 as CGFloat, y: -100 as CGFloat)
+//            displaySchedule.scrollView.setContentOffset(offset, animated: true)
+//            displaySchedule.scrollView.setZoomScale(1.5, animated: true)
+//
+//        }
+//        else{
+//            displaySchedule.isHidden=true
+//        }
+//
+//        view.bringSubviewToFront(Schedules)
+//    }
+    
     // Display routes
     func displayRoute(){
         westline = CustomPolyline(coordinates: westCoordinates, count: UInt(westCoordinates.count))
