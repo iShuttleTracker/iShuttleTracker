@@ -13,8 +13,8 @@ import Mapbox
 class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
-    @IBOutlet weak var Schedules: UIButton!
-    @IBOutlet weak var displaySchedule: WKWebView!
+//    @IBOutlet weak var Schedules: UIButton!
+//    @IBOutlet weak var displaySchedule: WKWebView!
     //    @IBOutlet weak var Schedules: UIButton!
 //    @IBOutlet weak var displaySchedule: WKWebView!
     
@@ -94,10 +94,10 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         parsingData(routes: routes)
         
         //responsible for displaying the schedule PDF
-        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
-        let req = URLRequest(url:pdf!)
-        displaySchedule.load(req as URLRequest)
-        displaySchedule.isHidden=true
+//        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
+//        let req = URLRequest(url:pdf!)
+//        displaySchedule.load(req as URLRequest)
+//        displaySchedule.isHidden=true
         
     }
     // Wait until the map is loaded before adding to the map.
@@ -108,20 +108,20 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     
     //button interaction to actually show the schedule
-    @IBAction func showSchedule(_ sender: Any) {
-        if(displaySchedule.isHidden){
-            displaySchedule.isHidden=false
-            let offset = CGPoint(x:-100 as CGFloat, y: -100 as CGFloat)
-            displaySchedule.scrollView.setContentOffset(offset, animated: true)
-            displaySchedule.scrollView.setZoomScale(1.5, animated: true)
-
-        }
-        else{
-            displaySchedule.isHidden=true
-        }
-
-        view.bringSubviewToFront(Schedules)
-    }
+//    @IBAction func showSchedule(_ sender: Any) {
+//        if(displaySchedule.isHidden){
+//            displaySchedule.isHidden=false
+//            let offset = CGPoint(x:-100 as CGFloat, y: -100 as CGFloat)
+//            displaySchedule.scrollView.setContentOffset(offset, animated: true)
+//            displaySchedule.scrollView.setZoomScale(1.5, animated: true)
+//
+//        }
+//        else{
+//            displaySchedule.isHidden=true
+//        }
+//
+//        view.bringSubviewToFront(Schedules)
+//    }
     
     // Display routes
     func displayRoute(){
