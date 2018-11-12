@@ -48,6 +48,9 @@
                                     <segment title="East Only"/>
                                     <segment title="West Only"/>
                                 </segments>
+                                <connections>
+                                    <action selector="toggleRoutes:" destination="qne-FA-DBa" eventType="valueChanged" id="YEb-54-zwD"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
