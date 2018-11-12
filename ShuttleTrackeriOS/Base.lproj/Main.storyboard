@@ -35,7 +35,7 @@
         <!--Item 1-->
         <scene sceneID="JbI-sM-aEq">
             <objects>
-                <viewController id="qne-FA-DBa" sceneMemberID="viewController">
+                <viewController id="qne-FA-DBa" customClass="ViewController" customModule="ShuttleTrackeriOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="087-8d-IVx" customClass="MGLMapView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,6 +75,9 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="p3M-I2-HwZ"/>
+                    <connections>
+                        <outlet property="mapView" destination="087-8d-IVx" id="p6n-JY-DsB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOR-Oj-ghW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
