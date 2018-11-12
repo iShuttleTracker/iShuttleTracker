@@ -23,7 +23,6 @@
 		92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */; };
 		92A3624821519BF800B7B33B /* ShuttleTrackeriOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3624721519BF800B7B33B /* ShuttleTrackeriOSTests.swift */; };
 		92A3625321519BF800B7B33B /* ShuttleTrackeriOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */; };
-		92ECF4A62195C933008E320E /* East.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92ECF4A52195C933008E320E /* East.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +79,6 @@
 		92A3624E21519BF800B7B33B /* ShuttleTrackeriOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShuttleTrackeriOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3625221519BF800B7B33B /* ShuttleTrackeriOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleTrackeriOSUITests.swift; sourceTree = "<group>"; };
 		92A3625421519BF800B7B33B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92ECF4A52195C933008E320E /* East.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = East.pdf; path = ../../../Downloads/East.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +156,6 @@
 			children = (
 				92A3623221519BF700B7B33B /* AppDelegate.swift */,
 				92A3623421519BF700B7B33B /* ViewController.swift */,
-				92ECF4A52195C933008E320E /* East.pdf */,
 				92A3623621519BF700B7B33B /* Main.storyboard */,
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
@@ -292,7 +289,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92ECF4A62195C933008E320E /* East.pdf in Resources */,
 				92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */,
 				92A3623A21519BF800B7B33B /* Assets.xcassets in Resources */,
 				92A3623821519BF700B7B33B /* Main.storyboard in Resources */,
