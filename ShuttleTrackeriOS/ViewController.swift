@@ -30,13 +30,15 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var eastline: CustomPolyline!
     var westline: CustomPolyline!
     
+    //testing
+    var source: MGLShapeSource!
     // Check whether a route has been added
     var addedRoutes: [String:CustomPolyline] = [:]
     
     //var timer = Timer()
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
-
+    
     @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -89,13 +91,22 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         parsingData(routes: routes)
         
-        //responsible for displaying the schedule PDF
-//        let pdf = Bundle.main.url(forResource: "East", withExtension: "pdf", subdirectory:nil, localization: nil)
-//        let req = URLRequest(url:pdf!)
-//        displaySchedule.load(req as URLRequest)
-//        displaySchedule.isHidden=true
+        
+        
+        //        let marker = MGLPointAnnotation();
+        //        marker.coordinate=CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788);
+        //        marker.title="testing";
+        //        mapView.addAnnotation(marker);
+        
+        //        var timer = Timer();
+        //        timer.invalidate();
+        //        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateURL), userInfo: nil, repeats: true)
+        
         
     }
+    //    @objc func updateURL(){
+    //        source.url=source.url;
+    //    }
     // Wait until the map is loaded before adding to the map.
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         displayRoute()
@@ -103,21 +114,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
     
     
-    //button interaction to actually show the schedule
-//    @IBAction func showSchedule(_ sender: Any) {
-//        if(displaySchedule.isHidden){
-//            displaySchedule.isHidden=false
-//            let offset = CGPoint(x:-100 as CGFloat, y: -100 as CGFloat)
-//            displaySchedule.scrollView.setContentOffset(offset, animated: true)
-//            displaySchedule.scrollView.setZoomScale(1.5, animated: true)
-//
-//        }
-//        else{
-//            displaySchedule.isHidden=true
-//        }
-//
-//        view.bringSubviewToFront(Schedules)
-//    }
     
     // Display routes
     func displayRoute(){
@@ -143,7 +139,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             mapView.addAnnotation(point)
         }
     }
-
+    
     // Parsing longitude and latitude of points into a list
     func parsingData(routes: [Route]){
         for route in routes{
@@ -157,6 +153,31 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         westCoordinates = parsedRoutes["West Campus"]!
     }
     
+    
+    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
+        
+        if let url = URL(string: "https://wanderdrone.appspot.com/") {
+            // Add a source to the map. https://wanderdrone.appspot.com/ generates coordinates for simulated paths.
+            source = MGLShapeSource(identifier: "wanderdrone", url: url, options: nil)
+            style.addSource(source)
+            
+            // Add a Maki icon to the map to represent the drone's coordinate. The specified icon is included in the Mapbox Dark style's sprite sheet. For more information about Maki icons, see https://www.mapbox.com/maki-icons/
+            let droneLayer = MGLSymbolStyleLayer(identifier: "wanderdrone", source: source)
+            droneLayer.iconImageName = NSExpression(forConstantValue: "rocket-15")
+            droneLayer.iconHaloColor = NSExpression(forConstantValue: UIColor.white)
+            style.addLayer(droneLayer)
+            var timer = Timer();
+            // Create a timer that calls the `updateUrl` function every 1.5 seconds.
+            timer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateURL), userInfo: nil, repeats: true)
+            
+            
+        }
+    }
+    @objc func updateURL(){
+        source.url=source.url
+        
+    }
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
         if let annotation = annotation as? CustomPolyline {
