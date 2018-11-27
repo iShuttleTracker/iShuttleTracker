@@ -31,11 +31,6 @@ class CustomVehicleAnnotation: MGLPointAnnotation{
     }
 }
 
-// Customize polyline
-class CustomPolyline: MGLPolyline {
-    var color: UIColor?
-}
-
 // Customize UIImage
 func dot(size: Int, color: UIColor) -> UIImage {
     let floatSize = CGFloat(size)
