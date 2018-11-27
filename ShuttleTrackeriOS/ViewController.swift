@@ -26,13 +26,9 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var lateNightCoordinates: [CLLocationCoordinate2D]!
     var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
     
-    // Display
-    var eastline: CustomPolyline!
-    var westline: CustomPolyline!
-    
     //testing
     var source: MGLShapeSource!
-    var contourLayer: [String: MGLStyleLayer?] = [:]
+    var routeLayer: [String: MGLStyleLayer?] = [:]
     
     //var timer = Timer()
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
@@ -78,6 +74,17 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
         
+        displayStops(stops: stops)
+        
+        let eastColor = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
+        let westColor = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
+        
+        initRoute(to: style, name: "east", coordinates: eastCoordinates, color: eastColor)
+        initRoute(to: style, name: "west", coordinates: westCoordinates, color: westColor)
+        initRoute(to: style, name: "lateNight", coordinates: lateNightCoordinates, color: UIColor.purple)
+        
+        displayRoutes()
+        
         
         //get the updates at the time
         var updates = initUpdates()
@@ -106,14 +113,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
         
         
-        let eastColor = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
-        let westColor = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
-        
-        displayRoute(to: style, name: "east", coordinates: eastCoordinates, color: eastColor)
-        displayRoute(to: style, name: "west", coordinates: westCoordinates, color: westColor)
-        //displayRoute(to: style, name: "lateNight", coordinates: lateNightCoordinates, color: UIColor.purple)
-        
-        displayStops(stops: stops)
         
         //create a timer to auto refresh
         var timer = Timer();
@@ -129,10 +128,16 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     //    @objc func updateURL(){
     //        source.url=source.url;
     //    }
-    // Wait until the map is loaded before adding to the map.
     
-    // Display routes
-    func displayRoute(to style: MGLStyle, name: String, coordinates: [CLLocationCoordinate2D], color: UIColor){
+    func displayRoutes(){
+        showRoute(name: "east")
+        showRoute(name: "west")
+        
+        // TODO: Show or Hide lateNight based on time
+        hideRoute(name: "lateNight")
+    }
+    
+    func initRoute(to style: MGLStyle, name: String, coordinates: [CLLocationCoordinate2D], color: UIColor){
         let route = MGLPolyline(coordinates: coordinates, count: UInt(coordinates.count))
         let routeSource = MGLShapeSource(identifier: name, shape: route, options: nil)
         let layer = MGLLineStyleLayer(identifier: name, source: routeSource)
@@ -141,21 +146,24 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         layer.lineJoin = NSExpression(forConstantValue: "round")
         layer.lineCap = NSExpression(forConstantValue: "round")
         layer.lineColor = NSExpression(forConstantValue: color)
-        layer.lineWidth = NSExpression(forConstantValue: 3.0)
+        layer.lineWidth = NSExpression(forConstantValue: 4.5)
         
         style.addSource(routeSource)
         style.addLayer(layer)
         
-        self.contourLayer[name] = layer
-        showRoute(name: name)
+        self.routeLayer[name] = layer
     }
     
     func showRoute(name: String){
-        self.contourLayer[name]??.isVisible = true
+        if let _ = routeLayer[name]{
+            self.routeLayer[name]??.isVisible = true
+        }
     }
     
     func hideRoute(name: String){
-        self.contourLayer[name]??.isVisible = false
+        if let _ = routeLayer[name]{
+            self.routeLayer[name]??.isVisible = false
+        }
     }
     
     // Display stops
@@ -190,7 +198,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("Initialized \(updates.count) updates")
         print("Initialized \(stops.count) stops")
         print("Initialized \(routes.count) routes")
-        
         parsingData(routes: routes)
     }
     
@@ -235,13 +242,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
 //        }
     }
     
-    func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
-        if let annotation = annotation as? CustomPolyline {
-            return annotation.color ?? .purple
-        }
-        return mapView.tintColor
-    }
-    
     
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         return nil
@@ -264,10 +264,5 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
         
         return nil
-    }
-    
-    func mapView(_ mapView: MGLMapView, lineWidthForPolylineAnnotation annotation: MGLPolyline) -> CGFloat {
-        // Set the line width for polyline annotations
-        return 4.5
     }
 }
