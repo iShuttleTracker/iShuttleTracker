@@ -156,15 +156,26 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
         
+        //get the updates at the time
+        var updates = initUpdates()
+        //geoJSON dictionary of point, fetch from updates
+        
         if let url = URL(string: "https://wanderdrone.appspot.com/") {
+            
+            var test_coords = CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788)
+            let ann = MGLPointAnnotation();
+            ann.coordinate=test_coords;
+            
             // Add a source to the map. https://wanderdrone.appspot.com/ generates coordinates for simulated paths.
-            source = MGLShapeSource(identifier: "wanderdrone", url: url, options: nil)
+            source = MGLShapeSource(identifier: "shuttleTest", shape: ann, options: nil);
+            
+            
             style.addSource(source)
             
             // Add a Maki icon to the map to represent the drone's coordinate. The specified icon is included in the Mapbox Dark style's sprite sheet. For more information about Maki icons, see https://www.mapbox.com/maki-icons/
             let droneLayer = MGLSymbolStyleLayer(identifier: "wanderdrone", source: source)
-            droneLayer.iconImageName = NSExpression(forConstantValue: "rocket-15")
-            droneLayer.iconHaloColor = NSExpression(forConstantValue: UIColor.white)
+            droneLayer.iconImageName = NSExpression(forConstantValue: "bus-15")
+            droneLayer.iconHaloColor = NSExpression(forConstantValue: UIColor.red)
             style.addLayer(droneLayer)
             var timer = Timer();
             // Create a timer that calls the `updateUrl` function every 1.5 seconds.
@@ -175,7 +186,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         }
     }
     @objc func updateURL(){
-        source.url=source.url
+//        source.url=source.url
         
     }
     
