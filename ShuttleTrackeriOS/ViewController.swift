@@ -84,23 +84,23 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         displayRoutes()
         
         //for all the vehicles
-        for (id, vehicle) in vehicles {
+        for update in updates {
             
             //create a coordinate object
-            let temp_coords = CLLocationCoordinate2D(latitude:vehicle.last_update.latitude,longitude:vehicle.last_update.longitude);
+            let temp_coords = CLLocationCoordinate2D(latitude:update.latitude,longitude:update.longitude);
             
             //create a MGLShape
             let p = MGLPointAnnotation();
             p.coordinate=temp_coords;
             
             //MGLShapeSource with the annotation
-            source = MGLShapeSource(identifier: String(vehicle.last_update.id), shape: p, options: nil);
+            source = MGLShapeSource(identifier: String(update.id), shape: p, options: nil);
             
             //add the point to the style layer
             style.addSource(source)
             
             //attach a picture to the point
-            let picture = MGLSymbolStyleLayer(identifier:String(vehicle.last_update.id),source:source);
+            let picture = MGLSymbolStyleLayer(identifier:String(update.id),source:source);
             picture.iconImageName=NSExpression(forConstantValue: "bus-15");
             style.addLayer(picture);
             

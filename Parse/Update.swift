@@ -6,6 +6,8 @@
 //  Copyright © 2018 WTG. All rights reserved.
 //
 
+var updates: [Update] = []
+
 import Foundation
 
 struct Update {
@@ -123,5 +125,6 @@ func initUpdates() {
         let update = Update(json:unique as! NSDictionary)
         print(update!)
         vehicles[update!.vehicle_id]!.update(update: update!)
+        updates.append(update!)
     }
 }
