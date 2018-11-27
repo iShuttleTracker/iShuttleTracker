@@ -58,7 +58,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        getInfo()
+        parsingData(routes: routes)
         
         //        let marker = MGLPointAnnotation();
         //        marker.coordinate=CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788);
@@ -192,17 +192,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         westCoordinates = parsedRoutes["West Campus"]!
         lateNightCoordinates = parsedRoutes["Weekend/Late Night"]!
     }
-    
-    func getInfo(){
-        print("Initialized \(vehicles.count) vehicles")
-        print("Initialized \(updates.count) updates")
-        print("Initialized \(stops.count) stops")
-        print("Initialized \(routes.count) routes")
-        parsingData(routes: routes)
-    }
-    
-    
-
     
     //repeted function calls to update vehicles on layer
     @objc func updatePositions(){
