@@ -20,6 +20,7 @@ struct Update {
     var created = ""
     var vehicle_id = 0
     var route_id = 0
+    var route = Route()!
     
     /**
      Default constructor.
@@ -55,6 +56,7 @@ struct Update {
             case "route_id":
                 if let id = value as? Int {
                     self.route_id = id
+                    self.route = routes[id]!
                 } else {
                     self.route_id = -1
                 }
@@ -112,18 +114,14 @@ func fetchUpdates() -> Data {
 
 /**
  Initializes updates fetched from fetchUpdates().
- - Returns: An array of initialized Updates
  */
-func initUpdates() -> [Update] {
-    var updates:[Update] = []
+func initUpdates() {
     let data = fetchUpdates()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
         print("Creating new update...")
         let update = Update(json:unique as! NSDictionary)
         print(update!)
-        updates.append(update!)
+        vehicles[update!.vehicle_id]!.update(update: update!)
     }
-    
-    return updates
 }
