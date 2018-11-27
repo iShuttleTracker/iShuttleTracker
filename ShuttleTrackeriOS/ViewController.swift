@@ -158,36 +158,77 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         //get the updates at the time
         var updates = initUpdates()
-        //geoJSON dictionary of point, fetch from updates
-        
-        if let url = URL(string: "https://wanderdrone.appspot.com/") {
-            
-            var test_coords = CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788)
-            let ann = MGLPointAnnotation();
-            ann.coordinate=test_coords;
-            
-            // Add a source to the map. https://wanderdrone.appspot.com/ generates coordinates for simulated paths.
-            source = MGLShapeSource(identifier: "shuttleTest", shape: ann, options: nil);
-            
-            
+
+        //for all the vehicles
+        for i in 0...updates.count-1{
+
+            //create a coordinate object
+            let temp_coords = CLLocationCoordinate2D(latitude:updates[i].latitude,longitude:updates[i].longitude);
+
+            //create a MGLShape
+            let p = MGLPointAnnotation();
+            p.coordinate=temp_coords;
+
+            //MGLShapeSource with the annotation
+            source = MGLShapeSource(identifier: String(updates[i].id), shape: p, options: nil);
+
+            //add the point to the style layer
             style.addSource(source)
-            
-            // Add a Maki icon to the map to represent the drone's coordinate. The specified icon is included in the Mapbox Dark style's sprite sheet. For more information about Maki icons, see https://www.mapbox.com/maki-icons/
-            let droneLayer = MGLSymbolStyleLayer(identifier: "wanderdrone", source: source)
-            droneLayer.iconImageName = NSExpression(forConstantValue: "bus-15")
-            droneLayer.iconHaloColor = NSExpression(forConstantValue: UIColor.red)
-            style.addLayer(droneLayer)
-            var timer = Timer();
-            // Create a timer that calls the `updateUrl` function every 1.5 seconds.
-            timer.invalidate()
-            timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateURL), userInfo: nil, repeats: true)
-            
-            
+
+            //attach a picture to the point
+            let picture = MGLSymbolStyleLayer(identifier:String(updates[i].id),source:source);
+            picture.iconImageName=NSExpression(forConstantValue: "bus-15");
+            style.addLayer(picture);
+
         }
-    }
-    @objc func updateURL(){
-//        source.url=source.url
         
+        //create a timer to auto refresh
+        var timer = Timer();
+        
+        //TODO
+        //put on separate thread?
+        timer.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updatePositions), userInfo: nil, repeats: true)
+            
+        
+    }
+    
+    //repeted function calls to update vehicles on layer
+    @objc func updatePositions(){
+        
+        //TODO
+        //CLEAR style LAYERS?
+        //THREAD FAULT BECAUSE OVERWRITING LAYER ALREADY THERE?
+        
+        
+//        let style = mapView.style!;
+//        print("THE LAYERS")
+//        print(style.layers)
+//        //get the updates at the time
+//        var updates = initUpdates()
+//
+//        //for all the vehicles
+//        for i in 0...updates.count-1{
+//
+//            //create a coordinate object
+//            let temp_coords = CLLocationCoordinate2D(latitude:updates[i].latitude,longitude:updates[i].longitude);
+//
+//            //create a MGLShape
+//            let p = MGLPointAnnotation();
+//            p.coordinate=temp_coords;
+//
+//            //MGLShapeSource with the annotation
+//            source = MGLShapeSource(identifier: String(updates[i].id), shape: p, options: nil);
+//
+//            //add the point to the style layer
+//            style.addSource(source)
+//
+//            //attach a picture to the point
+//            let picture = MGLSymbolStyleLayer(identifier:String(updates[i].id),source:source);
+//            picture.iconImageName=NSExpression(forConstantValue: "bus-15");
+//            style.addLayer(picture);
+//
+//        }
     }
     
     func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
