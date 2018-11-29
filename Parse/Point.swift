@@ -8,8 +8,6 @@
 
 import Foundation
 
-var points: [Point] = []
-
 struct Point: Equatable {
 
     var latitude: Double

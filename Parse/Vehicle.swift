@@ -56,18 +56,6 @@ struct Vehicle {
     }
     
     /**
-     Attempts to update the Vehicle.
-     - Parameter updates: An array of Updates that may contain an Update for this Vehicle.
-     */
-    mutating func updateFrom(updates: [Update]) {
-        for u in updates {
-            if u.vehicle_id == id {
-                update(update: u)
-            }
-        }
-    }
-    
-    /**
      Estimates the current position of this Vehicle based on the previous Updates received.
      - Returns: A Point corresponding to the current estimated position for this Vehicle.
      */
