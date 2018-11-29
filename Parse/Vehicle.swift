@@ -72,7 +72,7 @@ struct Vehicle {
      - Returns: A Point corresponding to the current estimated position for this Vehicle.
      */
     func estimateCurrentPosition() -> Point {
-        let feet_per_second = (last_update.speed / 60) * 5280 // TODO: Assumes speed is in mph; could be km/h
+        let feet_per_second = (last_update.speed / 3600) * 5280
         let distance = feet_per_second * secondsSince(update: last_update) // In feet
         let start = Point(update: last_update)
         var startIndex = 0

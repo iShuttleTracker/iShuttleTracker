@@ -24,7 +24,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var source: MGLShapeSource!
     var routeLayer: [String: MGLStyleLayer?] = [:]
     
-    //var updateTimer = Timer()
+    var updateTimer = Timer()
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
     
@@ -67,7 +67,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         //        var timer = Timer();
         //        timer.invalidate();
-        //updateTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        updateTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
