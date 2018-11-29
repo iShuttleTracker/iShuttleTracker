@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Point: Equatable {
 
@@ -34,14 +35,12 @@ struct Point: Equatable {
     
     /**
      Approximates the distance between two points.
-     - Returns: An approximation of the distance between two points, in feet.
+     - Returns: The distance between two points, in meters.
      */
     func distanceFrom(p: Point) -> Double {
-        let pi = 0.017453292519943295;    // pi / 180
-        let a = 0.5 - cos((p.latitude - latitude) * pi)/2 +
-            cos(latitude * pi) * cos(p.latitude * pi) *
-            (1 - cos((p.longitude - longitude) * pi))/2;
-        return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
+        let startLocation = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let endLocation = CLLocation(latitude: p.latitude, longitude: p.longitude)
+        return startLocation.distance(from: endLocation)
     }
 
 }
