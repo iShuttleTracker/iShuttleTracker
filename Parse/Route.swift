@@ -101,15 +101,6 @@ extension Route:CustomStringConvertible {
 }
 
 /**
- Checks whether or not the Route data should be refreshed from shuttles.rpi.edu/routes.
- - Returns: Whether or not the Route data should be refreshed.
- */
-func shouldRefreshRoutes() -> Bool {
-    // TODO
-    return false
-}
-
-/**
  Fetches route data from shuttles.rpi.edu/routes and writes it to
  routes.json in the application's documents directory.
  - Returns: A String containing the raw JSON data fetched

@@ -66,15 +66,6 @@ extension Stop: CustomStringConvertible {
 }
 
 /**
- Checks whether or not the Stop data should be refreshed from shuttles.rpi.edu/stops.
- - Returns: Whether or not the Stop data should be refreshed.
- */
-func shouldRefreshStops() -> Bool {
-    // TODO
-    return false
-}
-
-/**
  Fetches stop data from shuttles.rpi.edu/stops and writes it to
  stops.json in the application's documents directory.
  - Returns: A String containing the raw JSON data fetched
