@@ -19,6 +19,7 @@ struct Vehicle {
     var enabled = false
     var tracker_id = ""
     var last_update = Update()!
+    var closest_point_index = 0
     
     /**
      Initializes a new Vehicle.
@@ -53,6 +54,22 @@ struct Vehicle {
      */
     mutating func update(update: Update) {
         last_update = update
+        let start = Point(update: last_update)
+        var minIndex = 0
+        var minDistance = 0.0
+        for i in 0..<last_update.route.points.count {
+            if last_update.route.points[i] == start {
+                minIndex = i
+                break
+            } else {
+                let distance = last_update.route.points[i].distanceFrom(p: start)
+                if distance < minDistance {
+                    minIndex = i
+                    minDistance = distance
+                }
+            }
+        }
+        closest_point_index = minIndex
     }
     
     /**
@@ -62,27 +79,22 @@ struct Vehicle {
     func estimateCurrentPosition() -> Point {
         // 0.621371192 is the same constant used in the web app to initially convert from
         // KM/H to MPH when pulling from the data feed, so we're not losing any precision
-        let meters_per_second = (last_update.speed / 0.621371192) / 3.6
-        let distance = meters_per_second * secondsSince(update: last_update)
+        let metersPerSecond = (last_update.speed / 0.621371192) / 3.6
+        // predictedDistance presents the distance that the shuttle would have traveled since
+        // the last update if its speed remained the same
+        let predictedDistance = metersPerSecond * secondsSince(update: last_update)
+        // start represents the closest point in the route to the the vehicle's actual position
         let start = Point(update: last_update)
-        var startIndex = 0
-        for i in 0..<last_update.route.points.count {
-            if last_update.route.points[i] == start {
-                startIndex = i
-                break
-            }
-        }
         var elapsedDistance = 0.0
-        var endPoint = start
-        for i in startIndex..<last_update.route.points.count {
-            elapsedDistance += start.distanceFrom(p: last_update.route.points[i])
-            if elapsedDistance > distance {
-                // TODO: Determine intermediate points based on excess distance
-                endPoint = last_update.route.points[i]
-                break
+        var index = closest_point_index
+        while elapsedDistance < predictedDistance {
+            elapsedDistance += start.distanceFrom(p: last_update.route.points[index])
+            index += 1
+            if index >= last_update.route.points.count {
+                index = 0
             }
         }
-        return endPoint
+        return last_update.route.points[index]
     }
     
     /**

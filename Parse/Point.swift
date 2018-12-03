@@ -15,6 +15,15 @@ struct Point: Equatable {
     var longitude: Double
     
     /**
+     Default constructor.
+     - Returns: A new Point with default values
+     */
+    init?() {
+        latitude = 0.0
+        longitude = 0.0
+    }
+    
+    /**
      Initializes a new Point from latitude and longitude values.
      - Returns: A new Point with the specified latitude and longitude
      */
