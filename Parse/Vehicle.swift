@@ -8,6 +8,8 @@
 
 import Foundation
 
+var vehicles: [Int:Vehicle] = [:]
+
 struct Vehicle {
     
     var id = 0
@@ -17,6 +19,7 @@ struct Vehicle {
     var enabled = false
     var tracker_id = ""
     var last_update = Update()!
+    var closest_point_index = 0
     
     /**
      Initializes a new Vehicle.
@@ -51,18 +54,47 @@ struct Vehicle {
      */
     mutating func update(update: Update) {
         last_update = update
+        let start = Point(update: last_update)
+        var minIndex = 0
+        var minDistance = 0.0
+        for i in 0..<last_update.route.points.count {
+            if last_update.route.points[i] == start {
+                minIndex = i
+                break
+            } else {
+                let distance = last_update.route.points[i].distanceFrom(p: start)
+                if distance < minDistance {
+                    minIndex = i
+                    minDistance = distance
+                }
+            }
+        }
+        closest_point_index = minIndex
     }
     
     /**
-     Attempts to update the Vehicle.
-     - Parameter updates: An array of Updates that may contain an Update for this Vehicle.
+     Estimates the current position of this Vehicle based on the previous Updates received.
+     - Returns: A Point corresponding to the current estimated position for this Vehicle.
      */
-    mutating func updateFrom(updates: [Update]) {
-        for u in updates {
-            if u.vehicle_id == id {
-                update(update: u)
+    func estimateCurrentPosition() -> Point {
+        // 0.621371192 is the same constant used in the web app to initially convert from
+        // KM/H to MPH when pulling from the data feed, so we're not losing any precision
+        let metersPerSecond = (last_update.speed / 0.621371192) / 3.6
+        // predictedDistance presents the distance that the shuttle would have traveled since
+        // the last update if its speed remained the same
+        let predictedDistance = metersPerSecond * secondsSince(update: last_update)
+        // start represents the closest point in the route to the the vehicle's actual position
+        let start = Point(update: last_update)
+        var elapsedDistance = 0.0
+        var index = closest_point_index
+        while elapsedDistance < predictedDistance {
+            elapsedDistance += start.distanceFrom(p: last_update.route.points[index])
+            index += 1
+            if index >= last_update.route.points.count {
+                index = 0
             }
         }
+        return last_update.route.points[index]
     }
     
     /**
@@ -71,6 +103,28 @@ struct Vehicle {
      */
     func getRotation() -> Int {
         return last_update.heading - 45;
+    }
+    
+    /**
+     Converts a time represented by a String to a Date.
+     - Parameter time: The time to convert, in the form "yyyy-MM-dd'T'HH:mm:ss.ZZZZZZ'Z'".
+     - Returns: A Date object representing the given String time, or nil if the String does not represent
+     a properly formatted time.
+     */
+    func convertTime(time: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.ZZZZZZ'Z'"
+        return formatter.date(from: time)
+    }
+    
+    /**
+     Returns the amount of time that has passed since the given Update was received.
+     - Parameter update: The update to return the time since.
+     - Returns: A TimeInterval (Double) representing the amount of time in seconds since the update
+     was received.
+     */
+    func secondsSince(update: Update) -> TimeInterval {
+        return convertTime(time: update.time)!.timeIntervalSinceNow
     }
     
 }
@@ -114,18 +168,14 @@ func fetchVehicles() -> Data {
 
 /**
  Initializes vehicles fetched from fetchVehicles().
- - Returns: An array of initialized Vehicles
  */
-func initVehicles() -> [Vehicle] {
-    var vehicles:[Vehicle] = []
+func initVehicles() {
     let data = fetchVehicles()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
         print("Creating new vehicle...")
         let vehicle = Vehicle(json:unique as! NSDictionary)
         print(vehicle!)
-        vehicles.append(vehicle!)
+        vehicles[vehicle!.id] = vehicle
     }
-    
-    return vehicles
 }

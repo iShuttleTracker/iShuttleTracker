@@ -8,6 +8,8 @@
 
 import Foundation
 
+var routes: [Int:Route] = [:]
+
 struct Route {
     
     var color = ""
@@ -20,6 +22,13 @@ struct Route {
     var stop_ids: [Int] = []
     var updated = ""
     var width = 0
+    var stops: [Int:Stop] = [:]
+    
+    /**
+     Default constructor.
+     - Returns: A new Route with default values
+     */
+    init?() {}
     
     /**
      Initializes a new Route.
@@ -73,9 +82,6 @@ struct Route {
         self.points = pointsList
         print("Finished JSON initialization for route \(self.id)")
     }
-    
-
-    
 }
 extension Route:CustomStringConvertible {
     var description: String {
@@ -125,10 +131,8 @@ func fetchRoutes() -> String {
 /**
  Initializes routes from routes.json if it exists, otherwise will
  call fetchRoutes() fetch route data and writes it to routes.json.
- - Returns: An array of initialized Routes
  */
-func initRoutes() -> [Route] {
-    var routes:[Route] = []
+func initRoutes() {
     let file = "routes.json"
     let dataString = !fileExists(filename: file) ? fetchRoutes() : readJSON(filename: file)
     let data = dataString.data(using: .utf8)!
@@ -137,8 +141,6 @@ func initRoutes() -> [Route] {
         print("Creating new route...")
         let route = Route(json:unique as! NSDictionary)
         print(route!)
-        routes.append(route!)
+        routes[route!.id] = route!
     }
-    
-    return routes
 }

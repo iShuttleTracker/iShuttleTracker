@@ -7,19 +7,49 @@
 //
 
 import Foundation
+import CoreLocation
 
-struct Point {
+struct Point: Equatable {
 
     var latitude: Double
     var longitude: Double
     
     /**
-     Initializes a new Point.
+     Default constructor.
+     - Returns: A new Point with default values
+     */
+    init?() {
+        latitude = 0.0
+        longitude = 0.0
+    }
+    
+    /**
+     Initializes a new Point from latitude and longitude values.
      - Returns: A new Point with the specified latitude and longitude
      */
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
+    }
+    
+    /**
+     Initializes a new Point from an Update.
+     - Returns: A new Point with the latitude and longitude values from the
+     specified Update.
+     */
+    init(update: Update) {
+        self.latitude = update.latitude
+        self.longitude = update.longitude
+    }
+    
+    /**
+     Approximates the distance between two points.
+     - Returns: The distance between two points, in meters.
+     */
+    func distanceFrom(p: Point) -> Double {
+        let startLocation = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let endLocation = CLLocation(latitude: p.latitude, longitude: p.longitude)
+        return startLocation.distance(from: endLocation)
     }
 
 }

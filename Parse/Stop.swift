@@ -8,6 +8,8 @@
 
 import Foundation
 
+var stops: [Int:Stop] = [:]
+
 struct Stop {
     
     var id = 0
@@ -91,16 +93,11 @@ func fetchStops() -> String {
     return stopsData
 }
 
-// Initializes stops from stops.json if it exists, otherwise will
-// fetch stop data and write it to stops.json before returning an
-// array of the stops.
 /**
  Initializes stops from stops.json if it exists, otherwise will
  call fetchStops() fetch stop data and writes it to stops.json.
- - Returns: An array of initialized Stops
  */
-func initStops() -> [Stop] {
-    var stops:[Stop] = []
+func initStops() {
     let file = "stops.json"
     let dataString = !fileExists(filename: file) ? fetchStops() : readJSON(filename: file)
     let data = dataString.data(using: .utf8)!
@@ -109,9 +106,12 @@ func initStops() -> [Stop] {
         print("Creating new stop...")
         let stop = Stop(json:unique as! NSDictionary)
         print(stop!)
-        stops.append(stop!)
+        for (id, route) in routes {
+            if route.stop_ids.contains(stop!.id) {
+                routes[id]!.stops[stop!.id] = stop
+            }
+        }
+        stops[stop!.id] = stop
     }
-    
-    return stops
 }
 

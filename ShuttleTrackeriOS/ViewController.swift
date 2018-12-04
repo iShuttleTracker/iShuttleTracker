@@ -14,12 +14,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
     
-    // Get shuttle tracker info
-    let vehicles = initVehicles()
-    let updates = initUpdates()
-    let stops = initStops()
-    let routes = initRoutes()
-    
     // Store info
     var eastCoordinates: [CLLocationCoordinate2D]!
     var westCoordinates: [CLLocationCoordinate2D]!
@@ -30,7 +24,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var source: MGLShapeSource!
     var routeLayer: [String: MGLStyleLayer?] = [:]
     
-    //var timer = Timer()
+    var updateTimer = Timer()
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
     
@@ -58,7 +52,13 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.showsUserLocation = true
         mapView.delegate = self
         
-        parsingData(routes: routes)
+        // Stops before routes, routes before updates, vehicles before updates
+        initStops()
+        initRoutes()
+        initVehicles()
+        initUpdates()
+        
+        parsingData()
         
         //        let marker = MGLPointAnnotation();
         //        marker.coordinate=CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788);
@@ -67,14 +67,12 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         //        var timer = Timer();
         //        timer.invalidate();
-        //        timer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(updateURL), userInfo: nil, repeats: true)
-        
-        
+        updateTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
         
-        displayStops(stops: stops)
+        displayStops()
         
         let eastColor = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
         let westColor = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
@@ -85,28 +83,24 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
         displayRoutes()
         
-        
-        //get the updates at the time
-        var updates = initUpdates()
-        
         //for all the vehicles
-        for i in 0...updates.count-1{
+        for update in updates {
             
             //create a coordinate object
-            let temp_coords = CLLocationCoordinate2D(latitude:updates[i].latitude,longitude:updates[i].longitude);
+            let temp_coords = CLLocationCoordinate2D(latitude:update.latitude,longitude:update.longitude);
             
             //create a MGLShape
             let p = MGLPointAnnotation();
             p.coordinate=temp_coords;
             
             //MGLShapeSource with the annotation
-            source = MGLShapeSource(identifier: String(updates[i].id), shape: p, options: nil);
+            source = MGLShapeSource(identifier: String(update.id), shape: p, options: nil);
             
             //add the point to the style layer
             style.addSource(source)
             
             //attach a picture to the point
-            let picture = MGLSymbolStyleLayer(identifier:String(updates[i].id),source:source);
+            let picture = MGLSymbolStyleLayer(identifier:String(update.id),source:source);
             picture.iconImageName=NSExpression(forConstantValue: "bus-15");
             style.addLayer(picture);
             
@@ -123,6 +117,10 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updatePositions), userInfo: nil, repeats: true)
         
         
+    }
+    
+    @objc func update() {
+        initUpdates()
     }
     
     //    @objc func updateURL(){
@@ -167,9 +165,9 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
     
     // Display stops
-    func displayStops(stops: [Stop]){
+    func displayStops(){
         var count = 0
-        for stop in stops{
+        for (id, stop) in stops{
             count += 1
             let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
             let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
@@ -180,8 +178,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
     
     // Parsing longitude and latitude of points into a list
-    func parsingData(routes: [Route]){
-        for route in routes{
+    func parsingData(){
+        for (id, route) in routes{
             var pointArr: [CLLocationCoordinate2D] = []
             for point in route.points{
                 pointArr.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
