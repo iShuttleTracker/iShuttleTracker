@@ -19,6 +19,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var westCoordinates: [CLLocationCoordinate2D]!
     var lateNightCoordinates: [CLLocationCoordinate2D]!
     var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
+    var shuttles: [MGLShapeSource]!
     
     //testing
     var source: MGLShapeSource!
@@ -98,6 +99,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
             
             //add the point to the style layer
             style.addSource(source)
+//            shuttles.append(source);
             
             //attach a picture to the point
             let picture = MGLSymbolStyleLayer(identifier:String(update.id),source:source);
@@ -120,7 +122,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     }
     
     @objc func update() {
-        initUpdates()
+//        initUpdates()
     }
     
     //    @objc func updateURL(){
@@ -193,40 +195,14 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     
     //repeted function calls to update vehicles on layer
     @objc func updatePositions(){
+        print("updating");
+        initUpdates();
         
-        //TODO
-        //CLEAR style LAYERS?
-        //THREAD FAULT BECAUSE OVERWRITING LAYER ALREADY THERE?
-        
-        
-//        let style = mapView.style!;
-//        print("THE LAYERS")
-//        print(style.layers)
-//        //get the updates at the time
-//        var updates = initUpdates()
-//
-//        //for all the vehicles
-//        for i in 0...updates.count-1{
-//
-//            //create a coordinate object
-//            let temp_coords = CLLocationCoordinate2D(latitude:updates[i].latitude,longitude:updates[i].longitude);
-//
-//            //create a MGLShape
-//            let p = MGLPointAnnotation();
-//            p.coordinate=temp_coords;
-//
-//            //MGLShapeSource with the annotation
-//            source = MGLShapeSource(identifier: String(updates[i].id), shape: p, options: nil);
-//
-//            //add the point to the style layer
-//            style.addSource(source)
-//
-//            //attach a picture to the point
-//            let picture = MGLSymbolStyleLayer(identifier:String(updates[i].id),source:source);
-//            picture.iconImageName=NSExpression(forConstantValue: "bus-15");
-//            style.addLayer(picture);
-//
+//        let s = mapView.style?.sources;
+//        for vehicle_pos in s!{
+//            print(vehicle_pos.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>))
 //        }
+        
     }
     
     
