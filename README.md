@@ -14,6 +14,7 @@ Native iOS app of the on campus shuttle tracker (shuttles.rpi.edu)
 
 ### Additions:
 - [ ] Deployed onto a device for testing/ loaded onto the App Store
+- [ ] Arrow shuttle icons in direction of movement (different map framework?)
 - [ ] Dynamic spreadsheet schedule 
     - [ ] Color highlighting for relevant times
 - [ ] Notifications

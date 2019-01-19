@@ -198,10 +198,10 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         print("updating");
         initUpdates();
         
-        let s = mapView.style?.sources;
-        for vehicle_pos in s!{
-            print(vehicle_pos.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>))
-        }
+//        let s = mapView.style?.sources;
+//        for vehicle_pos in s!{
+//            print(vehicle_pos.setValue(<#T##value: Any?##Any?#>, forKey: <#T##String#>))
+//        }
         
     }
     
