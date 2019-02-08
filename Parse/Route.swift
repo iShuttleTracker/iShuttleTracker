@@ -8,6 +8,12 @@
 
 import Foundation
 
+let west_id = 1
+let east_id = 2
+let weekend_late_night_id = 3
+let east_inclement_weather_id = 4
+let west_inclement_weather_id = 5
+
 var routes: [Int:Route] = [:]
 
 struct Route {
