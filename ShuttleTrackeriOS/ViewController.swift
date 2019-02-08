@@ -9,10 +9,15 @@
 import WebKit
 import UIKit
 import Mapbox
+import UserNotifications
 
-class ViewController: UIViewController, MGLMapViewDelegate {
+var lastLocation: Point? = nil // The most up-to-date location we have of the user
+
+class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var mapView: MGLMapView!
+    
+    let locationManager = CLLocationManager()
     
     // Store info
     var eastCoordinates: [CLLocationCoordinate2D]!
@@ -27,6 +32,7 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     var updateTimer = Timer()
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
+    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
     @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -47,6 +53,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        startReceivingLocationChanges()
         
         mapView.styleURL = MGLStyle.lightStyleURL
         mapView.showsUserLocation = true
@@ -119,8 +127,43 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         
     }
     
+    func startReceivingLocationChanges() {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
+            // User has not authorized access to location information.
+            return
+        }
+        // Do not start services that aren't available.
+        if !CLLocationManager.locationServicesEnabled() {
+            // Location services is not available.
+            return
+        }
+        // Configure and start the service.
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10.0  // In meters.
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
+        lastLocation = Point(coordinate: locations.last!.coordinate)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let error = error as? CLError, error.code == .denied {
+            // Location updates are not authorized.
+            manager.stopUpdatingLocation()
+            return
+        }
+        // TODO: Notify the user that some features will not be available
+    }
+    
     @objc func update() {
         initUpdates()
+        
+        // Try to send any notifications
+        tryNotifyDate()
+        tryNotifyNearby()
     }
     
     //    @objc func updateURL(){
