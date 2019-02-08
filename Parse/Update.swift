@@ -23,6 +23,7 @@ struct Update {
     var vehicle_id = 0
     var route_id = 0
     var route = Route()!
+    var point = Point()!
     
     /**
      Default constructor.
@@ -67,6 +68,7 @@ struct Update {
                 print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
+        self.point = Point(latitude: self.latitude, longitude: self.longitude)
         print("Finished JSON initialization for update \(self.id)")
     }
     
