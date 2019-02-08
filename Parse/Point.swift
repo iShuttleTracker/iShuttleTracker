@@ -43,6 +43,16 @@ struct Point: Equatable {
     }
     
     /**
+     Initializes a new Point from a CLLocationCoordinate2D.
+     - Returns: A new Point with the latitude and longitude values from the
+     specified CLLocationCoordinate2D.
+     */
+    init(coordinate: CLLocationCoordinate2D) {
+        self.latitude = coordinate.latitude
+        self.longitude = coordinate.longitude
+    }
+    
+    /**
      Approximates the distance between two points.
      - Returns: The distance between two points, in meters.
      */
