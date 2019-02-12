@@ -6,11 +6,57 @@
 //  Copyright © 2018 WTG. All rights reserved.
 //
 
-import WebKit
 import UIKit
-import Mapbox
+import MapKit
 
-class ViewController: UIViewController, MGLMapViewDelegate {
+class ViewController : UIViewController {
+
+    @IBOutlet var mapView: MKMapView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
+        let regionRadius:CLLocationDistance = 1000;
+        
+       
+        func centerMapOnLocation(location: CLLocation) {
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+        }
+        
+        centerMapOnLocation(location: initialLocation)
+        
+        displayVehicles();
+    }
+    
+    func displayVehicles(){
+        
+//      var a = MKAnn
+        
+    }
+    
+
+
+}
+
+extension ViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation{
+            return nil;
+        }
+        else{
+            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
+            annotationView.image = UIImage(named: "place icon")
+            return annotationView
+        }
+        
+    }
+}
+
+
+
+/*UIViewController, MGLMapViewDelegate {
     
     @IBOutlet var mapView: MGLMapView!
     
@@ -229,3 +275,6 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         return nil
     }
 }
+
+ 
+ */
