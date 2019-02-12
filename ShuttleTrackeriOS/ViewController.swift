@@ -12,12 +12,14 @@ import MapKit
 class ViewController : UIViewController {
 
     @IBOutlet var mapView: MKMapView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
-        let regionRadius:CLLocationDistance = 1000;
+        let regionRadius:CLLocationDistance = 2000;
         
        
         func centerMapOnLocation(location: CLLocation) {
@@ -26,14 +28,35 @@ class ViewController : UIViewController {
         }
         
         centerMapOnLocation(location: initialLocation)
+        mapView.showsUserLocation = true;
+        mapView.showsBuildings = false;
+        mapView.showsCompass = false;
+        mapView.showsTraffic = false;
+        mapView.showsPointsOfInterest = false;
         
         displayVehicles();
     }
     
     func displayVehicles(){
+        fetchVehicles();
         
 //      var a = MKAnn
         
+    }
+    
+    func requestLocationAccess() {
+        let status = CLLocationManager.authorizationStatus()
+        
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            return
+            
+        case .denied, .restricted:
+            print("location access denied")
+            
+        default:
+            CLLocationManager().requestWhenInUseAuthorization()
+        }
     }
     
 

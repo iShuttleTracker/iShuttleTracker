@@ -36,8 +36,8 @@ func writeJSON(filename: String, data: String) {
         let fileURL = dir.appendingPathComponent(filename)
         do {
             try data.write(to: fileURL, atomically: false, encoding: .utf8)
-            print("Finished writing JSON data to \(filename)")
-            print("Absolute filepath: \(fileURL)")
+//            print("Finished writing JSON data to \(filename)")
+//            print("Absolute filepath: \(fileURL)")
         } catch let error as NSError {
             print("Error writing JSON data to \(filename):")
             print(error)
@@ -57,7 +57,7 @@ func readJSON(filename: String) -> String {
         let fileURL = dir.appendingPathComponent(filename)
         do {
             let routeText = try String(contentsOf: fileURL, encoding: .utf8)
-            print("Finished reading JSON data from \(filename)")
+//            print("Finished reading JSON data from \(filename)")
             return routeText
         } catch let error as NSError {
             print("Error reading JSON data from \(filename):")

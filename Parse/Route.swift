@@ -80,7 +80,6 @@ struct Route {
         }
         // Set the points at the end
         self.points = pointsList
-        print("Finished JSON initialization for route \(self.id)")
     }
 }
 extension Route:CustomStringConvertible {
@@ -138,9 +137,7 @@ func initRoutes() {
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
-        print("Creating new route...")
         let route = Route(json:unique as! NSDictionary)
-        print(route!)
         routes[route!.id] = route!
     }
 }
