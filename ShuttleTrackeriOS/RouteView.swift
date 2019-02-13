@@ -29,6 +29,15 @@ class RouteView {
     func createStop(){
         
     }
+    
+    func enable(to mapView: MKMapView){
+        
+    }
+    
+    func disable(to mapView: MKMapView){
+        mapView.removeAnnotations(stopAnnotations!)
+        mapView.removeOverlay(routePolyLine!)
+    }
 }
 
 func initRouteView(){
