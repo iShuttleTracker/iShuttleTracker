@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
+		389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */; };
 		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
 		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
@@ -58,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
 				380F719022138EE900F35728 /* RouteView.swift */,
+				389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */,
 				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
