@@ -14,6 +14,8 @@
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A2216705BF00BBC615 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A1216705BF00BBC615 /* Update.swift */; };
 		55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataHandler.swift */; };
+		9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B48F22135E9400EBBB39 /* Shuttle.swift */; };
+		9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */; };
 		928A17AB215C0B7F00A862B2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* Route.swift */; };
 		928A17AD215C0CE800A862B2 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* Point.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
@@ -63,6 +65,8 @@
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A1216705BF00BBC615 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		9217B48F22135E9400EBBB39 /* Shuttle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuttle.swift; sourceTree = "<group>"; };
+		9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleArrow.swift; sourceTree = "<group>"; };
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		92A359F021670E0900DB3E2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
 				380EBFD4217044A9000DBB01 /* CustomSettings.swift */,
+				9217B48F22135E9400EBBB39 /* Shuttle.swift */,
+				9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -337,12 +343,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				380EBFD5217044A9000DBB01 /* CustomSettings.swift in Sources */,
+				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				55BB26A2216705BF00BBC615 /* Update.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
+				9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
 				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,
 			);

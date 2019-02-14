@@ -12,12 +12,19 @@ import MapKit
 class ViewController : UIViewController {
 
     @IBOutlet var mapView: MKMapView!
+    var currentDisplay: [Shuttle] = []
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //adding a single marker
+        let first = MKPointAnnotation()
+        first.title = "First"
+        first.coordinate = CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788);
+        mapView.addAnnotation(first)
         
+        //code to set origin of mapkit
         let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
         let regionRadius:CLLocationDistance = 2000;
         
@@ -25,22 +32,52 @@ class ViewController : UIViewController {
         func centerMapOnLocation(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             mapView.setRegion(coordinateRegion, animated: true)
+            
+            //extra settings for the map
+            mapView.showsUserLocation = true;
+            mapView.showsBuildings = false;
+            mapView.showsCompass = false;
+            mapView.showsTraffic = false;
+            mapView.showsPointsOfInterest = false;
         }
-        
         centerMapOnLocation(location: initialLocation)
-        mapView.showsUserLocation = true;
-        mapView.showsBuildings = false;
-        mapView.showsCompass = false;
-        mapView.showsTraffic = false;
-        mapView.showsPointsOfInterest = false;
+        
         
         displayVehicles();
     }
     
+    //initial call to get the first updates and display them
     func displayVehicles(){
-        fetchVehicles();
+        initStops();
+        initRoutes();
+        initVehicles();
         
-//      var a = MKAnn
+        initUpdates();
+        print("got updates");
+        for update in updates{
+            
+            let shuttle = Shuttle(title: String(update.vehicle_id), locationName: update.description, discipline: " ", coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            currentDisplay.append(shuttle);
+            mapView.addAnnotation(shuttle)
+        }
+        //code to remove all annotations
+//        mapView.removeAnnotations(mapView.annotations)
+        
+        _ = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+
+    }
+    
+    func newUpdates(){
+        
+        
+    }
+    
+    @objc func repeated(){
+     
+            
+            mapView.removeAnnotations(mapView.annotations)
+            
+        
         
     }
     
@@ -59,21 +96,32 @@ class ViewController : UIViewController {
         }
     }
     
+    func addAnnotation(){
+        mapView.delegate = self;
+        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
+//        let a = MKAnnotation(initialLocation);
+    }
+    
+    
 
 
 }
 
 extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation{
-            return nil;
-        }
-        else{
-            let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotationView") ?? MKAnnotationView()
-            annotationView.image = UIImage(named: "place icon")
-            return annotationView
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "Annotation"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+        } else {
+            annotationView!.annotation = annotation
         }
         
+        return annotationView
     }
 }
 
