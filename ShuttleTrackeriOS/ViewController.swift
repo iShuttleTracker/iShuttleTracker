@@ -63,21 +63,25 @@ class ViewController : UIViewController {
         //code to remove all annotations
 //        mapView.removeAnnotations(mapView.annotations)
         
-        _ = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
 
     }
     
     func newUpdates(){
         
-        
+        initUpdates()
+        for update in updates {
+            let shuttle = Shuttle(title: String(update.vehicle_id), locationName: update.description, discipline: " ", coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            mapView.addAnnotation(shuttle)
+        }
     }
     
     @objc func repeated(){
      
             
-            mapView.removeAnnotations(mapView.annotations)
+        mapView.removeAnnotations(mapView.annotations)
             
-        
+        newUpdates()
         
     }
     
