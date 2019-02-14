@@ -17,16 +17,24 @@ var color:[String:UIColor] = [
 ]
 
 class RouteView {
-    var name: String
-    var id: Int
-    var isEnabled: Bool
-    var routePolyLine: CustomPolyline?
-    var stopAnnotations: [MKAnnotation]?
+    private var name: String                        // "East Campus"
+    private var id: Int                             // id is the int stored in route
+    var isEnabled: Bool                     // Check if the route is displayed
+    private var routePolyLine: CustomPolyline?      // Store the polyline of current route
+    private var stopAnnotations: [MKAnnotation]?    // Store the corresponding stops
     
     init(name: String, id: Int, isEnabled: Bool){
         self.name = name
         self.id = id
         self.isEnabled = isEnabled
+    }
+    
+    func getName() -> String {
+        return name
+    }
+    
+    func getId() -> Int {
+        return id
     }
     
     func createRoute(polyline: CustomPolyline){
@@ -42,7 +50,9 @@ class RouteView {
     
     // The initial display function
     func display(to mapView: MKMapView){
-        
+        if isEnabled{
+            mapView.addOverlay(routePolyLine!)
+        }
     }
     
     // Toggling routes function

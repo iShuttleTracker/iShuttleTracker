@@ -15,18 +15,26 @@ class ViewController: UIViewController{
     
     func displayRoutes(){
         for (_, route) in routeViews {
-            if route.isEnabled{
-                mapView.addOverlay(route.routePolyLine!)
-            }
+            route.display(to: mapView)
+        }
+    }
+    
+    func displayStops(){
+        for stop in stopViews {
+            mapView.addAnnotation(stop)
         }
     }
     
     func initData(){
+        // Data
         initStops()
         initRoutes()
         initVehicles()
         initUpdates()
+        
+        // View
         initRouteView()
+        initStopView()
     }
     
     override func viewDidLoad() {
@@ -50,6 +58,7 @@ extension ViewController: MKMapViewDelegate {
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         displayRoutes()
+        displayStops()
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -61,6 +70,34 @@ extension ViewController: MKMapViewDelegate {
         }
         
         return MKOverlayRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard !(annotation is StopView) else {
+            return nil
+        }
+        
+        // Better to make this class property
+        let annotationIdentifier = "AnnotationIdentifier"
+        
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        }
+        else {
+            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView = av
+        }
+        
+        if let annotationView = annotationView {
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "circle")
+        }
+        
+        return annotationView
     }
     
 }
