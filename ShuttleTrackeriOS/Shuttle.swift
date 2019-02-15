@@ -30,8 +30,7 @@ class Shuttle : NSObject, MKAnnotation {
     }
     
     var imageName: String? {
-        if discipline == "Sculpture" { return "Statue" }
-        return "Flag"
+        return "Shuttle"
     }
 
     

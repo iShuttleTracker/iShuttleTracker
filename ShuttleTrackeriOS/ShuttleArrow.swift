@@ -13,13 +13,14 @@ class ShuttleArrow:MKAnnotationView {
     
     override var annotation: MKAnnotation? {
         willSet {
-            guard let artwork = newValue as? Shuttle else {return}
+            guard let shuttle = newValue as? Shuttle else {return}
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)
             rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
-            if let imageName = artwork.imageName {
-                image = UIImage(named: imageName)
+            //adjust later for later color
+            if let imageName = shuttle.imageName {
+                image = UIImage(named: shuttle.imageName!)
             } else {
                 image = nil
             }

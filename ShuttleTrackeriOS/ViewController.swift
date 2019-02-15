@@ -27,9 +27,12 @@ class ViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         initMapView()
         displayVehicles();
     }
+    
+  
     
     //initial call to get the first updates and display them
     func displayVehicles(){
@@ -37,12 +40,15 @@ class ViewController : UIViewController {
         initRoutes();
         initVehicles();
         
+        //uses shuttle asset instead of default marker
+        mapView.register(ShuttleArrow.self,
+                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         newUpdates();
         
-        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
-
+        //crash resposible because repeated without parameters
+        _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        
     }
-    
     //add annotations to the view
     func newUpdates(){
         
@@ -52,6 +58,7 @@ class ViewController : UIViewController {
             mapView.addAnnotation(shuttle)
         }
     }
+
     
     //the function for Timer to call
     //deletes all annotations
@@ -87,10 +94,15 @@ class ViewController : UIViewController {
         let regionRadius:CLLocationDistance = 2000;
         
         
-        func centerMapOnLocation(location: CLLocation) {
+        func initMap(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             mapView.setRegion(coordinateRegion, animated: true)
             
+            mapView.isRotateEnabled = false;
+            
+            mapView.delegate = self;
+            //sets map to be minimalistic
+            mapView.mapType = .mutedStandard
             //extra settings for the map
             //do they even work?
             mapView.showsUserLocation = true;
@@ -99,30 +111,11 @@ class ViewController : UIViewController {
             mapView.showsTraffic = false;
             mapView.showsPointsOfInterest = false;
         }
-        centerMapOnLocation(location: initialLocation)
+        initMap(location: initialLocation)
         
     }
 
 
-}
-
-
-extension ViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        
-        let identifier = "Annotation"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-        } else {
-            annotationView!.annotation = annotation
-        }
-        
-        return annotationView
-    }
 }
 
 
