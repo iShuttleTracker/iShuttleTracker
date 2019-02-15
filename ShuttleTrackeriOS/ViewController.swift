@@ -162,7 +162,7 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
         initUpdates()
         
         // Try to send any notifications
-        tryNotifyDate()
+        tryNotifyTime()
         tryNotifyNearby()
     }
     

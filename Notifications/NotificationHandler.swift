@@ -9,11 +9,11 @@
 import Foundation
 import UserNotifications
 
-// The times that the user should be notified to get on the shuttle
-var notificationTimes: [Time] = []
+// The trips that the user has asked to be notified for
+var notifyForTrips: [Trip] = []
 
 // The route IDs of shuttles that the user should be notified for the proximity of
-var notificationNearbyIds: [Int] = []
+var notifyForNearbyIds: [Int] = []
 
 /**
  Notifies the user that they should get on the shuttle now in order to reach the
@@ -21,8 +21,8 @@ var notificationNearbyIds: [Int] = []
  */
 func tryNotifyTime() {
     let time = Time()
-    for i in 0..<notificationTimes.count {
-        if notificationTimes[i] > time {
+    for i in 0..<notifyForTrips.count {
+        if notifyForTrips[i].getOnShuttleAt > time {
             // Create notification content
             let content = UNMutableNotificationContent()
             content.title = "Shuttle Nearby"
@@ -38,7 +38,7 @@ func tryNotifyTime() {
             print("Sending notification: \(content.body)")
             
             // We've notified the user, so remove it from the queued times
-            notificationTimes.remove(at: i)
+            notifyForTrips.remove(at: i)
         }
     }
 }
@@ -49,7 +49,7 @@ func tryNotifyTime() {
  */
 func tryNotifyNearby() {
     for (id, vehicle) in vehicles {
-        if notificationNearbyIds.contains(vehicle.last_update.route_id) {
+        if notifyForNearbyIds.contains(vehicle.last_update.route_id) {
             // Send a notification when a shuttle is within 100 meters
             let distance = vehicle.last_update.point.distanceFrom(p: lastLocation!)
             if distance < 100 {
