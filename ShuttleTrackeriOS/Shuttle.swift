@@ -12,14 +12,18 @@ import MapKit
 class Shuttle : NSObject, MKAnnotation {
     
     let title: String?
+    let vehicle_id: Int
+    let route_id: Int
+    let vehicle_name: String?
     let locationName: String
-    let discipline: String
     let coordinate: CLLocationCoordinate2D
     
-    init(title: String, locationName: String, discipline: String, coordinate: CLLocationCoordinate2D) {
-        self.title = title
+    init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D) {
+        self.vehicle_id = vehicle_id
+        self.title = shuttleNames[vehicle_id]
+        self.route_id = 1
+        self.vehicle_name = " "
         self.locationName = locationName
-        self.discipline = discipline
         self.coordinate = coordinate
         
         super.init()

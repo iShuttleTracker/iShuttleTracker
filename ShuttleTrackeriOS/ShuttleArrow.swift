@@ -18,12 +18,9 @@ class ShuttleArrow:MKAnnotationView {
             calloutOffset = CGPoint(x: -5, y: 5)
             rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
-            //adjust later for later color
-            if let imageName = shuttle.imageName {
-                image = UIImage(named: shuttle.imageName!)
-            } else {
-                image = nil
-            }
+            //adjust later for color/rotation
+            image = UIImage(named: shuttle.imageName!)
+            var ci = image?.ciImage
         }
     }
 }

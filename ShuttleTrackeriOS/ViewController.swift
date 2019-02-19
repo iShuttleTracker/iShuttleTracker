@@ -9,6 +9,9 @@
 import UIKit
 import MapKit
 
+
+var shuttleNames = [Int:String]()
+
 class ViewController : UIViewController {
 
     @IBOutlet var mapView: MKMapView!
@@ -39,6 +42,9 @@ class ViewController : UIViewController {
         initStops();
         initRoutes();
         initVehicles();
+        for vehicle in vehicles{
+            shuttleNames[vehicle.value.id] = vehicle.value.name;
+        }
         
         //uses shuttle asset instead of default marker
         mapView.register(ShuttleArrow.self,
@@ -54,7 +60,7 @@ class ViewController : UIViewController {
         
         initUpdates()
         for update in updates {
-            let shuttle = Shuttle(title: String(update.vehicle_id), locationName: update.description, discipline: " ", coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
             mapView.addAnnotation(shuttle)
         }
     }
