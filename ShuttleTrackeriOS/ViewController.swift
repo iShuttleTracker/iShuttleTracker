@@ -163,7 +163,7 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         initMapView()
         initData()
-        displayVehicles()
+//        displayVehicles()
     }
 }
 

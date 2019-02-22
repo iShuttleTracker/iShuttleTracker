@@ -11,6 +11,7 @@ import MapKit
 
 extension ViewController: MKMapViewDelegate {
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        displayVehicles()
         displayRoutes()
         displayStops()
         addSegementedControl()
