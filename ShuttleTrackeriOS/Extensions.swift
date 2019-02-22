@@ -10,6 +10,22 @@ import Foundation
 import MapKit
 
 extension ViewController: MKMapViewDelegate {
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        displayRoutes()
+        displayStops()
+        addSegementedControl()
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? CustomPolyline {
+            let renderer = MKPolylineRenderer(overlay: polyline)
+            renderer.strokeColor = polyline.color
+            renderer.lineWidth = 5
+            return renderer
+        }
+        
+        return MKOverlayRenderer()
+    }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
@@ -22,6 +38,7 @@ extension ViewController: MKMapViewDelegate {
         } else {
             annotationView!.annotation = annotation
         }
+        
         
         return annotationView
     }

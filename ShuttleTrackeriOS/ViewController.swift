@@ -167,52 +167,37 @@ class ViewController: UIViewController{
     }
 }
 
-extension ViewController: MKMapViewDelegate {
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        displayRoutes()
-        displayStops()
-        addSegementedControl()
-    }
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? CustomPolyline {
-            let renderer = MKPolylineRenderer(overlay: polyline)
-            renderer.strokeColor = polyline.color
-            renderer.lineWidth = 5
-            return renderer
-        }
-        
-        return MKOverlayRenderer()
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        // Don't want to show a custom image if the annotation is the user's location.
-        guard !(annotation is StopView) else {
-            return nil
-        }
-        
-        // Better to make this class property
-        let annotationIdentifier = "AnnotationIdentifier"
-        
-        var annotationView: MKAnnotationView?
-        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
-            annotationView = dequeuedAnnotationView
-            annotationView?.annotation = annotation
-        }
-        else {
-            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            annotationView = av
-        }
-        
-        if let annotationView = annotationView {
-            annotationView.canShowCallout = true
-            annotationView.image = UIImage(named: "circle")
+//extension ViewController: MKMapViewDelegate {
 
-        
-        return annotationView
-    }
-    }
-}
+    
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        // Don't want to show a custom image if the annotation is the user's location.
+//        guard !(annotation is StopView) else {
+//            return nil
+//        }
+//
+//        // Better to make this class property
+//        let annotationIdentifier = "AnnotationIdentifier"
+//
+//        var annotationView: MKAnnotationView?
+//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+//            annotationView = dequeuedAnnotationView
+//            annotationView?.annotation = annotation
+//        }
+//        else {
+//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView = av
+//        }
+//
+//        if let annotationView = annotationView {
+//            annotationView.canShowCallout = true
+//            annotationView.image = UIImage(named: "circle")
+//
+//
+//        return annotationView
+//    }
+//    }
+//}
 
