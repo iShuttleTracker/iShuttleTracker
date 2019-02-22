@@ -204,11 +204,11 @@
 				92A3623621519BF700B7B33B /* Main.storyboard */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
-				386CFB7F221615E6001FE9B7 /* Supporting Files */,
-				386CFB7D221615A8001FE9B7 /* Images */,
 				9217B48F22135E9400EBBB39 /* Shuttle.swift */,
 				9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */,
 				92954A1C221720D1000AD318 /* Extensions.swift */,
+				386CFB7F221615E6001FE9B7 /* Supporting Files */,
+				386CFB7D221615A8001FE9B7 /* Images */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";

@@ -34,17 +34,6 @@ class ViewController: UIViewController{
         }
     }
     
-    // remove segment: segmentedControl.removeSegment(at: <#T##Int#>, animated: <#T##Bool#>)
-    // add segment: segmentedControl.insertSegment(with: <#T##UIImage?#>, at: <#T##Int#>, animated: <#T##Bool#>)
-    func addSegementedControl(){
-        let segmentedControl = UISegmentedControl(items : items)
-        segmentedControl.center = self.view.center
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(ViewController.indexChanged(_:)), for: .valueChanged)
-        segmentedControl.layer.cornerRadius = 5.0
-        self.view.addSubview(segmentedControl)
-    }
-    
     // It is based on index changed
     // Click on one segment twice????
     @objc func indexChanged(_ sender: UISegmentedControl) {

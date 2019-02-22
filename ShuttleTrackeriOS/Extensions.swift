@@ -14,7 +14,6 @@ extension ViewController: MKMapViewDelegate {
         displayVehicles()
         displayRoutes()
         displayStops()
-        addSegementedControl()
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
