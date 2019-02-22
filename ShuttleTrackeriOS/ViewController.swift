@@ -14,8 +14,14 @@ import UserNotifications
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
 class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate {
-    
+
     @IBOutlet var mapView: MGLMapView!
+    
+    // Settings
+    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
+    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
+    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
+    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
     let locationManager = CLLocationManager()
     
@@ -33,22 +39,6 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-    
-    @IBAction func toggleRoutes(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            showRoute(name: "east")
-            showRoute(name: "west")
-        case 1:
-            showRoute(name: "east")
-            hideRoute(name: "west")
-        case 2:
-            showRoute(name: "west")
-            hideRoute(name: "east")
-        default:
-            break
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +66,13 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
         //        var timer = Timer();
         //        timer.invalidate();
         updateTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        
+        
+        // Settings
+        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
+        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
+        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
+        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
     }
     
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
@@ -169,6 +166,46 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     //    @objc func updateURL(){
     //        source.url=source.url;
     //    }
+    
+    @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
+        if eastRouteSwitch.isOn {
+            print("Toggled east route on")
+            showRoute(name: "east")
+        } else {
+            print("Toggled east route off")
+            hideRoute(name: "east")
+        }
+    }
+    
+    @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
+        if westRouteSwitch.isOn {
+            print("Toggled west route on")
+            showRoute(name: "west")
+        } else {
+            print("Toggled west route off")
+            hideRoute(name: "west")
+        }
+    }
+    
+    @IBAction func nearbyNotificationsChanged(nearbyNotificationsSwitch: UISwitch) {
+        if nearbyNotificationsSwitch.isOn {
+            print("Toggled nearby notifications on")
+            // TODO
+        } else {
+            print("Toggled nearby notifications off")
+            // TODO
+        }
+    }
+    
+    @IBAction func scheduledNotificationsChanged(scheduledNotificationsSwitch: UISwitch) {
+        if scheduledNotificationsSwitch.isOn {
+            print("Toggled scheduled notifications on")
+            // TODO
+        } else {
+            print("Toggled scheduled notifications off")
+            // TODO
+        }
+    }
     
     func displayRoutes(){
         showRoute(name: "east")
