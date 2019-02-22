@@ -14,6 +14,11 @@
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A2216705BF00BBC615 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A1216705BF00BBC615 /* Update.swift */; };
 		55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataHandler.swift */; };
+		842B905A22205B50001B9F26 /* weekendLNE.csv in Resources */ = {isa = PBXBuildFile; fileRef = 842B905622205B4E001B9F26 /* weekendLNE.csv */; };
+		842B905B22205B50001B9F26 /* MFE.csv in Resources */ = {isa = PBXBuildFile; fileRef = 842B905722205B4E001B9F26 /* MFE.csv */; };
+		842B905C22205B50001B9F26 /* MFEP.csv in Resources */ = {isa = PBXBuildFile; fileRef = 842B905822205B4F001B9F26 /* MFEP.csv */; };
+		842B905D22205B50001B9F26 /* weekendE.csv in Resources */ = {isa = PBXBuildFile; fileRef = 842B905922205B4F001B9F26 /* weekendE.csv */; };
+		843E205D220538E00060E1D3 /* schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E205C220538DF0060E1D3 /* schedule.swift */; };
 		928A17AB215C0B7F00A862B2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* Route.swift */; };
 		928A17AD215C0CE800A862B2 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* Point.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
@@ -63,6 +68,11 @@
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A1216705BF00BBC615 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		842B905622205B4E001B9F26 /* weekendLNE.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weekendLNE.csv; sourceTree = "<group>"; };
+		842B905722205B4E001B9F26 /* MFE.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MFE.csv; sourceTree = "<group>"; };
+		842B905822205B4F001B9F26 /* MFEP.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MFEP.csv; sourceTree = "<group>"; };
+		842B905922205B4F001B9F26 /* weekendE.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weekendE.csv; sourceTree = "<group>"; };
+		843E205C220538DF0060E1D3 /* schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = schedule.swift; path = /Users/zrysnd/Downloads/study/spring2019/iShuttleTracker/Parse/schedule.swift; sourceTree = "<absolute>"; };
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		92A359F021670E0900DB3E2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -110,6 +120,11 @@
 		9217F39E21644762008C847A /* Parse */ = {
 			isa = PBXGroup;
 			children = (
+				843E205C220538DF0060E1D3 /* schedule.swift */,
+				842B905722205B4E001B9F26 /* MFE.csv */,
+				842B905822205B4F001B9F26 /* MFEP.csv */,
+				842B905922205B4F001B9F26 /* weekendE.csv */,
+				842B905622205B4E001B9F26 /* weekendLNE.csv */,
 				55BB26A3216708BC00BBC615 /* DataHandler.swift */,
 				928A17AA215C0B7F00A862B2 /* Route.swift */,
 				928A17AC215C0CE800A862B2 /* Point.swift */,
@@ -289,8 +304,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842B905D22205B50001B9F26 /* weekendE.csv in Resources */,
+				842B905C22205B50001B9F26 /* MFEP.csv in Resources */,
 				92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */,
+				842B905B22205B50001B9F26 /* MFE.csv in Resources */,
 				92A3623A21519BF800B7B33B /* Assets.xcassets in Resources */,
+				842B905A22205B50001B9F26 /* weekendLNE.csv in Resources */,
 				92A3623821519BF700B7B33B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +363,7 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
+				843E205D220538E00060E1D3 /* schedule.swift in Sources */,
 				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
