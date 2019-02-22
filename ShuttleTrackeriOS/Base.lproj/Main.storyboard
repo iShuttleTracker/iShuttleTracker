@@ -36,32 +36,13 @@
         <scene sceneID="JbI-sM-aEq">
             <objects>
                 <viewController id="qne-FA-DBa" customClass="ViewController" customModule="ShuttleTrackeriOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="087-8d-IVx" customClass="MKMapView">
+                    <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="0IY-AV-IDq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                        <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mlj-Q1-fUh">
-                                <rect key="frame" x="16" y="69" width="343" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="All Routes"/>
-                                    <segment title="East Only"/>
-                                    <segment title="West Only"/>
-                                </segments>
-                                <connections>
-                                    <action selector="toggleRoutes:" destination="qne-FA-DBa" eventType="valueChanged" id="YEb-54-zwD"/>
-                                </connections>
-                            </segmentedControl>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <accessibility key="accessibilityConfiguration">
-                            <bool key="isElement" value="YES"/>
-                        </accessibility>
-                        <viewLayoutGuide key="safeArea" id="AgU-rp-Nsp"/>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </mapView>
                     <tabBarItem key="tabBarItem" title="Item 1" id="p3M-I2-HwZ"/>
                     <connections>
-                        <outlet property="mapView" destination="087-8d-IVx" id="QoV-eJ-dBb"/>
+                      <outlet property="mapView" destination="0IY-AV-IDq" id="VdE-Qb-2rG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOR-Oj-ghW" userLabel="First Responder" sceneMemberID="firstResponder"/>

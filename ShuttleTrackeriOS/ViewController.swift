@@ -9,35 +9,92 @@
 import UIKit
 import MapKit
 
-
+// UISegmentedControl: list of string objects
+//      - Check enabled routes
+//      - Add names accordingly
+//      - Enable corresponding routes
 var shuttleNames = [Int:String]()
 
-class ViewController : UIViewController {
-
+class ViewController: UIViewController{
+    
     @IBOutlet var mapView: MKMapView!
     
-    
-    //TODO:
-    /*
- 
-        Use currentDisplay to save the currently displayed vehicles and move
-        them slowly, instead of just relying on updates... more detailed
-        description in the issues page
-    */
-//    var currentDisplay: [Shuttle] = []
+    var items:[String] = ["All routes"]
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        initMapView()
-        displayVehicles();
+    func displayRoutes(){
+        for (_, route) in routeViews {
+            route.display(to: mapView)
+        }
     }
     
-  
+    func displayStops(){
+        for stop in stopViews {
+            mapView.addAnnotation(stop)
+        }
+    }
     
-    //initial call to get the first updates and display them
+    // It is based on index changed
+    // Click on one segment twice????
+    @objc func indexChanged(_ sender: UISegmentedControl) {
+        let routeName = items[sender.selectedSegmentIndex]
+        if let route = routeViews[routeName] {
+            if route.isDisplaying{
+                route.disable(to: mapView)
+            } else {
+                route.enable(to: mapView)
+            }
+        }
+    }
+    
+    func checkEnabledRoutes(){
+        for (name, route) in routeViews {
+            if route.isEnabled {
+                items.append(name)
+            }
+        }
+    }
+    
+    func initData(){
+        // Data
+        initStops()
+        initRoutes()
+        initVehicles()
+        initUpdates()
+        
+        // View
+        initRouteView()
+        initStopView()
+        
+        checkEnabledRoutes()
+    }
+  
+    func initMapView(){
+        //code to set origin of mapkit
+        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
+        let regionRadius:CLLocationDistance = 2000;
+        
+        
+        func initMap(location: CLLocation) {
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+            
+            mapView.isRotateEnabled = false;
+            
+            mapView.delegate = self;
+            //sets map to be minimalistic
+            mapView.mapType = .mutedStandard
+            //extra settings for the map
+            //do they even work?
+            mapView.showsUserLocation = true;
+            mapView.showsBuildings = false;
+            mapView.showsCompass = false;
+            mapView.showsTraffic = false;
+            mapView.showsPointsOfInterest = false;
+        }
+        initMap(location: initialLocation)
+    }
+       //initial call to get the first updates and display them
     func displayVehicles(){
         initStops();
         initRoutes();
@@ -75,7 +132,7 @@ class ViewController : UIViewController {
         newUpdates()
     }
     
-    
+      
     //get user's location
     func requestLocationAccess() {
         let status = CLLocationManager.authorizationStatus()
@@ -91,37 +148,45 @@ class ViewController : UIViewController {
             CLLocationManager().requestWhenInUseAuthorization()
         }
     }
-    
-    
-    
-    func initMapView(){
-        //code to set origin of mapkit
-        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
-        let regionRadius:CLLocationDistance = 2000;
-        
-        
-        func initMap(location: CLLocation) {
-            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            mapView.setRegion(coordinateRegion, animated: true)
-            
-            mapView.isRotateEnabled = false;
-            
-            mapView.delegate = self;
-            //sets map to be minimalistic
-            mapView.mapType = .mutedStandard
-            //extra settings for the map
-            //do they even work?
-            mapView.showsUserLocation = true;
-            mapView.showsBuildings = false;
-            mapView.showsCompass = false;
-            mapView.showsTraffic = false;
-            mapView.showsPointsOfInterest = false;
-        }
-        initMap(location: initialLocation)
-        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initMapView()
+        initData()
+//        displayVehicles()
     }
-
-
 }
 
+//extension ViewController: MKMapViewDelegate {
+
+    
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        // Don't want to show a custom image if the annotation is the user's location.
+//        guard !(annotation is StopView) else {
+//            return nil
+//        }
+//
+//        // Better to make this class property
+//        let annotationIdentifier = "AnnotationIdentifier"
+//
+//        var annotationView: MKAnnotationView?
+//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+//            annotationView = dequeuedAnnotationView
+//            annotationView?.annotation = annotation
+//        }
+//        else {
+//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView = av
+//        }
+//
+//        if let annotationView = annotationView {
+//            annotationView.canShowCallout = true
+//            annotationView.image = UIImage(named: "circle")
+//
+//
+//        return annotationView
+//    }
+//    }
+//}
 
