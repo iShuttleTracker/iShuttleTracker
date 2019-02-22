@@ -42,7 +42,7 @@
                     </mapView>
                     <tabBarItem key="tabBarItem" title="Item 1" id="p3M-I2-HwZ"/>
                     <connections>
-                        <outlet property="mapView" destination="0IY-AV-IDq" id="VdE-Qb-2rG"/>
+                        <outlet property="mapView" destination="0IY-AV-IDq" id="VdE-Qb-2rG"/
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOR-Oj-ghW" userLabel="First Responder" sceneMemberID="firstResponder"/>

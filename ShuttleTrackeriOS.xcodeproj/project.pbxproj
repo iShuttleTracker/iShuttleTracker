@@ -18,8 +18,12 @@
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A2216705BF00BBC615 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A1216705BF00BBC615 /* Update.swift */; };
 		55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataHandler.swift */; };
+		9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B48F22135E9400EBBB39 /* Shuttle.swift */; };
+		9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */; };
+		925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C73A92215BBAE00E77A14 /* ShuttleDisplay.swift */; };
 		928A17AB215C0B7F00A862B2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AA215C0B7F00A862B2 /* Route.swift */; };
 		928A17AD215C0CE800A862B2 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928A17AC215C0CE800A862B2 /* Point.swift */; };
+		92954A1D221720D1000AD318 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92954A1C221720D1000AD318 /* Extensions.swift */; };
 		92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623221519BF700B7B33B /* AppDelegate.swift */; };
 		92A3623521519BF700B7B33B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3623421519BF700B7B33B /* ViewController.swift */; };
 		92A3623821519BF700B7B33B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623621519BF700B7B33B /* Main.storyboard */; };
@@ -71,8 +75,12 @@
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A1216705BF00BBC615 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		9217B48F22135E9400EBBB39 /* Shuttle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuttle.swift; sourceTree = "<group>"; };
+		9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleArrow.swift; sourceTree = "<group>"; };
+		925C73A92215BBAE00E77A14 /* ShuttleDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleDisplay.swift; sourceTree = "<group>"; };
 		928A17AA215C0B7F00A862B2 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		928A17AC215C0CE800A862B2 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		92954A1C221720D1000AD318 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		92A359F021670E0900DB3E2B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		92A3622F21519BF700B7B33B /* ShuttleTrackeriOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShuttleTrackeriOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A3623221519BF700B7B33B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,11 +200,15 @@
 			children = (
 				386CFB7E221615CA001FE9B7 /* View */,
 				92A3623421519BF700B7B33B /* ViewController.swift */,
+				925C73A92215BBAE00E77A14 /* ShuttleDisplay.swift */,
 				92A3623621519BF700B7B33B /* Main.storyboard */,
 				92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */,
 				92A3623E21519BF800B7B33B /* Info.plist */,
 				386CFB7F221615E6001FE9B7 /* Supporting Files */,
 				386CFB7D221615A8001FE9B7 /* Images */,
+				9217B48F22135E9400EBBB39 /* Shuttle.swift */,
+				9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */,
+				92954A1C221720D1000AD318 /* Extensions.swift */,
 			);
 			path = ShuttleTrackeriOS;
 			sourceTree = "<group>";
@@ -375,13 +387,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
+				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
+				925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */,
 				55BB26A2216705BF00BBC615 /* Update.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
+				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
+				9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
 				389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */,
 				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,

@@ -13,6 +13,7 @@ import MapKit
 //      - Check enabled routes
 //      - Add names accordingly
 //      - Enable corresponding routes
+var shuttleNames = [Int:String]()
 
 class ViewController: UIViewController{
     
@@ -78,25 +79,95 @@ class ViewController: UIViewController{
         
         checkEnabledRoutes()
     }
+  
+    func initMapView(){
+        //code to set origin of mapkit
+        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
+        let regionRadius:CLLocationDistance = 2000;
+        
+        
+        func initMap(location: CLLocation) {
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
+            
+            mapView.isRotateEnabled = false;
+            
+            mapView.delegate = self;
+            //sets map to be minimalistic
+            mapView.mapType = .mutedStandard
+            //extra settings for the map
+            //do they even work?
+            mapView.showsUserLocation = true;
+            mapView.showsBuildings = false;
+            mapView.showsCompass = false;
+            mapView.showsTraffic = false;
+            mapView.showsPointsOfInterest = false;
+        }
+        initMap(location: initialLocation)
+    }
+       //initial call to get the first updates and display them
+    func displayVehicles(){
+        initStops();
+        initRoutes();
+        initVehicles();
+        for vehicle in vehicles{
+            shuttleNames[vehicle.value.id] = vehicle.value.name;
+        }
+        
+        //uses shuttle asset instead of default marker
+        mapView.register(ShuttleArrow.self,
+                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        newUpdates();
+        
+        //crash resposible because repeated without parameters
+        _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        
+    }
+    //add annotations to the view
+    func newUpdates(){
+        
+        initUpdates()
+        for update in updates {
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            mapView.addAnnotation(shuttle)
+        }
+    }
+
     
+    //the function for Timer to call
+    //deletes all annotations
+    //adds them back
+    @objc func repeated(){
+    
+        mapView.removeAnnotations(mapView.annotations)
+        newUpdates()
+    }
+    
+      
+    //get user's location
+    func requestLocationAccess() {
+        let status = CLLocationManager.authorizationStatus()
+        
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            return
+            
+        case .denied, .restricted:
+            print("location access denied")
+            
+        default:
+            CLLocationManager().requestWhenInUseAuthorization()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         initMapView()
         initData()
+        displayVehicles()
     }
 }
 
 extension ViewController: MKMapViewDelegate {
-    
-    func initMapView(){
-        let center = CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 800, longitudinalMeters: 800)
-        
-        mapView.delegate = self
-        mapView.centerCoordinate = center
-        mapView.showsUserLocation = true
-        mapView.setRegion(region, animated: false)
-    }
     
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         displayRoutes()
@@ -138,12 +209,10 @@ extension ViewController: MKMapViewDelegate {
         if let annotationView = annotationView {
             annotationView.canShowCallout = true
             annotationView.image = UIImage(named: "circle")
-        }
+
         
         return annotationView
     }
-    
+    }
 }
-
-
 
