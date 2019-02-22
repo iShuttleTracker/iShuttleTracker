@@ -46,7 +46,7 @@ struct Stop {
                 print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
-        print("Finished JSON initialization for stop \(self.id)")
+//        print("Finished JSON initialization for stop \(self.id)")
     }
 
 }
@@ -103,9 +103,7 @@ func initStops() {
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
-        print("Creating new stop...")
         let stop = Stop(json:unique as! NSDictionary)
-        print(stop!)
         for (id, route) in routes {
             if route.stop_ids.contains(stop!.id) {
                 routes[id]!.stops[stop!.id] = stop

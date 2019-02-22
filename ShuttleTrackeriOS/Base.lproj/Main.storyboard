@@ -36,9 +36,9 @@
         <scene sceneID="JbI-sM-aEq">
             <objects>
                 <viewController id="qne-FA-DBa" customClass="ViewController" customModule="ShuttleTrackeriOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="087-8d-IVx" customClass="MGLMapView">
+                    <view key="view" contentMode="scaleToFill" id="087-8d-IVx" customClass="MKMapView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mlj-Q1-fUh">
                                 <rect key="frame" x="16" y="69" width="343" height="28"/>
@@ -58,28 +58,10 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <viewLayoutGuide key="safeArea" id="AgU-rp-Nsp"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v10"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="latitude">
-                                <real key="value" value="42.730200000000004"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="longitude">
-                                <real key="value" value="-73.678799999999995"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="zoomLevel">
-                                <real key="value" value="14"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="minimumZoomLevel">
-                                <real key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="maximumZoomLevel">
-                                <real key="value" value="18"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="p3M-I2-HwZ"/>
                     <connections>
-                        <outlet property="mapView" destination="087-8d-IVx" id="p6n-JY-DsB"/>
+                        <outlet property="mapView" destination="087-8d-IVx" id="QoV-eJ-dBb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOR-Oj-ghW" userLabel="First Responder" sceneMemberID="firstResponder"/>

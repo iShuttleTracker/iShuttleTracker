@@ -67,7 +67,7 @@ struct Update {
                 print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
-        print("Finished JSON initialization for update \(self.id)")
+//        print("Finished JSON initialization for update \(self.id)")
     }
     
 }
@@ -120,10 +120,9 @@ func fetchUpdates() -> Data {
 func initUpdates() {
     let data = fetchUpdates()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    updates.removeAll() 
     for unique in json! {
-        print("Creating new update...")
         let update = Update(json:unique as! NSDictionary)
-        print(update!)
         vehicles[update!.vehicle_id]!.update(update: update!)
         updates.append(update!)
     }
