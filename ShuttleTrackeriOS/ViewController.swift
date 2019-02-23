@@ -9,10 +9,6 @@
 import UIKit
 import MapKit
 
-// UISegmentedControl: list of string objects
-//      - Check enabled routes
-//      - Add names accordingly
-//      - Enable corresponding routes
 var shuttleNames = [Int:String]()
 
 class ViewController: UIViewController{
@@ -31,19 +27,6 @@ class ViewController: UIViewController{
     func displayStops(){
         for stop in stopViews {
             mapView.addAnnotation(stop)
-        }
-    }
-    
-    // It is based on index changed
-    // Click on one segment twice????
-    @objc func indexChanged(_ sender: UISegmentedControl) {
-        let routeName = items[sender.selectedSegmentIndex]
-        if let route = routeViews[routeName] {
-            if route.isDisplaying{
-                route.disable(to: mapView)
-            } else {
-                route.enable(to: mapView)
-            }
         }
     }
     
@@ -94,7 +77,8 @@ class ViewController: UIViewController{
         }
         initMap(location: initialLocation)
     }
-       //initial call to get the first updates and display them
+    
+    //initial call to get the first updates and display them
     func displayVehicles(){
         initStops();
         initRoutes();
@@ -112,6 +96,7 @@ class ViewController: UIViewController{
         _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
         
     }
+    
     //add annotations to the view
     func newUpdates(){
         
@@ -127,7 +112,6 @@ class ViewController: UIViewController{
     //deletes all annotations
     //adds them back
     @objc func repeated(){
-    
         mapView.removeAnnotations(mapView.annotations)
         newUpdates()
     }
@@ -148,45 +132,12 @@ class ViewController: UIViewController{
             CLLocationManager().requestWhenInUseAuthorization()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initMapView()
         initData()
-//        displayVehicles()
     }
 }
 
-//extension ViewController: MKMapViewDelegate {
-
-    
-    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        // Don't want to show a custom image if the annotation is the user's location.
-//        guard !(annotation is StopView) else {
-//            return nil
-//        }
-//
-//        // Better to make this class property
-//        let annotationIdentifier = "AnnotationIdentifier"
-//
-//        var annotationView: MKAnnotationView?
-//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
-//            annotationView = dequeuedAnnotationView
-//            annotationView?.annotation = annotation
-//        }
-//        else {
-//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//            annotationView = av
-//        }
-//
-//        if let annotationView = annotationView {
-//            annotationView.canShowCallout = true
-//            annotationView.image = UIImage(named: "circle")
-//
-//
-//        return annotationView
-//    }
-//    }
-//}
 
