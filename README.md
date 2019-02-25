@@ -18,7 +18,8 @@ Native iOS app of the on campus shuttle tracker (shuttles.rpi.edu)
 - [ ] Dynamic spreadsheet schedule 
     - [ ] Color highlighting for relevant times
 - [ ] Notifications
-- [x]  Location/stop descriptions
+- [x] Location/stop descriptions
+- [ ] Settings panel
 - [ ] **EXTRA**: VR/AR?
     
 
