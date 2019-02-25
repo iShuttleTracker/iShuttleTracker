@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38042E872221B33F0049261F /* stopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 38042E862221B33F0049261F /* stopIcon.png */; };
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
 		386CFB8122161647001FE9B7 /* circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = 386CFB8022161647001FE9B7 /* circle.svg */; };
@@ -65,7 +64,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		38042E862221B33F0049261F /* stopIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopIcon.png; path = ../../../../Users/beiqizou/Downloads/stopIcon.png; sourceTree = "<group>"; };
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		386CFB8022161647001FE9B7 /* circle.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = circle.svg; sourceTree = "<group>"; };
@@ -126,7 +124,6 @@
 		386CFB7D221615A8001FE9B7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				38042E862221B33F0049261F /* stopIcon.png */,
 				386CFB8022161647001FE9B7 /* circle.svg */,
 			);
 			path = Images;
@@ -175,7 +172,6 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
-				386CFB8222161742001FE9B7 /* Default-568h@2x.png */,
 				92A359EF21670DFD00DB3E2B /* Documentation */,
 				9217F39E21644762008C847A /* Parse */,
 				38F700CF215340D9005D3607 /* Mapbox.framework */,
@@ -341,7 +337,6 @@
 				386CFB8122161647001FE9B7 /* circle.svg in Resources */,
 				92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */,
 				92A3623A21519BF800B7B33B /* Assets.xcassets in Resources */,
-				38042E872221B33F0049261F /* stopIcon.png in Resources */,
 				92A3623821519BF700B7B33B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
