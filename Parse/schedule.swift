@@ -34,7 +34,7 @@ func parseString(dataRead:String)->[String]{
 // if Drop at Union only, first location has the string, other locations behind it has an empty string.
 // if a stop is "X", "X" will appear in the array.
 func getSchedule(sheet:Int)->[[String]]{
-    let sheets = ["MFE", "MFEP", "weekendE", "weekendLNE"]
+    let sheets = ["MFE", "MFEP", "weekendE", "weekendLNE","MFW","SaW","SuW"]
     let file = sheets[sheet]
     let tmp = readDataFromFile(file:file)
     var t = parseString(dataRead:tmp!)
