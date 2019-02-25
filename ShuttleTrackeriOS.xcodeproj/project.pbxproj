@@ -175,6 +175,7 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				386CFB8222161742001FE9B7 /* Default-568h@2x.png */,
 				92A359EF21670DFD00DB3E2B /* Documentation */,
 				9217F39E21644762008C847A /* Parse */,
 				38F700CF215340D9005D3607 /* Mapbox.framework */,

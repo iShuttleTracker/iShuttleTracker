@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 extension ViewController: MKMapViewDelegate {
-    
+
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
         displayVehicles()
         displayRoutes()
@@ -44,6 +44,7 @@ extension ViewController: MKMapViewDelegate {
 //        return annotationView
 //    }
     
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         // Don't want to show a custom image if the annotation is the user's location.
         guard annotation is StopView else {
@@ -68,6 +69,7 @@ extension ViewController: MKMapViewDelegate {
             annotationView.canShowCallout = true
             annotationView.image = UIImage(named: "StopIcon")?.resizeImage(targetSize: CGSize(width: 10, height: 10))
         }
+        
         
         return annotationView
     }

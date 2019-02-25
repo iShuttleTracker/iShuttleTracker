@@ -23,7 +23,7 @@ class ViewController: UIViewController{
             route.display(to: mapView)
         }
     }
-    
+  
     func displayStops(){
         for stop in stopViews {
             mapView.addAnnotation(stop)
@@ -132,12 +132,46 @@ class ViewController: UIViewController{
             CLLocationManager().requestWhenInUseAuthorization()
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initMapView()
         initData()
+//        displayVehicles()
+
     }
 }
 
+//extension ViewController: MKMapViewDelegate {
+
+    
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        // Don't want to show a custom image if the annotation is the user's location.
+//        guard !(annotation is StopView) else {
+//            return nil
+//        }
+//
+//        // Better to make this class property
+//        let annotationIdentifier = "AnnotationIdentifier"
+//
+//        var annotationView: MKAnnotationView?
+//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+//            annotationView = dequeuedAnnotationView
+//            annotationView?.annotation = annotation
+//        }
+//        else {
+//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//            annotationView = av
+//        }
+//
+//        if let annotationView = annotationView {
+//            annotationView.canShowCallout = true
+//            annotationView.image = UIImage(named: "circle")
+//
+//
+//        return annotationView
+//    }
+//    }
+//}
 

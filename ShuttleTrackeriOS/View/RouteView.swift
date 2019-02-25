@@ -37,6 +37,7 @@ class RouteView {
     func createRoute(polyline: CustomPolyline){
         self.routePolyLine = polyline
         polyline.color = color
+
     }
     
     func createStop(){
