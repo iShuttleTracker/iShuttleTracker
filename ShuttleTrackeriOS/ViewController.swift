@@ -16,7 +16,7 @@ var lastLocation: Point? = nil // The most up-to-date location we have of the us
 class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet var mapView: MGLMapView!
-    
+
     // Settings
     @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
     @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
@@ -42,7 +42,7 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib
         
         startReceivingLocationChanges()
         
@@ -190,20 +190,22 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     @IBAction func nearbyNotificationsChanged(nearbyNotificationsSwitch: UISwitch) {
         if nearbyNotificationsSwitch.isOn {
             print("Toggled nearby notifications on")
-            // TODO
+            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
+            //       panel visible. It should be hidden if this switch is toggled off.
         } else {
             print("Toggled nearby notifications off")
-            // TODO
+            // TODO: Hide the "Nearby Notifications" section.
         }
     }
     
     @IBAction func scheduledNotificationsChanged(scheduledNotificationsSwitch: UISwitch) {
         if scheduledNotificationsSwitch.isOn {
             print("Toggled scheduled notifications on")
-            // TODO
+            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
+            //       settings panel visible. It should be hidden if the switch is toggled off.
         } else {
             print("Toggled scheduled notifications off")
-            // TODO
+            // TODO: Hide the "Scheduled Trips" section.
         }
     }
     
