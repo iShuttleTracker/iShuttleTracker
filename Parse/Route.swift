@@ -16,7 +16,7 @@ let west_inclement_weather_id = 5
 
 var routes: [Int:Route] = [:]
 
-struct Route {
+struct Route: CustomStringConvertible {
     
     var color = ""
     var created = ""
@@ -88,22 +88,22 @@ struct Route {
         self.points = pointsList
         print("Finished JSON initialization for route \(self.id)")
     }
-}
-extension Route:CustomStringConvertible {
+    
     var description: String {
         return  """
-                Color: \(self.color)
-                Created: \(self.created)
-                Description: \(self.desc)
-                Enabled: \(self.enabled)
-                ID: \(self.id)
-                Name: \(self.name)
-                Points: \(self.points)
-                Stop IDs: \(self.stop_ids)
-                Updated: \(self.updated)
-                Width: \(self.width)
-                """
+        Color: \(self.color)
+        Created: \(self.created)
+        Description: \(self.desc)
+        Enabled: \(self.enabled)
+        ID: \(self.id)
+        Name: \(self.name)
+        Points: \(self.points)
+        Stop IDs: \(self.stop_ids)
+        Updated: \(self.updated)
+        Width: \(self.width)
+        """
     }
+    
 }
 
 /**

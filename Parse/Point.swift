@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct Point: Equatable {
+struct Point: Equatable, CustomStringConvertible {
 
     var latitude: Double
     var longitude: Double
@@ -61,13 +61,11 @@ struct Point: Equatable {
         let endLocation = CLLocation(latitude: p.latitude, longitude: p.longitude)
         return startLocation.distance(from: endLocation)
     }
-
-}
-
-extension Point:CustomStringConvertible {
+    
     var description:String {
         return """
-                 (latitude \(self.latitude), longitude \(self.longitude))\n
-                 """
+        (latitude \(self.latitude), longitude \(self.longitude))\n
+        """
     }
+
 }
