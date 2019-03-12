@@ -54,6 +54,8 @@ class ViewController: UIViewController, MGLMapViewDelegate {
         mapView.delegate = self
         
         // Stops before routes, routes before updates, vehicles before updates
+        let schedule = getSchedule(sheet: 4)
+        print(schedule)
         initStops()
         initRoutes()
         initVehicles()

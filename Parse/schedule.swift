@@ -41,7 +41,7 @@ func getSchedule(sheet:Int)->[[String]]{
     var index = 0
     while index < t.count {
         if t[index] == "" { //remove empty lines
-            t.remove(at: index) //this will cause array index out of range
+            t.remove(at: index) // not-removed empty lines will cause array index out of range
             index = index-1
         }
         index = index+1
@@ -59,15 +59,10 @@ func getSchedule(sheet:Int)->[[String]]{
     i=0
     while i<locations.count{
         schedule.append([String]())
+        schedule[i+1].append(locations[i])//add locations to the first element each array of times
         i = i+1
     }
     
-    //add locations to the first element each array of times
-    i = 0
-    while( i < locations.count){
-        schedule[i+1].append(locations[i])
-        i = i+1
-    }
     
     // put time data into schedule
     i = 0
