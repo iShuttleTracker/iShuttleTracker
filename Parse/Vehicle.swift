@@ -10,7 +10,7 @@ import Foundation
 
 var vehicles: [Int:Vehicle] = [:]
 
-struct Vehicle {
+struct Vehicle: CustomStringConvertible {
     
     var id = 0
     var name = ""
@@ -127,18 +127,17 @@ struct Vehicle {
         return convertTime(time: update.time)!.timeIntervalSinceNow
     }
     
-}
-extension Vehicle:CustomStringConvertible {
     var description:String {
         return  """
-                  ID: \(self.id)
-                  Name: \(self.name)
-                  Created: \(self.created)
-                  Updated: \(self.updated)
-                  Enabled: \(self.enabled)
-                  Tracker ID: \(self.tracker_id)
-                  """
+        ID: \(self.id)
+        Name: \(self.name)
+        Created: \(self.created)
+        Updated: \(self.updated)
+        Enabled: \(self.enabled)
+        Tracker ID: \(self.tracker_id)
+        """
     }
+    
 }
 
 /**

@@ -10,7 +10,7 @@ var updates: [Update] = []
 
 import Foundation
 
-struct Update {
+struct Update: CustomStringConvertible {
     
     var id = 0
     var tracker_id = ""
@@ -23,6 +23,7 @@ struct Update {
     var vehicle_id = 0
     var route_id = 0
     var route = Route()!
+    var point = Point()!
     
     /**
      Default constructor.
@@ -67,26 +68,25 @@ struct Update {
                 print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
-//        print("Finished JSON initialization for update \(self.id)")
+        self.point = Point(latitude: self.latitude, longitude: self.longitude)
+        print("Finished JSON initialization for update \(self.id)")
     }
     
-}
-
-extension Update:CustomStringConvertible {
     var description:String {
         return """
-               ID: \(self.id)
-               Tracker ID: \(self.tracker_id)
-               Latitude: \(self.latitude)
-               Longitude: \(self.longitude)
-               Heading: \(self.heading)
-               Speed: \(self.speed)
-               Time: \(self.time)
-               Created: \(self.created)
-               Vehicle ID: \(self.vehicle_id)
-               Route ID: \(self.route_id)
-               """
+        ID: \(self.id)
+        Tracker ID: \(self.tracker_id)
+        Latitude: \(self.latitude)
+        Longitude: \(self.longitude)
+        Heading: \(self.heading)
+        Speed: \(self.speed)
+        Time: \(self.time)
+        Created: \(self.created)
+        Vehicle ID: \(self.vehicle_id)
+        Route ID: \(self.route_id)
+        """
     }
+    
 }
 
 /**

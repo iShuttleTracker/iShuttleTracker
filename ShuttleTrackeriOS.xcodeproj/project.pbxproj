@@ -13,6 +13,9 @@
 		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
 		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
+		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
+		551B8788220CF48D00576E58 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8787220CF48D00576E58 /* Time.swift */; };
+		551B878E2214E93A00576E58 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B878D2214E93A00576E58 /* Trip.swift */; };
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A2216705BF00BBC615 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A1216705BF00BBC615 /* Update.swift */; };
 		55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataHandler.swift */; };
@@ -68,6 +71,9 @@
 		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		551B8787220CF48D00576E58 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		551B878D2214E93A00576E58 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A1216705BF00BBC615 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
@@ -119,6 +125,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		551B8786220CF45E00576E58 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				551B8787220CF48D00576E58 /* Time.swift */,
+				551B878D2214E93A00576E58 /* Trip.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		55EC50AC21FBC30C0067EB8C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				551B8784220CA47F00576E58 /* NotificationHandler.swift */,
+			);
+			path = Notifications;
+    };
 		386CFB7E221615CA001FE9B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +184,8 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				551B8786220CF45E00576E58 /* Utilities */,
+				55EC50AC21FBC30C0067EB8C /* Notifications */,
 				92A359EF21670DFD00DB3E2B /* Documentation */,
 				9217F39E21644762008C847A /* Parse */,
 				38F700CF215340D9005D3607 /* Mapbox.framework */,
@@ -287,6 +311,11 @@
 				TargetAttributes = {
 					92A3622E21519BF700B7B33B = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					92A3624221519BF800B7B33B = {
 						CreatedOnToolsVersion = 10.0;
@@ -370,10 +399,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
+				380EBFD5217044A9000DBB01 /* CustomSettings.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
 				925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
+				551B8788220CF48D00576E58 /* Time.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */,
@@ -381,6 +413,7 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
+				551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */,
 				9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
 				389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */,

@@ -8,9 +8,15 @@
 
 import Foundation
 
+let west_id = 1
+let east_id = 2
+let weekend_late_night_id = 3
+let east_inclement_weather_id = 4
+let west_inclement_weather_id = 5
+
 var routes: [Int:Route] = [:]
 
-struct Route {
+struct Route: CustomStringConvertible {
     
     var color = ""
     var created = ""
@@ -81,22 +87,22 @@ struct Route {
         // Set the points at the end
         self.points = pointsList
     }
-}
-extension Route:CustomStringConvertible {
+    
     var description: String {
         return  """
-                Color: \(self.color)
-                Created: \(self.created)
-                Description: \(self.desc)
-                Enabled: \(self.enabled)
-                ID: \(self.id)
-                Name: \(self.name)
-                Points: \(self.points)
-                Stop IDs: \(self.stop_ids)
-                Updated: \(self.updated)
-                Width: \(self.width)
-                """
+        Color: \(self.color)
+        Created: \(self.created)
+        Description: \(self.desc)
+        Enabled: \(self.enabled)
+        ID: \(self.id)
+        Name: \(self.name)
+        Points: \(self.points)
+        Stop IDs: \(self.stop_ids)
+        Updated: \(self.updated)
+        Width: \(self.width)
+        """
     }
+    
 }
 
 /**

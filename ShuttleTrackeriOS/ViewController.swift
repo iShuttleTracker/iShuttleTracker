@@ -9,34 +9,50 @@
 import UIKit
 import MapKit
 
-var shuttleNames = [Int:String]()
+import UserNotifications
 
-class ViewController: UIViewController{
-    
+var shuttleNames = [Int:String]()
+var lastLocation: Point? = nil // The most up-to-date location we have of the user
+
+class ViewController: UIViewController, CLLocationManagerDelegate {
+
     @IBOutlet var mapView: MKMapView!
+
+    // Settings
+    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
+    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
+    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
+    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
+    let locationManager = CLLocationManager()
+
+
     var items:[String] = ["All routes"]
     
     
-    func displayRoutes(){
-        for (_, route) in routeViews {
-            route.display(to: mapView)
-        }
-    }
-  
-    func displayStops(){
-        for stop in stopViews {
-            mapView.addAnnotation(stop)
-        }
-    }
     
-    func checkEnabledRoutes(){
-        for (name, route) in routeViews {
-            if route.isEnabled {
-                items.append(name)
-            }
-        }
-    }
+    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    
+        // Stops before routes, routes before updates, vehicles before updates
+      func displayRoutes(){
+          for (_, route) in routeViews {
+              route.display(to: mapView)
+          }
+      }
+    
+      func displayStops(){
+          for stop in stopViews {
+              mapView.addAnnotation(stop)
+          }
+      }
+      
+      func checkEnabledRoutes(){
+          for (name, route) in routeViews {
+              if route.isEnabled {
+                  items.append(name)
+              }
+          }
+      }
     
     func initData(){
         // Data
@@ -48,6 +64,12 @@ class ViewController: UIViewController{
         // View
         initRouteView()
         initStopView()
+       
+        // Settings
+        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
+        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
+        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
+        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
         
         checkEnabledRoutes()
     }
@@ -75,8 +97,97 @@ class ViewController: UIViewController{
             mapView.showsTraffic = false;
             mapView.showsPointsOfInterest = false;
         }
+        
         initMap(location: initialLocation)
+        
+        
     }
+    
+    func startReceivingLocationChanges() {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
+            // User has not authorized access to location information.
+            return
+        }
+        // Do not start services that aren't available.
+        if !CLLocationManager.locationServicesEnabled() {
+            // Location services is not available.
+            return
+        }
+        // Configure and start the service.
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10.0  // In meters.
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
+        lastLocation = Point(coordinate: locations.last!.coordinate)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let error = error as? CLError, error.code == .denied {
+            // Location updates are not authorized.
+            manager.stopUpdatingLocation()
+            return
+        }
+        // TODO: Notify the user that some features will not be available
+    }
+    
+    @objc func update() {
+        initUpdates()
+        
+        // Try to send any notifications
+        tryNotifyTime()
+        tryNotifyNearby()
+    }
+    
+    //    @objc func updateURL(){
+    //        source.url=source.url;
+    //    }
+    
+    @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
+        if eastRouteSwitch.isOn {
+            print("Toggled east route on")
+//            showRoute(name: "east")
+        } else {
+            print("Toggled east route off")
+//            hideRoute(name: "east")
+        }
+    }
+    
+    @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
+        if westRouteSwitch.isOn {
+            print("Toggled west route on")
+//            showRoute(name: "west")
+        } else {
+            print("Toggled west route off")
+//            hideRoute(name: "west")
+        }
+    }
+    
+    @IBAction func nearbyNotificationsChanged(nearbyNotificationsSwitch: UISwitch) {
+        if nearbyNotificationsSwitch.isOn {
+            print("Toggled nearby notifications on")
+            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
+            //       panel visible. It should be hidden if this switch is toggled off.
+        } else {
+            print("Toggled nearby notifications off")
+            // TODO: Hide the "Nearby Notifications" section.
+        }
+    }
+    
+    @IBAction func scheduledNotificationsChanged(scheduledNotificationsSwitch: UISwitch) {
+        if scheduledNotificationsSwitch.isOn {
+            print("Toggled scheduled notifications on")
+            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
+            //       settings panel visible. It should be hidden if the switch is toggled off.
+        } else {
+            print("Toggled scheduled notifications off")
+            // TODO: Hide the "Scheduled Trips" section.
+        }
+    }
+    
     
     //initial call to get the first updates and display them
     func displayVehicles(){
@@ -140,38 +251,4 @@ class ViewController: UIViewController{
 
     }
 }
-
-//extension ViewController: MKMapViewDelegate {
-
-    
-    
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        // Don't want to show a custom image if the annotation is the user's location.
-//        guard !(annotation is StopView) else {
-//            return nil
-//        }
-//
-//        // Better to make this class property
-//        let annotationIdentifier = "AnnotationIdentifier"
-//
-//        var annotationView: MKAnnotationView?
-//        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
-//            annotationView = dequeuedAnnotationView
-//            annotationView?.annotation = annotation
-//        }
-//        else {
-//            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-//            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//            annotationView = av
-//        }
-//
-//        if let annotationView = annotationView {
-//            annotationView.canShowCallout = true
-//            annotationView.image = UIImage(named: "circle")
-//
-//
-//        return annotationView
-//    }
-//    }
-//}
 

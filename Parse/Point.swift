@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct Point: Equatable {
+struct Point: Equatable, CustomStringConvertible {
 
     var latitude: Double
     var longitude: Double
@@ -43,6 +43,16 @@ struct Point: Equatable {
     }
     
     /**
+     Initializes a new Point from a CLLocationCoordinate2D.
+     - Returns: A new Point with the latitude and longitude values from the
+     specified CLLocationCoordinate2D.
+     */
+    init(coordinate: CLLocationCoordinate2D) {
+        self.latitude = coordinate.latitude
+        self.longitude = coordinate.longitude
+    }
+    
+    /**
      Approximates the distance between two points.
      - Returns: The distance between two points, in meters.
      */
@@ -51,13 +61,11 @@ struct Point: Equatable {
         let endLocation = CLLocation(latitude: p.latitude, longitude: p.longitude)
         return startLocation.distance(from: endLocation)
     }
-
-}
-
-extension Point:CustomStringConvertible {
+    
     var description:String {
         return """
-                 (latitude \(self.latitude), longitude \(self.longitude))\n
-                 """
+        (latitude \(self.latitude), longitude \(self.longitude))\n
+        """
     }
+
 }

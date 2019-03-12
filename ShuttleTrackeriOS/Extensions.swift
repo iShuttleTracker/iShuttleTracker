@@ -21,7 +21,7 @@ extension ViewController: MKMapViewDelegate {
         if let polyline = overlay as? CustomPolyline {
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.strokeColor = polyline.color
-            renderer.lineWidth = 5
+            renderer.lineWidth = 2
             return renderer
         }
         

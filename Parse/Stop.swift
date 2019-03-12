@@ -10,7 +10,7 @@ import Foundation
 
 var stops: [Int:Stop] = [:]
 
-struct Stop {
+struct Stop: CustomStringConvertible {
     
     var id = 0
     var latitude = 0.0
@@ -48,21 +48,19 @@ struct Stop {
         }
 //        print("Finished JSON initialization for stop \(self.id)")
     }
-
-}
-
-extension Stop: CustomStringConvertible {
+    
     var description: String {
         return """
-               ID: \(self.id)
-               Latitude: \(self.latitude)
-               Logitude: \(self.longitude)
-               Created: \(self.created)
-               Updated: \(self.updated)
-               Name: \(self.name)
-               Description: \(self.desc)
-               """
+        ID: \(self.id)
+        Latitude: \(self.latitude)
+        Logitude: \(self.longitude)
+        Created: \(self.created)
+        Updated: \(self.updated)
+        Name: \(self.name)
+        Description: \(self.desc)
+        """
     }
+
 }
 
 /**
