@@ -42,7 +42,7 @@ struct Vehicle: CustomStringConvertible {
                 self.tracker_id = (value as! String)
             default:
                 // This should never happen
-                print("Unknown (key/value) pair: (\(key)/\(value))")
+                print("Unknown (key/value) pair in a vehicle: (\(key)/\(value))")
             }
         }
 //        print("Finished JSON initialization for vehicle \(self.id)")

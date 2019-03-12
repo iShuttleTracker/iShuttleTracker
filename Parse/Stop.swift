@@ -43,7 +43,7 @@ struct Stop: CustomStringConvertible {
                 self.desc = (value as! String)
             default:
                 // This should never happen
-                print("Unknown (key/value) pair: (\(key)/\(value))")
+                print("Unknown (key/value) pair in a stop: (\(key)/\(value))")
             }
         }
 //        print("Finished JSON initialization for stop \(self.id)")

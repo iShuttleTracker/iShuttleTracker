@@ -65,7 +65,7 @@ struct Update: CustomStringConvertible {
                 }
             default:
                 // This should never happen
-                print("Unknown (key/value) pair: (\(key)/\(value))")
+                print("Unknown (key/value) pair in an update: (\(key)/\(value))")
             }
         }
         self.point = Point(latitude: self.latitude, longitude: self.longitude)
