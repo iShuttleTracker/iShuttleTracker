@@ -6,16 +6,17 @@
 //  Copyright © 2018 WTG. All rights reserved.
 //
 
-import WebKit
 import UIKit
-import Mapbox
+import MapKit
+
 import UserNotifications
 
+var shuttleNames = [Int:String]()
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
-class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
-    @IBOutlet var mapView: MGLMapView!
+    @IBOutlet var mapView: MKMapView!
 
     // Settings
     @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
@@ -24,102 +25,80 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
     let locationManager = CLLocationManager()
+
+
+    var items:[String] = ["All routes"]
     
-    // Store info
-    var eastCoordinates: [CLLocationCoordinate2D]!
-    var westCoordinates: [CLLocationCoordinate2D]!
-    var lateNightCoordinates: [CLLocationCoordinate2D]!
-    var parsedRoutes: [String:[CLLocationCoordinate2D]] = [:]
     
-    //testing
-    var source: MGLShapeSource!
-    var routeLayer: [String: MGLStyleLayer?] = [:]
-    
-    var updateTimer = Timer()
-    //var vehicleIcons: [String:CustomPointAnnotation] = [:]
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib
-        
-        startReceivingLocationChanges()
-        
-        mapView.styleURL = MGLStyle.lightStyleURL
-        mapView.showsUserLocation = true
-        mapView.delegate = self
-        
         // Stops before routes, routes before updates, vehicles before updates
+      func displayRoutes(){
+          for (_, route) in routeViews {
+              route.display(to: mapView)
+          }
+      }
+    
+      func displayStops(){
+          for stop in stopViews {
+              mapView.addAnnotation(stop)
+          }
+      }
+      
+      func checkEnabledRoutes(){
+          for (name, route) in routeViews {
+              if route.isEnabled {
+                  items.append(name)
+              }
+          }
+      }
+    
+    func initData(){
+        // Data
         initStops()
         initRoutes()
         initVehicles()
         initUpdates()
         
-        parsingData()
-        
-        //        let marker = MGLPointAnnotation();
-        //        marker.coordinate=CLLocationCoordinate2D(latitude: 42.7302, longitude: -73.6788);
-        //        marker.title="testing";
-        //        mapView.addAnnotation(marker);
-        
-        //        var timer = Timer();
-        //        timer.invalidate();
-        updateTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-        
-        
+        // View
+        initRouteView()
+        initStopView()
+       
         // Settings
         eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
         westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
         nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
         scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
+        
+        checkEnabledRoutes()
     }
-    
-    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle){
+  
+    func initMapView(){
+        //code to set origin of mapkit
+        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
+        let regionRadius:CLLocationDistance = 2000;
         
-        displayStops()
         
-        let eastColor = UIColor(red: 120/255, green: 180/255, blue: 0, alpha: 1)
-        let westColor = UIColor(red: 200/255, green: 55/255, blue: 0, alpha: 1)
-        
-        initRoute(to: style, name: "east", coordinates: eastCoordinates, color: eastColor)
-        initRoute(to: style, name: "west", coordinates: westCoordinates, color: westColor)
-        initRoute(to: style, name: "lateNight", coordinates: lateNightCoordinates, color: UIColor.purple)
-        
-        displayRoutes()
-        
-        //for all the vehicles
-        for update in updates {
+        func initMap(location: CLLocation) {
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            mapView.setRegion(coordinateRegion, animated: true)
             
-            //create a coordinate object
-            let temp_coords = CLLocationCoordinate2D(latitude:update.latitude,longitude:update.longitude);
+            mapView.isRotateEnabled = false;
             
-            //create a MGLShape
-            let p = MGLPointAnnotation();
-            p.coordinate=temp_coords;
-            
-            //MGLShapeSource with the annotation
-            source = MGLShapeSource(identifier: String(update.id), shape: p, options: nil);
-            
-            //add the point to the style layer
-            style.addSource(source)
-            
-            //attach a picture to the point
-            let picture = MGLSymbolStyleLayer(identifier:String(update.id),source:source);
-            picture.iconImageName=NSExpression(forConstantValue: "bus-15");
-            style.addLayer(picture);
-            
+            mapView.delegate = self;
+            //sets map to be minimalistic
+            mapView.mapType = .mutedStandard
+            //extra settings for the map
+            //do they even work?
+            mapView.showsUserLocation = true;
+            mapView.showsBuildings = false;
+            mapView.showsCompass = false;
+            mapView.showsTraffic = false;
+            mapView.showsPointsOfInterest = false;
         }
         
-        
-        
-        //create a timer to auto refresh
-        var timer = Timer();
-        
-        //TODO
-        //put on separate thread?
-        timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(updatePositions), userInfo: nil, repeats: true)
+        initMap(location: initialLocation)
         
         
     }
@@ -170,20 +149,20 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
     @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
         if eastRouteSwitch.isOn {
             print("Toggled east route on")
-            showRoute(name: "east")
+//            showRoute(name: "east")
         } else {
             print("Toggled east route off")
-            hideRoute(name: "east")
+//            hideRoute(name: "east")
         }
     }
     
     @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
         if westRouteSwitch.isOn {
             print("Toggled west route on")
-            showRoute(name: "west")
+//            showRoute(name: "west")
         } else {
             print("Toggled west route off")
-            hideRoute(name: "west")
+//            hideRoute(name: "west")
         }
     }
     
@@ -209,129 +188,67 @@ class ViewController: UIViewController, MGLMapViewDelegate, CLLocationManagerDel
         }
     }
     
-    func displayRoutes(){
-        showRoute(name: "east")
-        showRoute(name: "west")
+    
+    //initial call to get the first updates and display them
+    func displayVehicles(){
+        initStops();
+        initRoutes();
+        initVehicles();
+        for vehicle in vehicles{
+            shuttleNames[vehicle.value.id] = vehicle.value.name;
+        }
         
-        // TODO: Show or Hide lateNight based on time
-        hideRoute(name: "lateNight")
+        //uses shuttle asset instead of default marker
+        mapView.register(ShuttleArrow.self,
+                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        newUpdates();
+        
+        //crash resposible because repeated without parameters
+        _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        
     }
     
-    func initRoute(to style: MGLStyle, name: String, coordinates: [CLLocationCoordinate2D], color: UIColor){
-        let route = MGLPolyline(coordinates: coordinates, count: UInt(coordinates.count))
-        let routeSource = MGLShapeSource(identifier: name, shape: route, options: nil)
-        let layer = MGLLineStyleLayer(identifier: name, source: routeSource)
+    //add annotations to the view
+    func newUpdates(){
         
-        layer.sourceLayerIdentifier = name
-        layer.lineJoin = NSExpression(forConstantValue: "round")
-        layer.lineCap = NSExpression(forConstantValue: "round")
-        layer.lineColor = NSExpression(forConstantValue: color)
-        layer.lineWidth = NSExpression(forConstantValue: 4.5)
-        
-        style.addSource(routeSource)
-        style.addLayer(layer)
-        
-        self.routeLayer[name] = layer
-    }
-    
-    func showRoute(name: String){
-        if let _ = routeLayer[name]{
-            self.routeLayer[name]??.isVisible = true
+        initUpdates()
+        for update in updates {
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            mapView.addAnnotation(shuttle)
         }
     }
+
     
-    func hideRoute(name: String){
-        if let _ = routeLayer[name]{
-            self.routeLayer[name]??.isVisible = false
-        }
+    //the function for Timer to call
+    //deletes all annotations
+    //adds them back
+    @objc func repeated(){
+        mapView.removeAnnotations(mapView.annotations)
+        newUpdates()
     }
     
-    // Display stops
-    func displayStops(){
-        var count = 0
-        for (id, stop) in stops{
-            count += 1
-            let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
-            let point = CustomPointAnnotation(coordinate: coordinate, title: stop.name, subtitle: stop.desc)
-            point.reuseIdentifier = "customAnnotation\(count)"
-            point.image = dot(size:15, color: UIColor.darkGray)
-            mapView.addAnnotation(point)
-        }
-    }
-    
-    // Parsing longitude and latitude of points into a list
-    func parsingData(){
-        for (id, route) in routes{
-            var pointArr: [CLLocationCoordinate2D] = []
-            for point in route.points{
-                pointArr.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
-            }
-            parsedRoutes[route.name] = pointArr
-        }
-        eastCoordinates = parsedRoutes["East Campus"]!
-        westCoordinates = parsedRoutes["West Campus"]!
-        lateNightCoordinates = parsedRoutes["Weekend/Late Night"]!
-    }
-    
-    //repeted function calls to update vehicles on layer
-    @objc func updatePositions(){
+      
+    //get user's location
+    func requestLocationAccess() {
+        let status = CLLocationManager.authorizationStatus()
         
-        //TODO
-        //CLEAR style LAYERS?
-        //THREAD FAULT BECAUSE OVERWRITING LAYER ALREADY THERE?
-        
-        
-//        let style = mapView.style!;
-//        print("THE LAYERS")
-//        print(style.layers)
-//        //get the updates at the time
-//        var updates = initUpdates()
-//
-//        //for all the vehicles
-//        for i in 0...updates.count-1{
-//
-//            //create a coordinate object
-//            let temp_coords = CLLocationCoordinate2D(latitude:updates[i].latitude,longitude:updates[i].longitude);
-//
-//            //create a MGLShape
-//            let p = MGLPointAnnotation();
-//            p.coordinate=temp_coords;
-//
-//            //MGLShapeSource with the annotation
-//            source = MGLShapeSource(identifier: String(updates[i].id), shape: p, options: nil);
-//
-//            //add the point to the style layer
-//            style.addSource(source)
-//
-//            //attach a picture to the point
-//            let picture = MGLSymbolStyleLayer(identifier:String(updates[i].id),source:source);
-//            picture.iconImageName=NSExpression(forConstantValue: "bus-15");
-//            style.addLayer(picture);
-//
-//        }
-    }
-    
-    
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        return nil
-    }
-    
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-    
-    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        if let point = annotation as? CustomPointAnnotation,
-            let image = point.image,
-            let reuseIdentifier = point.reuseIdentifier {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            return
             
-            if let annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: reuseIdentifier) {
-                return annotationImage
-            } else {
-                return MGLAnnotationImage(image: image, reuseIdentifier: reuseIdentifier)
-            }
+        case .denied, .restricted:
+            print("location access denied")
+            
+        default:
+            CLLocationManager().requestWhenInUseAuthorization()
         }
-        
-        return nil
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initMapView()
+        initData()
+//        displayVehicles()
+
     }
 }
+

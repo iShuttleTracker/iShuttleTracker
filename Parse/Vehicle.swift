@@ -45,7 +45,7 @@ struct Vehicle: CustomStringConvertible {
                 print("Unknown (key/value) pair: (\(key)/\(value))")
             }
         }
-        print("Finished JSON initialization for vehicle \(self.id)")
+//        print("Finished JSON initialization for vehicle \(self.id)")
     }
     
     /**
@@ -172,9 +172,7 @@ func initVehicles() {
     let data = fetchVehicles()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
-        print("Creating new vehicle...")
         let vehicle = Vehicle(json:unique as! NSDictionary)
-        print(vehicle!)
         vehicles[vehicle!.id] = vehicle
     }
 }
