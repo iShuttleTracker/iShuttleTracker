@@ -12,16 +12,17 @@ var routes: [Int:Route] = [:]
 
 struct Route {
     
-    var color = ""
-    var created = ""
-    var desc = ""
-    var enabled = false
     var id = 0
     var name = ""
-    var points: [Point] = []
-    var stop_ids: [Int] = []
-    var updated = ""
+    var desc = ""
+    var enabled = false
+    var color = ""
     var width = 0
+    var stop_ids: [Int] = []
+    var created = ""
+    var updated = ""
+    var points: [Point] = []
+    var active = false
     var stops: [Int:Stop] = [:]
     
     /**
@@ -39,24 +40,24 @@ struct Route {
         var pointsList:[Point] = [];
         for (key, value) in json {
             switch key as? NSString {
-            case "color":
-                self.color = (value as! String)
-            case "created":
-                self.created = (value as! String)
-            case "description":
-                self.desc = (value as! String)
-            case "enabled":
-                self.enabled = (value as! Bool)
             case "id":
                 self.id = (value as! Int)
             case "name":
                 self.name = (value as! String)
-            case "stop_ids":
-                self.stop_ids = (value as! [Int])
-            case "updated":
-                self.updated = (value as! String)
+            case "description":
+                self.desc = (value as! String)
+            case "enabled":
+                self.enabled = (value as! Bool)
+            case "color":
+                self.color = (value as! String)
             case "width":
                 self.width = (value as! Int)
+            case "stop_ids":
+                self.stop_ids = (value as! [Int])
+            case "created":
+                self.created = (value as! String)
+            case "updated":
+                self.updated = (value as! String)
             case "points":
                 // Need to parse the coordinates separately since
                 // nested dictionary inside a dictionary
@@ -73,9 +74,15 @@ struct Route {
                     // Append the points to the array
                     pointsList.append(Point(latitude: lat, longitude: long))
                 }
+            case "active":
+                self.active = (value as! Bool)
+            case "schedule":
+                // Ignore the value of this key, we'll never need it. Only used to set the value of active
+                // on the backend.
+                break
             default:
                 // This should never happen
-                print("Unknown (key/value) pair: (\(key)/\(value))")
+                print("Unknown (key/value) pair in a route: (\(key)/\(value))")
             }
         }
         // Set the points at the end

@@ -64,7 +64,7 @@ struct Update {
                 }
             default:
                 // This should never happen
-                print("Unknown (key/value) pair: (\(key)/\(value))")
+                print("Unknown (key/value) pair in an update: (\(key)/\(value))")
             }
         }
 //        print("Finished JSON initialization for update \(self.id)")
