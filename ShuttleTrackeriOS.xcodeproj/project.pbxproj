@@ -140,6 +140,7 @@
 				551B8784220CA47F00576E58 /* NotificationHandler.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
     };
 		386CFB7E221615CA001FE9B7 /* View */ = {
 			isa = PBXGroup;
