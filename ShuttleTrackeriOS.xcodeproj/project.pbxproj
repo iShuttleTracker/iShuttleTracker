@@ -10,8 +10,6 @@
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
 		389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */; };
-		38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; };
-		38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38F700CF215340D9005D3607 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
 		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
 		551B8788220CF48D00576E58 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8787220CF48D00576E58 /* Time.swift */; };
@@ -58,7 +56,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				38F700D1215340D9005D3607 /* Mapbox.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,7 +66,6 @@
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
-		38F700CF215340D9005D3607 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		551B8787220CF48D00576E58 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -104,7 +100,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38F700D0215340D9005D3607 /* Mapbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +186,6 @@
 				55EC50AC21FBC30C0067EB8C /* Notifications */,
 				92A359EF21670DFD00DB3E2B /* Documentation */,
 				9217F39E21644762008C847A /* Parse */,
-				38F700CF215340D9005D3607 /* Mapbox.framework */,
 				92A3623121519BF700B7B33B /* ShuttleTrackeriOS */,
 				92A3624621519BF800B7B33B /* ShuttleTrackeriOSTests */,
 				92A3625121519BF800B7B33B /* ShuttleTrackeriOSUITests */,
@@ -391,7 +385,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
