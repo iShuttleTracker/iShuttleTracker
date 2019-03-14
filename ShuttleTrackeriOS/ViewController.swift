@@ -204,7 +204,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         newUpdates();
         
         //crash resposible because repeated without parameters
-        _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
         
     }
     
