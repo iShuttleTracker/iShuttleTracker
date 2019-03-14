@@ -29,6 +29,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var items:[String] = ["All routes"]
     
+    var currentUpdates:[MKAnnotation] = []
+    
     
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
@@ -215,6 +217,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         for update in updates {
             let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             mapView.addAnnotation(shuttle)
+            currentUpdates.append(shuttle)
         }
     }
     
@@ -223,7 +226,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //deletes all annotations
     //adds them back
     @objc func repeated(){
-        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeAnnotations(currentUpdates)
+        currentUpdates.removeAll()
         newUpdates()
     }
     
