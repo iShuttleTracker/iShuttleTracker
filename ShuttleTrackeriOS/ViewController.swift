@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Andrew Qu on 9/18/18.
-//  Copyright © 2018 WTG. All rights reserved.
+//  Copyright ¬© 2018 WTG. All rights reserved.
 //
 
 import UIKit
@@ -15,9 +15,9 @@ var shuttleNames = [Int:String]()
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-
+    
     @IBOutlet var mapView: MKMapView!
-
+    
     // Settings
     @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
     @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
@@ -25,34 +25,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
     let locationManager = CLLocationManager()
-
-
+    
+    
     var items:[String] = ["All routes"]
     
     
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
-        // Stops before routes, routes before updates, vehicles before updates
-      func displayRoutes(){
-          for (_, route) in routeViews {
-              route.display(to: mapView)
-          }
-      }
+    // Stops before routes, routes before updates, vehicles before updates
+    func displayRoutes(){
+        for (_, route) in routeViews {
+            route.display(to: mapView)
+        }
+    }
     
-      func displayStops(){
-          for stop in stopViews {
-              mapView.addAnnotation(stop)
-          }
-      }
-      
-      func checkEnabledRoutes(){
-          for (name, route) in routeViews {
-              if route.isEnabled {
-                  items.append(name)
-              }
-          }
-      }
+    func displayStops(){
+        for stop in stopViews {
+            mapView.addAnnotation(stop)
+        }
+    }
+    
+    func checkEnabledRoutes(){
+        for (name, route) in routeViews {
+            if route.isEnabled {
+                items.append(name)
+            }
+        }
+    }
     
     func initData(){
         // Data
@@ -64,7 +64,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // View
         initRouteView()
         initStopView()
-       
+        
         // Settings
         eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
         westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
@@ -73,7 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         checkEnabledRoutes()
     }
-  
+    
     func initMapView(){
         //code to set origin of mapkit
         let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
@@ -149,20 +149,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
         if eastRouteSwitch.isOn {
             print("Toggled east route on")
-//            showRoute(name: "east")
+            //            showRoute(name: "east")
         } else {
             print("Toggled east route off")
-//            hideRoute(name: "east")
+            //            hideRoute(name: "east")
         }
     }
     
     @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
         if westRouteSwitch.isOn {
             print("Toggled west route on")
-//            showRoute(name: "west")
+            //            showRoute(name: "west")
         } else {
             print("Toggled west route off")
-//            hideRoute(name: "west")
+            //            hideRoute(name: "west")
         }
     }
     
@@ -217,7 +217,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             mapView.addAnnotation(shuttle)
         }
     }
-
+    
     
     //the function for Timer to call
     //deletes all annotations
@@ -227,7 +227,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         newUpdates()
     }
     
-      
+    
     //get user's location
     func requestLocationAccess() {
         let status = CLLocationManager.authorizationStatus()
@@ -247,8 +247,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         initMapView()
         initData()
-//        displayVehicles()
-
+        //        displayVehicles()
+        
     }
 }
-
