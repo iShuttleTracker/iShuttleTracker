@@ -213,7 +213,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         initUpdates()
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             mapView.addAnnotation(shuttle)
         }
     }

@@ -17,14 +17,16 @@ class Shuttle : NSObject, MKAnnotation {
     let vehicle_name: String?
     let locationName: String
     let coordinate: CLLocationCoordinate2D
+    let heading: Int
     
-    init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D) {
+    init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int) {
         self.vehicle_id = vehicle_id
         self.title = shuttleNames[vehicle_id]
         self.route_id = 1
         self.vehicle_name = " "
         self.locationName = locationName
         self.coordinate = coordinate
+        self.heading = heading
         
         super.init()
     }

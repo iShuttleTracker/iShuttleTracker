@@ -125,23 +125,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		551B8786220CF45E00576E58 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				551B8787220CF48D00576E58 /* Time.swift */,
-				551B878D2214E93A00576E58 /* Trip.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		55EC50AC21FBC30C0067EB8C /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				551B8784220CA47F00576E58 /* NotificationHandler.swift */,
-			);
-			path = Notifications;
-			sourceTree = "<group>";
-    };
 		386CFB7E221615CA001FE9B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +142,23 @@
 				92A3623921519BF800B7B33B /* Assets.xcassets */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		551B8786220CF45E00576E58 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				551B8787220CF48D00576E58 /* Time.swift */,
+				551B878D2214E93A00576E58 /* Trip.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		55EC50AC21FBC30C0067EB8C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				551B8784220CA47F00576E58 /* NotificationHandler.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		9217F39E21644762008C847A /* Parse */ = {
@@ -401,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
-				380EBFD5217044A9000DBB01 /* CustomSettings.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
 				925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */,
@@ -594,6 +593,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YF49BFK2ZP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -615,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YF49BFK2ZP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
