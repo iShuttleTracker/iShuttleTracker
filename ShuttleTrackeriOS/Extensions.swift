@@ -28,24 +28,15 @@ extension ViewController: MKMapViewDelegate {
         return MKOverlayRenderer()
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard annotation is MKPointAnnotation else { return nil }
-//
-//        let identifier = "Annotation"
-//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-//
-//        if annotationView == nil {
-//            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-//            annotationView!.canShowCallout = true
-//        } else {
-//            annotationView!.annotation = annotation
-//        }
-//
-//        return annotationView
-//    }
     
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        /**
+         
+         Overwrite the default stop behavior by using a custom asset
+ 
+         */
         // Don't want to show a custom image if the annotation is the user's location.
         guard annotation is StopView else {
             return nil
@@ -67,7 +58,7 @@ extension ViewController: MKMapViewDelegate {
         
         if let annotationView = annotationView {
             annotationView.canShowCallout = true
-            annotationView.image = UIImage(named: "StopIcon")?.resizeImage(targetSize: CGSize(width: 10, height: 10))
+            annotationView.image = UIImage(named: "StopIcon")?.imageWithSize(size: CGSize(width: 10, height: 10))
         }
         
         
@@ -79,20 +70,52 @@ extension ViewController: MKMapViewDelegate {
 
 // Resize the given image
 extension UIImage {
-    func resizeImage(targetSize: CGSize) -> UIImage {
-        let size = self.size
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    
         
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        self.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        func imageWithSize(size:CGSize) -> UIImage
+        {
+            var scaledImageRect = CGRect.zero;
+            
+            let aspectWidth:CGFloat = size.width / self.size.width;
+            let aspectHeight:CGFloat = size.height / self.size.height;
+            let aspectRatio:CGFloat = min(aspectWidth, aspectHeight);
+            
+            scaledImageRect.size.width = self.size.width * aspectRatio;
+            scaledImageRect.size.height = self.size.height * aspectRatio;
+            scaledImageRect.origin.x = (size.width - scaledImageRect.size.width) / 2.0;
+            scaledImageRect.origin.y = (size.height - scaledImageRect.size.height) / 2.0;
+            
+            UIGraphicsBeginImageContextWithOptions(size, false, 0);
+            
+            self.draw(in: scaledImageRect);
+            
+            let scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            return scaledImage!;
+        }
         
-        return newImage!
-    }
+        func rotate(radians: Float) -> UIImage? {
+            var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
+            // Trim off the extremely small float value to prevent core graphics from rounding it up
+            newSize.width = floor(newSize.width)
+            newSize.height = floor(newSize.height)
+            
+            UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
+            let context = UIGraphicsGetCurrentContext()!
+            
+            // Move origin to middle
+            context.translateBy(x: newSize.width/2, y: newSize.height/2)
+            // Rotate around middle
+            context.rotate(by: CGFloat(radians))
+            // Draw the image at its center
+            self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
+            
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            return newImage
+        }
 }
 
 // Convert hex string into UIColor
