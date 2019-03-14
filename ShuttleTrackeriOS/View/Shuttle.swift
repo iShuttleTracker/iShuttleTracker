@@ -19,6 +19,14 @@ class Shuttle : NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let heading: Int
     
+    /**
+     
+     constructor for a shuttle object to be displayed on the map
+     - Parameters: vehicle_id - unique vehicle ID
+                    locationName - information to insert into pop up bubble
+                    coordinate - where the marker should be
+                    heading - amount to rotate the shuttle marker
+     */
     init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int) {
         self.vehicle_id = vehicle_id
         self.title = shuttleNames[vehicle_id]
@@ -31,10 +39,18 @@ class Shuttle : NSObject, MKAnnotation {
         super.init()
     }
     
+    /**
+     function needed to return the pop up bubble information
+     */
     var subtitle: String? {
         return locationName
     }
     
+    /**
+     - TODO:
+     Add to this method to support different colors of shuttles
+     Or look into coloring the actual uiimage
+     */
     var imageName: String? {
         return "Shuttle"
     }

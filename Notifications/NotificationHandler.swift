@@ -50,7 +50,7 @@ func tryNotifyTime() {
  that the user chose to be notified for.
  */
 func tryNotifyNearby() {
-    for (id, vehicle) in vehicles {
+    for (_, vehicle) in vehicles {
         if notifyForNearbyIds.keys.contains(vehicle.last_update.route_id) {
             // Check if a notification has already been sent for a shuttle on this route
             // in the last 60 seconds
