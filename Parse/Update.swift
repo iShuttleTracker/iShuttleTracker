@@ -127,3 +127,10 @@ func initUpdates() {
         updates.append(update!)
     }
 }
+
+extension Update:Equatable{
+    static func == (lhs: Update, rhs: Update) -> Bool {
+        return
+            lhs.id == rhs.id
+    }
+}
