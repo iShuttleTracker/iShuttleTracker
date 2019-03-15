@@ -10,20 +10,26 @@ Native iOS app of the on campus shuttle tracker (shuttles.rpi.edu)
 - [x] Explore alternative map frameworks more indepth
 - [ ] Refactor code into MVC standard
 - [x] Rewrite front end to be dynamic (assuming infinite # of routes and vehicles)
-- [ ] Look into Cocoapods or alternatives to manage packages better
+- [x] Look into Cocoapods or alternatives to manage packages better
+- [x] Move to a better supported Map framework
+
 
 ### Additions:
-- [ ] Deployed onto a device for testing/ loaded onto the App Store
+- [x] Deployed onto a device for testing/ loaded onto the App Store
+- [x] Display shuttle movement with proper rotation
+- [ ] Dispaly shuttle movement with proper route coloring
 - [x] Arrow shuttle icons in direction of movement (different map framework?)
 - [ ] Dynamic spreadsheet schedule 
     - [ ] Color highlighting for relevant times
 - [ ] Notifications
 - [x] Location/stop descriptions
-- [ ] Settings panel
+- [x] Settings panel front-end
+- [ ] Settings panel back-end
+- [x] Be usable as a substitute for the web app
 - [ ] **EXTRA**: VR/AR?
-    
 
 ## Fall 2018 Accomplishments:
+
 - [x] Parse and store all relevant information from web app
 - [x] Front end displays baseline information that's useful 
 - [x] Route toggling
