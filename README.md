@@ -27,6 +27,9 @@ Native iOS app of the on campus shuttle tracker (shuttles.rpi.edu)
 - [ ] Settings panel back-end
 - [x] Be usable as a substitute for the web app
 - [ ] **EXTRA**: VR/AR?
+- [ ] Implement web app BUS BUTTON
+- [ ] Implement web app ETA
+- [ ] Implement web app SCHEDULES
 
 ## Fall 2018 Accomplishments:
 
