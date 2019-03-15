@@ -31,6 +31,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var currentUpdates:[MKAnnotation] = []
     
+    var recentUpdates:[Update] = []
+    
     
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
@@ -213,12 +215,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //add annotations to the view
     func newUpdates(){
         
-        initUpdates()
+        //display new updates
         for update in updates {
             let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             mapView.addAnnotation(shuttle)
             currentUpdates.append(shuttle)
         }
+        
+        //this is the most recent update now
+        recentUpdates = updates;
     }
     
     
@@ -226,9 +231,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //deletes all annotations
     //adds them back
     @objc func repeated(){
-        mapView.removeAnnotations(currentUpdates)
-        currentUpdates.removeAll()
-        newUpdates()
+        
+        //fetch latest /updates feed
+        initUpdates()
+        
+        //no change in updates
+        if(updates == recentUpdates){
+            return;
+        }
+        
+        //only remove current updates if there are new updates
+        else{
+            mapView.removeAnnotations(currentUpdates)
+            currentUpdates.removeAll()
+            newUpdates()
+        }
     }
     
     

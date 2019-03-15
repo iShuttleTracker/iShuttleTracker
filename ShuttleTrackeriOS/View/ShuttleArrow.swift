@@ -34,11 +34,12 @@ class ShuttleArrow:MKAnnotationView {
             rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
             //adjust later for color/rotation
-            image = UIImage(named: shuttle.imageName!)
+            var tempImage = UIImage(named: shuttle.imageName!)
             
             //fix this
-            image = image!.rotate(radians: Float(Float(shuttle.heading-45) * Float(Float.pi/180)))
-            image = image!.imageWithSize(size: CGSize(width: image!.size.width * 1.5, height: image!.size.height * 1.5))
+            tempImage = tempImage!.rotate(radians: Float(Float(shuttle.heading-45) * Float(Float.pi/180)))
+            tempImage = tempImage!.imageWithSize(size: CGSize(width: tempImage!.size.width * 1.5, height: tempImage!.size.height * 1.5))
+            image = tempImage
         }
     }
 }
