@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Andrew Qu on 9/18/18.
-//  Copyright © 2018 WTG. All rights reserved.
+//  Copyright ¬© 2018 WTG. All rights reserved.
 //
 
 import UIKit
@@ -15,9 +15,9 @@ var shuttleNames = [Int:String]()
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-
+    
     @IBOutlet var mapView: MKMapView!
-
+    
     // Settings
     @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
     @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
@@ -25,34 +25,38 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
     let locationManager = CLLocationManager()
-
-
+    
+    
     var items:[String] = ["All routes"]
+    
+    var currentUpdates:[MKAnnotation] = []
+    
+    var recentUpdates:[Update] = []
     
     
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
-        // Stops before routes, routes before updates, vehicles before updates
-      func displayRoutes(){
-          for (_, route) in routeViews {
-              route.display(to: mapView)
-          }
-      }
+    // Stops before routes, routes before updates, vehicles before updates
+    func displayRoutes(){
+        for (_, route) in routeViews {
+            route.display(to: mapView)
+        }
+    }
     
-      func displayStops(){
-          for stop in stopViews {
-              mapView.addAnnotation(stop)
-          }
-      }
-      
-      func checkEnabledRoutes(){
-          for (name, route) in routeViews {
-              if route.isEnabled {
-                  items.append(name)
-              }
-          }
-      }
+    func displayStops(){
+        for stop in stopViews {
+            mapView.addAnnotation(stop)
+        }
+    }
+    
+    func checkEnabledRoutes(){
+        for (name, route) in routeViews {
+            if route.isEnabled {
+                items.append(name)
+            }
+        }
+    }
     
     func initData(){
         // Data
@@ -64,7 +68,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // View
         initRouteView()
         initStopView()
-       
+        
         // Settings
         eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
         westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
@@ -73,7 +77,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         checkEnabledRoutes()
     }
-  
+    
     func initMapView(){
         //code to set origin of mapkit
         let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788);
@@ -149,20 +153,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
         if eastRouteSwitch.isOn {
             print("Toggled east route on")
-//            showRoute(name: "east")
+            //            showRoute(name: "east")
         } else {
             print("Toggled east route off")
-//            hideRoute(name: "east")
+            //            hideRoute(name: "east")
         }
     }
     
     @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
         if westRouteSwitch.isOn {
             print("Toggled west route on")
-//            showRoute(name: "west")
+            //            showRoute(name: "west")
         } else {
             print("Toggled west route off")
-//            hideRoute(name: "west")
+            //            hideRoute(name: "west")
         }
     }
     
@@ -204,30 +208,47 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         newUpdates();
         
         //crash resposible because repeated without parameters
-        _ = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
         
     }
     
     //add annotations to the view
     func newUpdates(){
         
-        initUpdates()
+        //display new updates
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             mapView.addAnnotation(shuttle)
+            currentUpdates.append(shuttle)
         }
+        
+        //this is the most recent update now
+        recentUpdates = updates;
     }
-
+    
     
     //the function for Timer to call
     //deletes all annotations
     //adds them back
     @objc func repeated(){
-        mapView.removeAnnotations(mapView.annotations)
-        newUpdates()
+        
+        //fetch latest /updates feed
+        initUpdates()
+        
+        //no change in updates
+        if(updates == recentUpdates){
+            return;
+        }
+        
+        //only remove current updates if there are new updates
+        else{
+            mapView.removeAnnotations(currentUpdates)
+            currentUpdates.removeAll()
+            newUpdates()
+        }
     }
     
-      
+    
     //get user's location
     func requestLocationAccess() {
         let status = CLLocationManager.authorizationStatus()
@@ -247,8 +268,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         initMapView()
         initData()
-//        displayVehicles()
-
+        //        displayVehicles()
+        
     }
 }
-
