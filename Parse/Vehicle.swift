@@ -112,7 +112,7 @@ struct Vehicle: CustomStringConvertible {
      */
     func convertTime(time: String) -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.ZZZZZZ'Z'"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         return formatter.date(from: time)
     }
     

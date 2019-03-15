@@ -33,6 +33,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var recentUpdates:[Update] = []
     
+    var lastUpdateTime: Date = Date()
+    
     
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
@@ -208,22 +210,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         newUpdates();
         
         //crash resposible because repeated without parameters
-        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.repeated), userInfo: nil, repeats: true)
         
     }
     
     //add annotations to the view
     func newUpdates(){
+        recentUpdates = []
         
         //display new updates
         for update in updates {
             let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             mapView.addAnnotation(shuttle)
             currentUpdates.append(shuttle)
+            recentUpdates.append(update)
         }
-        
-        //this is the most recent update now
-        recentUpdates = updates;
+    }
+    
+    func estimate() {
+        for (id, vehicle) in vehicles {
+            // Only update this vehicle if it is on a valid route
+            if vehicle.last_update.route.points.count > 0 {
+                let estimation = vehicle.estimateCurrentPosition()
+                // TODO: fix heading
+                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimation.latitude, longitude: estimation.longitude), heading: 0)
+                mapView.addAnnotation(shuttle)
+                currentUpdates.append(shuttle)
+            }
+        }
     }
     
     
@@ -231,20 +245,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //deletes all annotations
     //adds them back
     @objc func repeated(){
+        mapView.removeAnnotations(currentUpdates)
+        currentUpdates.removeAll()
         
-        //fetch latest /updates feed
-        initUpdates()
-        
-        //no change in updates
-        if(updates == recentUpdates){
-            return;
-        }
-        
-        //only remove current updates if there are new updates
-        else{
-            mapView.removeAnnotations(currentUpdates)
-            currentUpdates.removeAll()
-            newUpdates()
+        // Check for updates every 10 seconds
+        if lastUpdateTime.timeIntervalSinceNow < -10 {
+            //fetch latest /updates feed
+            initUpdates()
+            lastUpdateTime = Date()
+            if updates != recentUpdates {
+                newUpdates()
+            } else {
+                estimate()
+            }
+        } else {
+            estimate()
         }
     }
     
