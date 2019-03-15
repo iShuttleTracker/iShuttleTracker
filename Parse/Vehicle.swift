@@ -45,7 +45,6 @@ struct Vehicle: CustomStringConvertible {
                 print("Unknown (key/value) pair in a vehicle: (\(key)/\(value))")
             }
         }
-//        print("Finished JSON initialization for vehicle \(self.id)")
     }
     
     /**
