@@ -17,9 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </mapView>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="p3M-I2-HwZ"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapTabBarIcon" id="p3M-I2-HwZ"/>
                     <connections>
-                      <outlet property="mapView" destination="0IY-AV-IDq" id="VdE-Qb-2rG"/>
+                        <outlet property="mapView" destination="0IY-AV-IDq" id="VdE-Qb-2rG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sOR-Oj-ghW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -36,16 +36,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="xdH-8S-qq1"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Schedule" id="TOk-si-BoW"/>
+                    <tabBarItem key="tabBarItem" title="Schedule" image="ScheduleTabBarIcon" id="TOk-si-BoW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vL-px-MZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="350"/>
+            <point key="canvasLocation" x="212" y="292"/>
         </scene>
         <!--Tab Bar-->
         <scene sceneID="nyp-he-ivW">
             <objects>
-                <tabBarController title="Tab Bar" id="x1D-Ti-9CG" userLabel="Tab Bar" sceneMemberID="viewController">
+                <tabBarController title="Tab Bar" id="x1D-Ti-9CG" userLabel="Tab Bar" customClass="CustomTabBar" customModule="ShuttleTrackeriOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hi8-cf-eaj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -367,7 +367,7 @@
                             <outlet property="delegate" destination="KuV-mr-y1B" id="dqE-55-0CU"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Settings" id="Uoh-KR-5SP"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="SettingsTabBarIcon" id="Uoh-KR-5SP"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygx-hm-zEQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lql-H8-nOe" userLabel="Exit" sceneMemberID="exit"/>
@@ -375,4 +375,9 @@
             <point key="canvasLocation" x="212" y="-1090.6403940886701"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="MapTabBarIcon" width="70" height="60"/>
+        <image name="ScheduleTabBarIcon" width="70" height="61"/>
+        <image name="SettingsTabBarIcon" width="70" height="61"/>
+    </resources>
 </document>
