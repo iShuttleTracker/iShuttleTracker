@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
+		383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* CustomTabBar.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
 		389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		383157AA2240247D009FB2D4 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				380F719022138EE900F35728 /* RouteView.swift */,
 				386CFB7B22160D76001FE9B7 /* StopView.swift */,
 				389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */,
+				383157AA2240247D009FB2D4 /* CustomTabBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 			files = (
 				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
+				383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
 				925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
