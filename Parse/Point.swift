@@ -13,7 +13,6 @@ struct Point: Equatable, CustomStringConvertible {
 
     var latitude: Double
     var longitude: Double
-    var closest_stop: Stop
     
     /**
      Default constructor.
@@ -22,7 +21,6 @@ struct Point: Equatable, CustomStringConvertible {
     init?() {
         latitude = 0.0
         longitude = 0.0
-        closest_stop = Stop()!
     }
     
     /**
@@ -32,24 +30,6 @@ struct Point: Equatable, CustomStringConvertible {
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
-        self.closest_stop = Stop()!
-        var min_distance = 0.0
-        for (id, stop) in stops {
-            let distance = distanceFrom(latitude: stop.latitude, longitude: stop.longitude)
-            if distance < min_distance {
-                closest_stop = stop
-                min_distance = distance
-            }
-        }
-    }
-    
-    /**
-     Initializes a new Point from an Update.
-     - Returns: A new Point with the latitude and longitude values from the
-     specified Update.
-     */
-    init(update: Update) {
-        self.init(latitude: update.latitude, longitude: update.longitude)
     }
     
     /**
