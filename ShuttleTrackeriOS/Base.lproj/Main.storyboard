@@ -33,14 +33,36 @@
                     <view key="view" contentMode="scaleToFill" id="N15-Xg-h9L">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Gp2-lh-49G">
+                                <rect key="frame" x="0.0" y="44" width="375" height="685"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellReuseIdentifier" rowHeight="31" id="Gur-V4-vWU">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="31"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gur-V4-vWU" id="qMU-OQ-bdp">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="30.666666666666668"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xdH-8S-qq1" firstAttribute="bottom" secondItem="Gp2-lh-49G" secondAttribute="bottom" id="TvA-Cj-HXY"/>
+                            <constraint firstItem="Gp2-lh-49G" firstAttribute="top" secondItem="xdH-8S-qq1" secondAttribute="top" id="VLq-nQ-qwM"/>
+                            <constraint firstItem="Gp2-lh-49G" firstAttribute="leading" secondItem="xdH-8S-qq1" secondAttribute="leading" id="gm6-2i-8YF"/>
+                            <constraint firstItem="xdH-8S-qq1" firstAttribute="trailing" secondItem="Gp2-lh-49G" secondAttribute="trailing" id="sig-M7-f6Y"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xdH-8S-qq1"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Schedule" image="ScheduleTabBarIcon" id="TOk-si-BoW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vL-px-MZp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="212" y="292"/>
+            <point key="canvasLocation" x="212" y="291.87192118226602"/>
         </scene>
         <!--Tab Bar-->
         <scene sceneID="nyp-he-ivW">
@@ -376,8 +398,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MapTabBarIcon" width="70" height="60"/>
-        <image name="ScheduleTabBarIcon" width="70" height="61"/>
-        <image name="SettingsTabBarIcon" width="70" height="61"/>
+        <image name="MapTabBarIcon" width="23" height="20"/>
+        <image name="ScheduleTabBarIcon" width="23" height="20"/>
+        <image name="SettingsTabBarIcon" width="23" height="20"/>
     </resources>
 </document>
