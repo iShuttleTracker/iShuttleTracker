@@ -12,6 +12,7 @@ import MapKit
 import UserNotifications
 
 var shuttleNames = [Int:String]()
+var colors = [Int:String]()
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
@@ -62,6 +63,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Data
         initStops()
         initRoutes()
+        for route in routes{
+            print("we are on " + String(route.key) + " and the color is " + route.value.color)
+            colors[route.key] = route.value.color;
+        }
+        
         initVehicles()
         initUpdates()
         
@@ -217,7 +223,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         //display new updates
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading), route_id: update.route_id)
             mapView.addAnnotation(shuttle)
             currentUpdates.append(shuttle)
         }

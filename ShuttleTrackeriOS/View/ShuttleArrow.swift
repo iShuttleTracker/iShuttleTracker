@@ -36,9 +36,16 @@ class ShuttleArrow:MKAnnotationView {
             //adjust later for color/rotation
             var tempImage = UIImage(named: shuttle.imageName!)
             
+            
             //fix this
             tempImage = tempImage!.rotate(radians: Float(Float(shuttle.heading-45) * Float(Float.pi/180)))
             tempImage = tempImage!.imageWithSize(size: CGSize(width: tempImage!.size.width * 1.5, height: tempImage!.size.height * 1.5))
+            
+            print("We are on the route " + String(shuttle.route_id));
+            print("The color is " + colors[shuttle.route_id]!)
+            
+            tempImage = tempImage!.imageWithColor(color1: UIColor(hexString: colors[shuttle.route_id]!));
+            
             image = tempImage
         }
     }
