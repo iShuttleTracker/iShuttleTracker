@@ -73,20 +73,16 @@ struct Vehicle: CustomStringConvertible {
     
     /**
      Estimates the current position of this Vehicle based on the previous Updates received.
-     - Returns: A Point corresponding to the current estimated position for this Vehicle.
+     - Returns: An index corresponding to the Point the shuttle should be at on its current route.
      */
-    func estimateCurrentPosition() -> Point {
+    func estimateCurrentPosition() -> Int {
         print("\(id): before: \(closest_point_index)")
-        // 0.621371192 is the same constant used in the web app to initially convert from
-        // KM/H to MPH when pulling from the data feed, so we're not losing any precision
-        let metersPerSecond = (last_update.speed / 0.621371192) / 3.6
+        // Seems like speeds from the datafeed are actually in KM/H, not MPH
+        let metersPerSecond = last_update.speed / 3.6
         // predictedDistance represents the distance that the shuttle would have traveled since
         // the last update if its speed remained the same
-        print("m/s: \(metersPerSecond)")
-        print("seconds since: \(secondsSince(update: last_update))")
         let predictedDistance = metersPerSecond * secondsSince(update: last_update)
-        print("Predicted distance: \(predictedDistance)")
-        // start represents the closest point in the route to the the vehicle's actual position
+        //print("Predicted distance for vehicle \(vehicle_id): \(predictedDistance)")
         var elapsedDistance = 0.0
         var index = closest_point_index
         while elapsedDistance < predictedDistance {
@@ -97,8 +93,7 @@ struct Vehicle: CustomStringConvertible {
             }
             elapsedDistance += last_update.route.points[index].distanceFrom(p: last_update.route.points[prevIndex])
         }
-        print("\(id): after: \(index)")
-        return last_update.route.points[index]
+        return index
     }
     
     /**
