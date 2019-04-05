@@ -24,18 +24,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
     @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
+    // Used to keep track of the user's most recent location
     let locationManager = CLLocationManager()
     
+    // Set this to false to disable shuttle predictions (for debugging only)
+    let predictPositions = true
     
-    var items:[String] = ["All routes"]
+    // Stores all the currently enabled routes
+    var items: [String] = ["All routes"]
     
-    var currentUpdates:[MKAnnotation] = []
+    // Stores the last unique updates received, can be checked against the global updates to see if
+    // annotations should be updated
+    var recentUpdates: [Update] = []
     
-    var recentUpdates:[Update] = []
-    
+    // The last time new updates were checked for (checked every 10 seconds)
     var lastUpdateTime: Date = Date()
     
-    
+    // The last time annotations were completely refreshed (refreshed every 5 minutes to remove any
+    // expired annotations)
+    var lastRefreshTime: Date = Date()
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
@@ -197,16 +204,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     //initial call to get the first updates and display them
     func displayVehicles(){
-        initStops();
-        initRoutes();
-        initVehicles();
-        for vehicle in vehicles{
+        initStops()
+        initRoutes()
+        initVehicles()
+        for vehicle in vehicles {
             shuttleNames[vehicle.value.id] = vehicle.value.name;
         }
         
         //uses shuttle asset instead of default marker
-        mapView.register(ShuttleArrow.self,
-                         forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ShuttleArrow.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         newUpdates();
         
         //crash resposible because repeated without parameters
@@ -214,37 +220,53 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    //add annotations to the view
+    /**
+     Updates the existing annotations on the map or adds new ones corresponding to the current updates.
+     */
     func newUpdates(){
-        //display new updates
         for update in updates {
             let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
-            //mapView.addAnnotation(shuttle)
             updateAnnotation(shuttle: shuttle)
-            //currentUpdates.append(shuttle)
+            recentUpdates.append(update)
         }
     }
     
+    /**
+     Estimates the current shuttle position based on how long it's been since the last update and the speed
+     the shuttle was traveling at in that update, then updates the annotations on the map.
+     */
     func estimate() {
         for (id, vehicle) in vehicles {
             // Only update this vehicle if it is on a valid route
             if vehicle.last_update.route.points.count > 0 {
-                let estimation = vehicle.estimateCurrentPosition()
-                // print("\(vehicle.id): \(estimation)")
-                // TODO: fix heading
-                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimation.latitude, longitude: estimation.longitude), heading: 0)
-                // mapView.addAnnotation(shuttle)
+                let estimationIndex = vehicle.estimateCurrentPosition()
+                var nextIndex = estimationIndex + 1
+                if nextIndex >= vehicle.last_update.route.points.count {
+                    nextIndex = 0
+                }
+                // TODO: fix heading, doesn't seem to be calculated correctly
+                let estimationPoint = vehicle.last_update.route.points[estimationIndex]
+                let nextPoint = vehicle.last_update.route.points[nextIndex]
+                let deltaLatitude = nextPoint.latitude - estimationPoint.latitude
+                let deltaLongitude = nextPoint.longitude - estimationPoint.longitude
+                let heading = Int(atan2(deltaLatitude, deltaLongitude) * 180 / .pi)
+                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: Int(heading))
                 updateAnnotation(shuttle: shuttle)
-                //currentUpdates.append(shuttle)
             }
         }
     }
     
+    /**
+     Updates the annotation on the map corresponding to the given shuttle, or adds a new annotation if none
+     exist with the same vehicle ID.
+     - Parameter shuttle: The shuttle to update on the map
+     */
     func updateAnnotation(shuttle: Shuttle) {
         for i in 0..<mapView.annotations.count {
             if let shuttleAnnotation = mapView.annotations[i] as? Shuttle {
                 if shuttleAnnotation.vehicle_id == shuttle.vehicle_id {
                     shuttleAnnotation.coordinate = shuttle.coordinate
+                    shuttleAnnotation.heading = shuttle.heading
                     return
                 }
             }
@@ -253,19 +275,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    //the function for Timer to call
-    //deletes all annotations
-    //adds them back
+    /**
+     Called on a 1-second timer to either initialize updates or estimate shuttle positions then update
+     the annotations on the map.
+     */
     @objc func repeated(){
-        //mapView.removeAnnotations(currentUpdates)
-        currentUpdates.removeAll()
-        
-        // Check for updates every 10 seconds
-        if lastUpdateTime.timeIntervalSinceNow < -10 {
-            //fetch latest /updates feed
+        // Only check for new updates if shuttle prediction is turned off or it's been over 10 seconds since
+        // the last check
+        print(lastUpdateTime.timeIntervalSinceNow)
+        if !predictPositions || lastUpdateTime.timeIntervalSinceNow < -10 {
             initUpdates()
             lastUpdateTime = Date()
-            newUpdates()
+            if updates != recentUpdates {
+                recentUpdates.removeAll()
+                // Clear annotations every 5 minutes in order to remove expired ones
+                if lastRefreshTime.timeIntervalSinceNow < -300 {
+                    for annotation in mapView.annotations {
+                        mapView.removeAnnotation(annotation)
+                    }
+                }
+                newUpdates()
+            }
         } else {
             estimate()
         }

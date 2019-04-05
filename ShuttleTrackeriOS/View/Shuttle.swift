@@ -16,8 +16,8 @@ class Shuttle : NSObject, MKAnnotation {
     let route_id: Int
     let vehicle_name: String?
     let locationName: String
-    let heading: Int
-    var coordinate: CLLocationCoordinate2D
+    @objc dynamic var heading: Int
+    @objc dynamic var coordinate: CLLocationCoordinate2D
     
     /**
      
