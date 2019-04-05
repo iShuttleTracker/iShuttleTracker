@@ -27,8 +27,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Used to keep track of the user's most recent location
     let locationManager = CLLocationManager()
     
-    // Set this to false to disable shuttle predictions (for debugging only)
-    let predictPositions = true
+    // Set this to false to disable shuttle predictions. Currently for debugging purposes only, but should
+    // be manipulated through the settings panel in the future.
+    var predictPositions = false
     
     // Stores all the currently enabled routes
     var items: [String] = ["All routes"]
@@ -73,6 +74,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         initRoutes()
         initVehicles()
         initUpdates()
+        propagateUpdates()
         
         // View
         initRouteView()
@@ -145,14 +147,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             return
         }
         // TODO: Notify the user that some features will not be available
-    }
-    
-    @objc func update() {
-        initUpdates()
-        
-        // Try to send any notifications
-        tryNotifyTime()
-        tryNotifyNearby()
     }
     
     //    @objc func updateURL(){
@@ -247,10 +241,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 // TODO: fix heading, doesn't seem to be calculated correctly
                 let estimationPoint = vehicle.last_update.route.points[estimationIndex]
                 let nextPoint = vehicle.last_update.route.points[nextIndex]
-                let deltaLatitude = nextPoint.latitude - estimationPoint.latitude
-                let deltaLongitude = nextPoint.longitude - estimationPoint.longitude
-                let heading = Int(atan2(deltaLatitude, deltaLongitude) * 180 / .pi)
-                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: Int(heading))
+                let deltaLongitude = (nextPoint.longitude - estimationPoint.longitude);
+                let y = sin(deltaLongitude) * cos(nextPoint.latitude);
+                let x = cos(estimationPoint.latitude) * sin(nextPoint.latitude) - sin(estimationPoint.latitude)
+                    * cos(nextPoint.latitude) * cos(deltaLongitude);
+                let headingRad = atan2(y, x)
+                var headingDeg = Int(headingRad * 180 / .pi)
+                headingDeg = (headingDeg + 360) % 360;
+                headingDeg = 360 - headingDeg;
+                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg)
                 updateAnnotation(shuttle: shuttle)
             }
         }
@@ -282,11 +281,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @objc func repeated(){
         // Only check for new updates if shuttle prediction is turned off or it's been over 10 seconds since
         // the last check
-        print(lastUpdateTime.timeIntervalSinceNow)
+        //print(lastUpdateTime.timeIntervalSinceNow)
         if !predictPositions || lastUpdateTime.timeIntervalSinceNow < -10 {
             initUpdates()
             lastUpdateTime = Date()
             if updates != recentUpdates {
+                propagateUpdates()
+                tryNotifyTime()
+                tryNotifyNearby()
                 recentUpdates.removeAll()
                 // Clear annotations every 5 minutes in order to remove expired ones
                 if lastRefreshTime.timeIntervalSinceNow < -300 {

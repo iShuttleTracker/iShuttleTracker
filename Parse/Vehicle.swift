@@ -76,7 +76,6 @@ struct Vehicle: CustomStringConvertible {
      - Returns: An index corresponding to the Point the shuttle should be at on its current route.
      */
     func estimateCurrentPosition() -> Int {
-        print("\(id): before: \(closest_point_index)")
         // Seems like speeds from the datafeed are actually in KM/H, not MPH
         let metersPerSecond = last_update.speed / 3.6
         // predictedDistance represents the distance that the shuttle would have traveled since
