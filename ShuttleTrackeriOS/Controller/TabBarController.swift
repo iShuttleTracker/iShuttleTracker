@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomTabBar: UITabBarController {
+class TabBarController: UITabBarController {
     
     @IBInspectable var defaultIndex: Int = 1
     
