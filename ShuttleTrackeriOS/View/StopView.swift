@@ -9,22 +9,32 @@
 import UIKit
 import MapKit
 
-var stopViews:[StopView] = []
+var stopViews: [StopView] = []
 
 class StopView: NSObject, MKAnnotation {
-    var title: String?
-    var coordinate: CLLocationCoordinate2D
+    
+    var title: String? // The title of this stop
+    var coordinate: CLLocationCoordinate2D // The stop's coordinate
     var identifier = "Stop"
     
+    /**
+     Initializes a stop view
+     - Parameters:
+       - title: The title of this stop
+       - The stop's coordinate
+     */
     init(title: String, coordinate: CLLocationCoordinate2D){
         self.title = title
         self.coordinate = coordinate
     }
+    
 }
 
 
-// Display stops
-func initStopView(){
+/**
+ Initializes a stop view from each stop fetched from the datafeed
+ */
+func initStopViews() {
     for (_, stop) in stops {
         let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
         stopViews.append(StopView(title: stop.name, coordinate: coordinate))

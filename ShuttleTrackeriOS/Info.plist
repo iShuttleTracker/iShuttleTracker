@@ -23,7 +23,7 @@
 	<key>MGLMapboxAccessToken</key>
 	<string>pk.eyJ1IjoiYnF6aWMiLCJhIjoiY2ptOXhvajV1MDE3czNrbnduZWZoaGdyaCJ9.Fd-EYfuNfkuLzNITFJOCSQ</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We only use your location to send you a notification when a shuttle is nearby.</string>
+	<string>We only use your location to send you notifications when shuttles are nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Shows your location on the map and helps improve OpenStreetMap.</string>
 	<key>UIBackgroundModes</key>
