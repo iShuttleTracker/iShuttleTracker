@@ -9,7 +9,11 @@
 import UIKit
 
 class AddCell: UITableViewCell {
-
+    
+    @IBAction func addSchedule(_ sender: Any) {
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

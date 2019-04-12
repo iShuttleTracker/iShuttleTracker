@@ -10,6 +10,10 @@ import UIKit
 
 class SwitchCell: UITableViewCell {
 
+    @IBAction func toggle(_ sender: Any) {
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
