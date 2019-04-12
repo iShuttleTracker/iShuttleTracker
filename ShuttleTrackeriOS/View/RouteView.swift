@@ -12,11 +12,11 @@ var routeViews:[String:RouteView] = [:]
 class RouteView {
     private var name: String                        // "East Campus"
     private var id: Int                             // id is the int stored in route
-    private var routePolyLine: CustomPolyline?      // Store the polyline of current route
+    var routePolyLine: CustomPolyline?      // Store the polyline of current route
     private var stopAnnotations: [MKAnnotation]?    // Store the corresponding stops
     private var color: UIColor                      // Color
     var isEnabled: Bool                             // Check if the route is displayed according to the web
-    var isDisplaying: Bool = false                  // Check if the route is displaying based on user input
+    var isDisplaying: Bool = false
     
 
     init(name: String, id: Int, isEnabled: Bool, color: String){
@@ -24,7 +24,15 @@ class RouteView {
         self.id = id
         self.isEnabled = isEnabled
         self.color = UIColor(hexString: color)
+        self.isDisplaying = false
     }
+    
+    // Check if the route is displaying based on user input
+//    var isDisplaying:Bool {
+//        didSet{
+//            //var vc = ViewController(nibName: nil, bundle: nil)
+//        }
+//    }
     
     func getName() -> String {
         return name
@@ -34,34 +42,17 @@ class RouteView {
         return id
     }
     
+    func getNotified(show: Bool) {
+        isDisplaying = show
+    }
+    
     func createRoute(polyline: CustomPolyline){
         self.routePolyLine = polyline
         polyline.color = color
-
     }
     
     func createStop(){
         
-    }
-    
-    // The initial display function
-    func display(to mapView: MKMapView){
-        if isEnabled{
-            mapView.addOverlay(routePolyLine!)
-            isDisplaying = true
-        }
-    }
-    
-    // Toggling routes function
-    func enable(to mapView: MKMapView){
-        isDisplaying = true
-        mapView.addOverlay(routePolyLine!)
-    }
-    
-    func disable(to mapView: MKMapView){
-        //mapView.removeAnnotations(stopAnnotations!)
-        isDisplaying = false
-        mapView.removeOverlay(routePolyLine!)
     }
 }
 

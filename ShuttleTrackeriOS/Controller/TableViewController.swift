@@ -15,19 +15,42 @@ class TableViewController: UITableViewController {
     
     private var sections = ["ROUTES", "NOTIFICATIONS", "NEARBY NOTIFICATIONS", "SCHEDULED TRIP NOTIFICATIONS"]
     
-    //private var route_cell = []
-    private var notification_cell = ["Enable nearby notifications", "Enable scheduled notifications"]
-    //private var nearbyNotification_cell = []
-    //private var scheduledNotification_cell = []
+    private var route_cell:[String] = []
+    private var notification_cell = ["Enable Nearby Notifications", "Enable Scheduled Notifications"]
+    private var nearbyNotification_cell:[String] = []
+    private var scheduledNotification_cell:[String] = []
+    private var section_cell:[[String]] = []
     
-    //private var section_cell = [route_cell, notification_cell, nearbyNofication_cell, scheduledNotification_cell]
+    // TODO: Need to call this function every time when the route list gets updated
+    func updateRouteCell() {
+        route_cell.removeAll()
+        for one_route in routeViews {
+            if one_route.value.isEnabled{
+                route_cell.append(one_route.key)
+            }
+        }
+    }
     
-
-
+    func updateNearbyNotificationCell() {
+        nearbyNotification_cell.removeAll()
+        for one_route in routeViews {
+            if one_route.value.isEnabled{
+                nearbyNotification_cell.append("Notify for " + one_route.key)
+            }
+        }
+    }
+    
+    func update(){
+        updateRouteCell()
+        updateNearbyNotificationCell()
+        section_cell = [route_cell, notification_cell, nearbyNotification_cell, scheduledNotification_cell]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        update()
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -42,7 +65,11 @@ class TableViewController: UITableViewController {
     // TODO: Each section has different number of cells
     //      Dynamically assign these cell names
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return section_cell[section].count
+    }
+    
+    @objc func switchChanged(_ sender : UISwitch!){
+        //routeViews[route_cell[sender.tag]]?.isDisplaying = sender.isOn
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -53,7 +80,15 @@ class TableViewController: UITableViewController {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Switches", for: indexPath)
-            cell.textLabel?.text = "Section \(indexPath.section) Row \(indexPath.row)"
+            
+            //here is programatically switch make to the table view
+            let switchView = UISwitch(frame: .zero)
+            switchView.setOn(false, animated: true)
+            switchView.tag = indexPath.row // for detect which row switch Changed
+            switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+            cell.accessoryView = switchView
+            
+            cell.textLabel?.text = section_cell[indexPath.section][indexPath.row]
             return cell
         }
     }

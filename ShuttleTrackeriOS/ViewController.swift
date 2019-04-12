@@ -20,7 +20,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     let locationManager = CLLocationManager()
     
-    
     var items:[String] = ["All routes"]
     
     var currentUpdates:[MKAnnotation] = []
@@ -30,9 +29,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
     // Stops before routes, routes before updates, vehicles before updates
+    // TODO: Need to get notified when the website enables/disables a route
     func displayRoutes(){
         for (_, route) in routeViews {
-            route.display(to: mapView)
+            if route.isEnabled {
+                mapView.addOverlay(route.routePolyLine!)
+                route.isDisplaying = true
+            }
         }
     }
     
@@ -50,6 +53,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    // Toggle Routes
+    // ??? func observe() {}
+    
+    func toggleRoute(routeName: String, show: Bool) {
+        if(show) {
+            mapView.addOverlay((routeViews[routeName]?.routePolyLine)!)
+        } else {
+            mapView.removeOverlay((routeViews[routeName]?.routePolyLine)!)
+        }
+    }
+    
     func initData(){
         // Data
         initStops()
@@ -60,14 +74,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // View
         initRouteView()
         initStopView()
-        
-        /*
-        // Settings
-        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
-        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
-        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
-        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
-        */
         
         checkEnabledRoutes()
     }
