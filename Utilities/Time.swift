@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Time: Comparable, Equatable {
+class Time: Comparable, Equatable, CustomStringConvertible {
     
     var hour : Int
     var minute: Int
@@ -20,6 +20,22 @@ class Time: Comparable, Equatable {
     */
     convenience init() {
         self.init(date: Date())
+    }
+    
+    var description: String {
+        let amOrPm = hour >= 12 ? "PM" : "AM"
+        let formattedHour = hour % 12
+        let formattedMinute = String(format: "%02d", minute)
+        return  "\(formattedHour):\(formattedMinute) \(amOrPm)"
+    }
+    
+    /**
+     Returns the number of seconds that have elapsed since the given time
+     - Parameter time: The time to check againsr
+     - Returns: The number of seconds since the given time
+    */
+    func secondsSince(time: Time) -> Int {
+        return time.secondsSinceBeginningOfDay - secondsSinceBeginningOfDay
     }
     
     /**

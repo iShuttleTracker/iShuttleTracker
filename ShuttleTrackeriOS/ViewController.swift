@@ -192,6 +192,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    /**
+     Adds an entry in notifyForNearbyIds with the given route ID.
+     - Parameter route_id: The route ID to add
+     */
+    func addRouteIDForNearbyNotification(route_id: Int) {
+        notifyForNearbyIds[route_id] = 0
+    }
+    
+    /**
+     Adds the given trip to notifyForTrips.
+     - Parameter trip: The trip to add
+     */
+    func addTripForNotification(trip: Trip) {
+        notifyForTrips.append(trip)
+    }
+    
     
     //initial call to get the first updates and display them
     func displayVehicles(){

@@ -14,6 +14,7 @@ struct Trip {
     var destination: Stop
     var getOnShuttleAt: Time
     var arriveBy: Time
+    var fiveMinuteWarning: Bool
     
     /**
      Initializes a new Trip from a start, destination, and arrival time.
@@ -26,6 +27,12 @@ struct Trip {
         // TODO: Once we have access to the schedule, set getOnShuttleAt to be whatever time a shuttle
         //       reaches start closest to it goes to destination at arriveBy
         self.getOnShuttleAt = Time()
+        self.fiveMinuteWarning = false
+    }
+    
+    static func == (lhs: Trip, rhs: Trip) -> Bool {
+        return lhs.start == rhs.start && lhs.destination == rhs.destination
+                && lhs.getOnShuttleAt == rhs.getOnShuttleAt && lhs.arriveBy == rhs.arriveBy
     }
     
 }

@@ -10,7 +10,7 @@ import Foundation
 
 var stops: [Int:Stop] = [:]
 
-struct Stop: CustomStringConvertible {
+struct Stop: CustomStringConvertible, Equatable {
     
     var id = 0
     var latitude = 0.0
@@ -59,6 +59,10 @@ struct Stop: CustomStringConvertible {
         Name: \(self.name)
         Description: \(self.desc)
         """
+    }
+    
+    static func == (lhs: Stop, rhs: Stop) -> Bool {
+        return lhs.id == rhs.id
     }
 
 }
