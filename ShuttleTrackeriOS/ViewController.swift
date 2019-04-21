@@ -47,6 +47,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
+    var last_estimations: [Int:Point] = [:]
+    
     // Stops before routes, routes before updates, vehicles before updates
     func displayRoutes(){
         for (_, route) in routeViews {
@@ -222,6 +224,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
+            
+            let distance = last_estimations[update.vehicle_id]!.distanceFrom(p: update.point)
+            print("Last estimation for vehicle \(update.vehicle_id) was \(distance) off")
         }
     }
     
@@ -230,6 +235,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
      the shuttle was traveling at in that update, then updates the annotations on the map.
      */
     func estimate() {
+        var updated_estimations: [Int] = []
         for (id, vehicle) in vehicles {
             // Only update this vehicle if it is on a valid route
             if vehicle.last_update.route.points.count > 0 {
@@ -241,16 +247,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 // TODO: fix heading, doesn't seem to be calculated correctly
                 let estimationPoint = vehicle.last_update.route.points[estimationIndex]
                 let nextPoint = vehicle.last_update.route.points[nextIndex]
-                let deltaLongitude = (nextPoint.longitude - estimationPoint.longitude);
-                let y = sin(deltaLongitude) * cos(nextPoint.latitude);
+                let deltaLongitude = (nextPoint.longitude - estimationPoint.longitude)
+                let y = sin(deltaLongitude) * cos(nextPoint.latitude)
                 let x = cos(estimationPoint.latitude) * sin(nextPoint.latitude) - sin(estimationPoint.latitude)
-                    * cos(nextPoint.latitude) * cos(deltaLongitude);
+                    * cos(nextPoint.latitude) * cos(deltaLongitude)
                 let headingRad = atan2(y, x)
                 var headingDeg = Int(headingRad * 180 / .pi)
-                headingDeg = (headingDeg + 360) % 360;
-                headingDeg = 360 - headingDeg;
+                headingDeg = (headingDeg + 360) % 360
+                headingDeg = 360 - headingDeg
                 let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg)
                 updateAnnotation(shuttle: shuttle)
+                last_estimations[vehicle.id] = estimationPoint
+                updated_estimations.append(vehicle.id)
+            }
+        }
+        for (id, location) in last_estimations {
+            if !updated_estimations.contains(id) {
+                last_estimations.removeValue(forKey: id)
             }
         }
     }
