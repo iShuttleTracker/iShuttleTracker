@@ -29,7 +29,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Set this to false to disable shuttle predictions. Currently for debugging purposes only, but should
     // be manipulated through the settings panel in the future.
-    var predictPositions = false
+    var predictPositions = true
     
     // Stores all the currently enabled routes
     var items: [String] = ["All routes"]
@@ -47,7 +47,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
-    var last_estimations: [Int:Point] = [:]
+    // Shuttle movement testing
+    var testing = true
+    var last_estimations: [Int:Point] = [:] // (key, value) = (vehicle ID, estimation)
+    var average_error_by_shuttle: [Int:(Double,Int)] = [:] // (key, value) = (vehicle ID, (total estimation error, entry count))
     
     // Stops before routes, routes before updates, vehicles before updates
     func displayRoutes(){
@@ -216,6 +219,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    func logEstimationError(update: Update) {
+        if testing {
+            let output_file = "vehicle-\(update.vehicle_id).txt"
+            let distance = last_estimations[update.vehicle_id]!.distanceFrom(p: update.point)
+            var prev_entry = (0.0, 0)
+            if average_error_by_shuttle.keys.contains(update.vehicle_id) {
+                prev_entry = average_error_by_shuttle[update.vehicle_id]!
+            }
+            let total_estimation_error = prev_entry.0 + distance
+            let entry_count = prev_entry.1 + 1
+            average_error_by_shuttle[update.vehicle_id] = (total_estimation_error, entry_count)
+            let diff = "\(update.time): diff = \(distance)"
+            print(diff)
+            writeToEndOfFile(filename: output_file, text: diff)
+        }
+    }
+    
+    func finalizeEstimationError(vehicle_id: Int) {
+        if testing {
+            let output_file = "vehicle_\(vehicle_id).txt"
+            var avg = 0.0
+            if average_error_by_shuttle.keys.contains(vehicle_id) {
+                if average_error_by_shuttle[vehicle_id]!.1 != 0 {
+                    avg = average_error_by_shuttle[vehicle_id]!.0 / Double(average_error_by_shuttle[vehicle_id]!.1)
+                }
+            }
+            let avg_diff = "avg_diff = \(avg)"
+            writeToEndOfFile(filename: output_file, text: avg_diff)
+        }
+    }
+    
     /**
      Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */
@@ -225,8 +259,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
             
-            let distance = last_estimations[update.vehicle_id]!.distanceFrom(p: update.point)
-            print("Last estimation for vehicle \(update.vehicle_id) was \(distance) off")
+            if testing {
+                if last_estimations.keys.contains(update.vehicle_id) {
+                    logEstimationError(update: update)
+                }
+            }
         }
     }
     
@@ -257,13 +294,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 headingDeg = 360 - headingDeg
                 let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg)
                 updateAnnotation(shuttle: shuttle)
-                last_estimations[vehicle.id] = estimationPoint
-                updated_estimations.append(vehicle.id)
+                
+                if testing {
+                    last_estimations[vehicle.id] = estimationPoint
+                    updated_estimations.append(vehicle.id)
+                }
             }
         }
-        for (id, location) in last_estimations {
-            if !updated_estimations.contains(id) {
-                last_estimations.removeValue(forKey: id)
+        
+        if testing {
+            for (vehicle_id, location) in last_estimations {
+                if !updated_estimations.contains(vehicle_id) {
+                    last_estimations.removeValue(forKey: vehicle_id)
+                    finalizeEstimationError(vehicle_id: vehicle_id)
+                }
             }
         }
     }
@@ -338,5 +382,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         initData()
         //        displayVehicles()
         
+        if testing {
+            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                print("Logging estimation errors in \(dir)")
+            }
+        }
     }
 }
