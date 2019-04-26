@@ -85,7 +85,7 @@ func fetchStops() -> String {
             } else {
                 if let usableData = data {
                     let dataString = String(data: usableData, encoding: .utf8)!
-                    writeJSON(filename: "stops.json", data: dataString)
+                    writeToFile(filename: "stops.json", data: dataString)
                     stopsData = dataString
                     semaphore.signal()
                 }
@@ -103,7 +103,7 @@ func fetchStops() -> String {
  */
 func initStops() {
     let file = "stops.json"
-    let dataString = !fileExists(filename: file) ? fetchStops() : readJSON(filename: file)
+    let dataString = !fileExists(filename: file) ? fetchStops() : readFromFile(filename: file)
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {

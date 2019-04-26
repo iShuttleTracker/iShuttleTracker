@@ -49,13 +49,11 @@ func writeToFile(filename: String, data: String) {
 func writeToEndOfFile(filename: String, text: String) {
     if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL =  dir.appendingPathComponent(filename)
-        if fileExists(filename: filename) {
-            if let fileHandle = FileHandle(forWritingAtPath: fileURL.path) {
-                let data = text.data(using: String.Encoding.utf8)!
-                fileHandle.seekToEndOfFile()
-                fileHandle.write(data)
-                fileHandle.closeFile()
-            }
+        if let fileHandle = FileHandle(forWritingAtPath: fileURL.path) {
+            let data = text.data(using: String.Encoding.utf8)!
+            fileHandle.seekToEndOfFile()
+            fileHandle.write(data)
+            fileHandle.closeFile()
         }
     }
 }

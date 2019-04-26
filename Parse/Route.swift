@@ -128,7 +128,7 @@ func fetchRoutes() -> String {
             } else {
                 if let usableData = data {
                     let dataString = String(data: usableData, encoding: .utf8)!
-                    writeJSON(filename: "routes.json", data: dataString)
+                    writeToFile(filename: "routes.json", data: dataString)
                     routesData = dataString
                     semaphore.signal()
                 }
@@ -146,7 +146,7 @@ func fetchRoutes() -> String {
  */
 func initRoutes() {
     let file = "routes.json"
-    let dataString = !fileExists(filename: file) ? fetchRoutes() : readJSON(filename: file)
+    let dataString = !fileExists(filename: file) ? fetchRoutes() : readFromFile(filename: file)
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
     for unique in json! {
