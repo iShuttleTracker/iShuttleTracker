@@ -19,10 +19,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var mapView: MKMapView!
     
     // Settings
-    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
-    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
-    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
-    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
+//    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
+//    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
+//    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
+//    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
     let locationManager = CLLocationManager()
     
@@ -39,8 +39,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Stops before routes, routes before updates, vehicles before updates
     func displayRoutes(){
-        for (_, route) in routeViews {
-            route.display(to: mapView)
+        for (name, _) in routeViews {
+            showRoute(of: name)
+        }
+    }
+    
+    func showRoute(of name: String) {
+        var rv = routeViews[name]
+        if rv!.isEnabled && !(rv!.isDisplaying){
+            mapView.addOverlay((rv?.routePolyLine!)!)
+        }
+        rv?.isDisplaying = true
+    }
+    
+    func hideRoute(of name: String) {
+        var rv = routeViews[name]
+        rv?.isDisplaying = false
+        
+        for overlay in mapView.overlays {
+            if overlay.title == name {
+                mapView.removeOverlay(overlay)
+                break
+            }
         }
     }
     
@@ -70,10 +90,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         initStopView()
         
         // Settings
-        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
-        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
-        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
-        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
+//        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
+//        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
+//        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
+//        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
         
         checkEnabledRoutes()
     }
@@ -150,47 +170,47 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     //        source.url=source.url;
     //    }
     
-    @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
-        if eastRouteSwitch.isOn {
-            print("Toggled east route on")
-            //            showRoute(name: "east")
-        } else {
-            print("Toggled east route off")
-            //            hideRoute(name: "east")
-        }
-    }
-    
-    @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
-        if westRouteSwitch.isOn {
-            print("Toggled west route on")
-            //            showRoute(name: "west")
-        } else {
-            print("Toggled west route off")
-            //            hideRoute(name: "west")
-        }
-    }
-    
-    @IBAction func nearbyNotificationsChanged(nearbyNotificationsSwitch: UISwitch) {
-        if nearbyNotificationsSwitch.isOn {
-            print("Toggled nearby notifications on")
-            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
-            //       panel visible. It should be hidden if this switch is toggled off.
-        } else {
-            print("Toggled nearby notifications off")
-            // TODO: Hide the "Nearby Notifications" section.
-        }
-    }
-    
-    @IBAction func scheduledNotificationsChanged(scheduledNotificationsSwitch: UISwitch) {
-        if scheduledNotificationsSwitch.isOn {
-            print("Toggled scheduled notifications on")
-            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
-            //       settings panel visible. It should be hidden if the switch is toggled off.
-        } else {
-            print("Toggled scheduled notifications off")
-            // TODO: Hide the "Scheduled Trips" section.
-        }
-    }
+//    @IBAction func eastRouteChanged(eastRouteSwitch: UISwitch) {
+//        if eastRouteSwitch.isOn {
+//            print("Toggled east route on")
+//            //            showRoute(name: "east")
+//        } else {
+//            print("Toggled east route off")
+//            //            hideRoute(name: "east")
+//        }
+//    }
+//
+//    @IBAction func westRouteChanged(westRouteSwitch: UISwitch) {
+//        if westRouteSwitch.isOn {
+//            print("Toggled west route on")
+//            //            showRoute(name: "west")
+//        } else {
+//            print("Toggled west route off")
+//            //            hideRoute(name: "west")
+//        }
+//    }
+//
+//    @IBAction func nearbyNotificationsChanged(nearbyNotificationsSwitch: UISwitch) {
+//        if nearbyNotificationsSwitch.isOn {
+//            print("Toggled nearby notifications on")
+//            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
+//            //       panel visible. It should be hidden if this switch is toggled off.
+//        } else {
+//            print("Toggled nearby notifications off")
+//            // TODO: Hide the "Nearby Notifications" section.
+//        }
+//    }
+//
+//    @IBAction func scheduledNotificationsChanged(scheduledNotificationsSwitch: UISwitch) {
+//        if scheduledNotificationsSwitch.isOn {
+//            print("Toggled scheduled notifications on")
+//            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
+//            //       settings panel visible. It should be hidden if the switch is toggled off.
+//        } else {
+//            print("Toggled scheduled notifications off")
+//            // TODO: Hide the "Scheduled Trips" section.
+//        }
+//    }
     
     
     //initial call to get the first updates and display them

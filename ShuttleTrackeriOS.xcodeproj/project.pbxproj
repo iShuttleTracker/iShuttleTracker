@@ -11,8 +11,6 @@
 		383157AB2240247D009FB2D4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* TabBarController.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
 		3895BD7922611E0400C27E47 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895BD7822611E0400C27E47 /* TableViewController.swift */; };
-		3895BD7B22611E2F00C27E47 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895BD7A22611E2F00C27E47 /* SwitchCell.swift */; };
-		3895BD7D22611E3D00C27E47 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3895BD7C22611E3D00C27E47 /* AddCell.swift */; };
 		389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
 		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
@@ -71,8 +69,6 @@
 		383157AA2240247D009FB2D4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		3895BD7822611E0400C27E47 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		3895BD7A22611E2F00C27E47 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
-		3895BD7C22611E3D00C27E47 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
 		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
@@ -154,8 +150,6 @@
 			children = (
 				383157AA2240247D009FB2D4 /* TabBarController.swift */,
 				3895BD7822611E0400C27E47 /* TableViewController.swift */,
-				3895BD7A22611E2F00C27E47 /* SwitchCell.swift */,
-				3895BD7C22611E3D00C27E47 /* AddCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -424,7 +418,6 @@
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
 				551B8788220CF48D00576E58 /* Time.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
-				3895BD7D22611E3D00C27E47 /* AddCell.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */,
 				55BB26A2216705BF00BBC615 /* Update.swift in Sources */,
@@ -433,7 +426,6 @@
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */,
 				9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */,
-				3895BD7B22611E2F00C27E47 /* SwitchCell.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
 				389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */,
 				55BB269E2166C28000BBC615 /* Stop.swift in Sources */,

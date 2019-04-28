@@ -9,15 +9,14 @@ import MapKit
 
 var routeViews:[String:RouteView] = [:]
 
-class RouteView {
+struct RouteView {
     private var name: String                        // "East Campus"
     private var id: Int                             // id is the int stored in route
-    private var routePolyLine: CustomPolyline?      // Store the polyline of current route
-    private var stopAnnotations: [MKAnnotation]?    // Store the corresponding stops
+    var routePolyLine: CustomPolyline?              // Store the polyline of current route
     private var color: UIColor                      // Color
     var isEnabled: Bool                             // Check if the route is displayed according to the web
     var isDisplaying: Bool = false                  // Check if the route is displaying based on user input
-    
+    //private var stopAnnotations: [MKAnnotation]?    // Store the corresponding stops
 
     init(name: String, id: Int, isEnabled: Bool, color: String){
         self.name = name
@@ -25,44 +24,7 @@ class RouteView {
         self.isEnabled = isEnabled
         self.color = UIColor(hexString: color)
     }
-    
-    func getName() -> String {
-        return name
-    }
-    
-    func getId() -> Int {
-        return id
-    }
-    
-    func createRoute(polyline: CustomPolyline){
-        self.routePolyLine = polyline
-        polyline.color = color
 
-    }
-    
-    func createStop(){
-        
-    }
-    
-    // The initial display function
-    func display(to mapView: MKMapView){
-        if isEnabled{
-            mapView.addOverlay(routePolyLine!)
-            isDisplaying = true
-        }
-    }
-    
-    // Toggling routes function
-    func enable(to mapView: MKMapView){
-        isDisplaying = true
-        mapView.addOverlay(routePolyLine!)
-    }
-    
-    func disable(to mapView: MKMapView){
-        //mapView.removeAnnotations(stopAnnotations!)
-        isDisplaying = false
-        mapView.removeOverlay(routePolyLine!)
-    }
 }
 
 func initRouteView(){
@@ -75,8 +37,10 @@ func initRouteView(){
             locations.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
         }
         let polyline = CustomPolyline(coordinates: &locations, count: locations.count)
-        let newRoute = RouteView(name: route.name, id: id, isEnabled: route.enabled, color: route.color)
-        newRoute.createRoute(polyline: polyline)
+        polyline.title = route.name
+        var newRoute = RouteView(name: route.name, id: id, isEnabled: route.enabled, color: route.color)
+        newRoute.routePolyLine = polyline
+        newRoute.routePolyLine?.color = UIColor(hexString: route.color)
         routeViews[route.name] = newRoute
     }
 }
