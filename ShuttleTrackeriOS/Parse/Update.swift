@@ -69,7 +69,6 @@ struct Update: CustomStringConvertible {
             }
         }
         self.point = Point(latitude: self.latitude, longitude: self.longitude)
-        print("Finished JSON initialization for update \(self.id)")
     }
     
     var description:String {

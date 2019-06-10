@@ -27,10 +27,10 @@ class Shuttle : NSObject, MKAnnotation {
        - coordinate: Where the marker should be
        - heading: Amount to rotate the shuttle marker by
      */
-    init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int) {
+    init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int, route_id: Int) {
         self.vehicle_id = vehicle_id
         self.title = shuttleNames[vehicle_id]
-        self.route_id = 1
+        self.route_id = route_id
         self.vehicle_name = " "
         self.locationName = locationName
         self.coordinate = coordinate
