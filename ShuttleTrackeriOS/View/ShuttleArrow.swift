@@ -10,12 +10,11 @@ import Foundation
 import MapKit
 import UIKit
 
-
 /**
- Class responsible for overriding the default MapKit annotation of the red pin.
+ Class responsible for overriding the default MapKit annotation of the red pin
  
- Uses a UIImage that is declared in the Shuttle object, rotates the image using the heading field,
- and increases the size of the image slightly.
+ Uses a UIImage that is declared in the Shuttle object, rotates the heading field, increases the
+ size of the image slightly, and sets the color to the route color
  */
 class ShuttleArrow: MKAnnotationView {
     
@@ -26,12 +25,16 @@ class ShuttleArrow: MKAnnotationView {
             calloutOffset = CGPoint(x: -5, y: 5)
             rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             
-            // Adjust later for color/rotation
-            var tempImage = UIImage(named: shuttle.imageName!)
+            // Initialize, rotate, resize, and color the image
+            var tempImage = UIImage(named: shuttle.imageName!)!
+            tempImage = tempImage.rotate(radians: Float(Float(shuttle.heading - 45) * Float(Float.pi / 180)))!
+            tempImage = tempImage.imageWithSize(size: CGSize(width: tempImage.size.width * 1.5, height: tempImage.size.height * 1.5))
+            var color = "#cfcfcf"
+            if (routes[shuttle.route_id] != nil) {
+                color = routes[shuttle.route_id]!.color
+            }
+            tempImage = tempImage.imageWithColor(color1: UIColor(hexString: color))
             
-            // TODO: Fix this
-            tempImage = tempImage!.rotate(radians: Float(Float(shuttle.heading-45) * Float(Float.pi/180)))
-            tempImage = tempImage!.imageWithSize(size: CGSize(width: tempImage!.size.width * 1.5, height: tempImage!.size.height * 1.5))
             image = tempImage
         }
     }

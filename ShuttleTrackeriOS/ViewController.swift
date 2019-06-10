@@ -78,6 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Data
         initStops()
         initRoutes()
+        
         initVehicles()
         initUpdates()
         
@@ -264,7 +265,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func newUpdates() {
         // Add an annotation for each new update and append it to currentAnnotations
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading), route_id: update.route_id)
             mapView.addAnnotation(shuttle)
             currentAnnotations.append(shuttle)
         }
