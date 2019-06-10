@@ -38,4 +38,5 @@ class ShuttleArrow: MKAnnotationView {
             image = tempImage
         }
     }
+    
 }
