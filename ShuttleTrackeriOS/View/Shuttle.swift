@@ -20,12 +20,12 @@ class Shuttle : NSObject, MKAnnotation {
     let heading: Int
     
     /**
-     
-     constructor for a shuttle object to be displayed on the map
-     - Parameters: vehicle_id - unique vehicle ID
-     locationName - information to insert into pop up bubble
-     coordinate - where the marker should be
-     heading - amount to rotate the shuttle marker
+     Constructor for a shuttle object to be displayed on the map
+     - Parameters:
+       - vehicle_id: Unique vehicle ID
+       - locationName: Information to display in the pop-up bubble
+       - coordinate: Where the marker should be
+       - heading: Amount to rotate the shuttle marker by
      */
     init(vehicle_id: Int, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int) {
         self.vehicle_id = vehicle_id
@@ -40,7 +40,8 @@ class Shuttle : NSObject, MKAnnotation {
     }
     
     /**
-     function needed to return the pop up bubble information
+     Gets the pop-up bubble information
+     - Returns: locationName
      */
     var subtitle: String? {
         return locationName
