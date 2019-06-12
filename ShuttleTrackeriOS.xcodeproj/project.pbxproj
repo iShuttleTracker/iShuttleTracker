@@ -26,6 +26,9 @@
 		84CFFB3622385B5D0064D784 /* weekendE.csv in Resources */ = {isa = PBXBuildFile; fileRef = 84CFFB2E22385B5D0064D784 /* weekendE.csv */; };
 		84CFFB3722385B5D0064D784 /* MFEP.csv in Resources */ = {isa = PBXBuildFile; fileRef = 84CFFB2F22385B5D0064D784 /* MFEP.csv */; };
 		84CFFB3A22385B800064D784 /* weekendLN.csv in Resources */ = {isa = PBXBuildFile; fileRef = 84CFFB3922385B800064D784 /* weekendLN.csv */; };
+		84E231242261249D006DF8DA /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E231232261249D006DF8DA /* CustomCollectionViewCell.swift */; };
+		84E231262261286D006DF8DA /* CustomCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E231252261286D006DF8DA /* CustomCollectionViewController.swift */; };
+		84E2312822612D60006DF8DA /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E2312722612D60006DF8DA /* CustomCollectionViewLayout.swift */; };
 		9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B48F22135E9400EBBB39 /* Shuttle.swift */; };
 		9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */; };
 		925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925C73A92215BBAE00E77A14 /* ShuttleDisplay.swift */; };
@@ -91,6 +94,9 @@
 		84CFFB2E22385B5D0064D784 /* weekendE.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weekendE.csv; sourceTree = "<group>"; };
 		84CFFB2F22385B5D0064D784 /* MFEP.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MFEP.csv; sourceTree = "<group>"; };
 		84CFFB3922385B800064D784 /* weekendLN.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weekendLN.csv; sourceTree = "<group>"; };
+		84E231232261249D006DF8DA /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		84E231252261286D006DF8DA /* CustomCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewController.swift; sourceTree = "<group>"; };
+		84E2312722612D60006DF8DA /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9217B48F22135E9400EBBB39 /* Shuttle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shuttle.swift; sourceTree = "<group>"; };
 		9217B4912214AD1900EBBB39 /* ShuttleArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleArrow.swift; sourceTree = "<group>"; };
 		925C73A92215BBAE00E77A14 /* ShuttleDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuttleDisplay.swift; sourceTree = "<group>"; };
@@ -177,7 +183,7 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
-		9217F39E21644762008C847A /* Parse */ = {
+		84E2312222612350006DF8DA /* schedule */ = {
 			isa = PBXGroup;
 			children = (
 				84CFFB2D22385B5C0064D784 /* MFE.csv */,
@@ -188,6 +194,17 @@
 				84CFFB2922385B5C0064D784 /* SuW.csv */,
 				84CFFB3922385B800064D784 /* weekendLN.csv */,
 				84CFFB2E22385B5D0064D784 /* weekendE.csv */,
+				84E231232261249D006DF8DA /* CustomCollectionViewCell.swift */,
+				84E231252261286D006DF8DA /* CustomCollectionViewController.swift */,
+				84E2312722612D60006DF8DA /* CustomCollectionViewLayout.swift */,
+			);
+			name = schedule;
+			path = s;
+			sourceTree = "<group>";
+		};
+		9217F39E21644762008C847A /* Parse */ = {
+			isa = PBXGroup;
+			children = (
 				55BB26A3216708BC00BBC615 /* DataHandler.swift */,
 				928A17AA215C0B7F00A862B2 /* Route.swift */,
 				928A17AC215C0CE800A862B2 /* Point.swift */,
@@ -209,6 +226,7 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
+				84E2312222612350006DF8DA /* schedule */,
 				551B8786220CF45E00576E58 /* Utilities */,
 				55EC50AC21FBC30C0067EB8C /* Notifications */,
 				92A359EF21670DFD00DB3E2B /* Documentation */,
@@ -430,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
+				84E231242261249D006DF8DA /* CustomCollectionViewCell.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
 				383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
@@ -437,10 +456,12 @@
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
 				551B8788220CF48D00576E58 /* Time.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
+				84E231262261286D006DF8DA /* CustomCollectionViewController.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */,
 				55BB26A2216705BF00BBC615 /* Update.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
+				84E2312822612D60006DF8DA /* CustomCollectionViewLayout.swift in Sources */,
 				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
 				551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */,
