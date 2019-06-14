@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Black</key>
+	<string>电脑</string>
+	<key>BlackType</key>
+	<string>program</string>
+	<key>City</key>
+	<string>?</string>
+	<key>Country</key>
+	<string>?</string>
+	<key>Event</key>
+	<string>休闲游戏</string>
+	<key>Holding</key>
+	<string>[QBBNNRRPPPPPPPP] [QBBNNRPPPPP]</string>
+	<key>MBCAlternateVoice</key>
+	<string>com.apple.speech.synthesis.voice.Vicki</string>
+	<key>MBCBoardAngle</key>
+	<real>60</real>
+	<key>MBCBoardSpin</key>
+	<real>180</real>
+	<key>MBCBoardStyle</key>
+	<string>Wood</string>
+	<key>MBCListenForMoves</key>
+	<false/>
+	<key>MBCMinSearchTime</key>
+	<real>-2</real>
+	<key>MBCPieceStyle</key>
+	<string>Wood</string>
+	<key>MBCSearchTime</key>
+	<real>-2</real>
+	<key>MBCShowGameLog</key>
+	<false/>
+	<key>MBCSpeakHumanMoves</key>
+	<false/>
+	<key>MBCSpeakMoves</key>
+	<true/>
+	<key>Moves</key>
+	<string>d2d4
+d7d5
+c2c3
+b8c6
+d1d3
+g8f6
+c1f4
+f6e4
+f2f3
+e4d6
+e2e4
+d5e4
+f3e4
+c8g4
+e4e5
+d6f5
+f1e2
+g4e2
+e1e2
+c6d4
+c3d4
+f5d4
+e2e3
+c7c5
+b2b3
+e7e6
+g1f3
+f8e7
+f3d4
+c5d4
+d3d4
+d8d4
+e3d4
+e8g8
+h1f1
+f8c8
+a2a4
+c8c2
+b1a3
+c2g2
+a3b5
+g2c2
+d4d3
+c2b2
+d3c3
+b2e2
+a1d1
+a7a5
+d1d7
+e7c5
+d7b7
+a8c8
+b5c7
+e2a2
+f4d2
+c8d8
+b7b5
+a2d2
+b5c5
+d8d5
+c7d5
+d2d5
+c5d5
+e6d5
+f1d1
+f7f6
+e5f6
+g7f6
+d1d5
+g8f7
+d5a5
+f7e6
+a5a6
+e6e5
+b3b4
+f6f5
+a6a7
+h7h5
+a7e7
+e5d5
+e7f7
+d5e4
+b4b5
+e4e5
+b5b6
+e5d6
+f7f5
+h5h4
+b6b7
+d6c7
+f5f7
+c7b8
+a4a5
+h4h3
+a5a6
+b8a7
+f7h7
+a7b8
+h7h3
+b8c7
+h3h7
+c7b8
+h2h4
+b8a7
+h4h5
+a7b8
+h7e7
+b8a7
+h5h6
+a7b8
+h6h7
+b8a7
+e7e6
+a7b8
+h7h8Q
+b8c7
+b7b8Q
+c7d7
+h8g8
+</string>
+	<key>Position</key>
+	<string>1Q4Q1/3k4/P3R3/8/8/2K5/8/8 b - - 2 60</string>
+	<key>Result</key>
+	<string>1/2-1/2</string>
+	<key>StartDate</key>
+	<string>2017.08.15</string>
+	<key>StartTime</key>
+	<string>05:47:57</string>
+	<key>Variant</key>
+	<string>normal</string>
+	<key>White</key>
+	<string>zrysnd</string>
+	<key>WhiteType</key>
+	<string>human</string>
+</dict>
+</plist>

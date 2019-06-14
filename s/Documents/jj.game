@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Black</key>
+	<string>电脑</string>
+	<key>BlackType</key>
+	<string>program</string>
+	<key>City</key>
+	<string>?</string>
+	<key>Country</key>
+	<string>?</string>
+	<key>Event</key>
+	<string>休闲游戏</string>
+	<key>Holding</key>
+	<string>[QBBNNPPPPPPP] [QBBNNRPPPP]</string>
+	<key>MBCAlternateVoice</key>
+	<string>com.apple.speech.synthesis.voice.Vicki</string>
+	<key>MBCBoardAngle</key>
+	<real>60</real>
+	<key>MBCBoardSpin</key>
+	<real>180</real>
+	<key>MBCBoardStyle</key>
+	<string>Wood</string>
+	<key>MBCListenForMoves</key>
+	<false/>
+	<key>MBCMinSearchTime</key>
+	<real>-2</real>
+	<key>MBCPieceStyle</key>
+	<string>Wood</string>
+	<key>MBCSearchTime</key>
+	<real>-2</real>
+	<key>MBCShowGameLog</key>
+	<false/>
+	<key>MBCSpeakHumanMoves</key>
+	<false/>
+	<key>MBCSpeakMoves</key>
+	<true/>
+	<key>Moves</key>
+	<string>d2d4
+d7d6
+c2c3
+b8c6
+e2e4
+g8f6
+d1f3
+c8g4
+f3g3
+e7e6
+f1e2
+h7h5
+e4e5
+d6e5
+d4e5
+g4e2
+g1e2
+f6e4
+g3f3
+f7f5
+e2g3
+d8h4
+g3f5
+e6f5
+f3f5
+f8e7
+b1d2
+e4c5
+d2f3
+h4c4
+c1e3
+c5e4
+a1d1
+a7a5
+e5e6
+e7c5
+f3g5
+c5e3
+f2e3
+e4g5
+f5g5
+c4e6
+g5g7
+h8f8
+e1e2
+e6a2
+d1d2
+a8c8
+h2h3
+a2c4
+d2d3
+b7b5
+g2g4
+h5g4
+h3g4
+a5a4
+g7g6
+f8f7
+g6g8
+f7f8
+g8c4
+b5c4
+d3d5
+c8b8
+d5c5
+b8b6
+c5c4
+b6a6
+g4g5
+f8f5
+h1h8
+e8d7
+h8h7
+d7c8
+g5g6
+c6e5
+g6g7
+e5c4
+g7g8Q
+c8b7
+g8c4
+a6c6
+c4a4
+c6f6
+a4c4
+b7c8
+h7h8
+c8b7
+c4b4
+b7c6
+h8c8
+f5f2
+e2e1
+f6f5
+b4e4
+c6d6
+b2b4
+f5f3
+c8d8
+</string>
+	<key>Position</key>
+	<string>3R4/2p5/3k4/8/1P2Q3/2P1Pr2/5r2/4K3 b - - 2 50</string>
+	<key>Result</key>
+	<string>1-0</string>
+	<key>StartDate</key>
+	<string>2017.08.15</string>
+	<key>StartTime</key>
+	<string>06:13:55</string>
+	<key>Variant</key>
+	<string>normal</string>
+	<key>White</key>
+	<string>zrysnd</string>
+	<key>WhiteType</key>
+	<string>human</string>
+</dict>
+</plist>
