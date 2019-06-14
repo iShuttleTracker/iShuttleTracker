@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		115866CA22AADECA0026455E /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115866C922AADECA0026455E /* Notification.swift */; };
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
 		383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* CustomTabBar.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		115866C922AADECA0026455E /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		383157AA2240247D009FB2D4 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				386CFB7B22160D76001FE9B7 /* StopView.swift */,
 				389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */,
 				383157AA2240247D009FB2D4 /* CustomTabBar.swift */,
+				115866C922AADECA0026455E /* Notification.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				115866CA22AADECA0026455E /* Notification.swift in Sources */,
 				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
 				383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */,
@@ -592,7 +596,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YF49BFK2ZP;
+				DEVELOPMENT_TEAM = R422FL7C6R;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -602,7 +606,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.wtg.ShuttleTrackeriOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enzhelu.ShuttleTrackeriOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -614,7 +618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YF49BFK2ZP;
+				DEVELOPMENT_TEAM = R422FL7C6R;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -624,7 +628,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.github.wtg.ShuttleTrackeriOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.enzhelu.ShuttleTrackeriOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

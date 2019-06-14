@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x1D-Ti-9CG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x1D-Ti-9CG">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -278,6 +278,9 @@
                                                     <rect key="frame" x="320" y="0.0" width="39" height="42"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                     <state key="normal" title="+"/>
+                                                    <connections>
+                                                        <segue destination="oIZ-wU-PIh" kind="show" id="1n9-y3-mPM"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -374,10 +377,51 @@
             </objects>
             <point key="canvasLocation" x="212" y="-1090.6403940886701"/>
         </scene>
+        <!--Notification-->
+        <scene sceneID="gXr-gi-e2p">
+            <objects>
+                <viewController id="oIZ-wU-PIh" customClass="Notification" customModule="ShuttleTrackeriOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jAZ-BX-kOE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="picker1" translatesAutoresizingMaskIntoConstraints="NO" id="io8-HM-Mnf">
+                                <rect key="frame" x="0.0" y="119" width="375" height="102"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <pickerView tag="1" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="picker2" translatesAutoresizingMaskIntoConstraints="NO" id="edd-ef-ATx">
+                                <rect key="frame" x="0.0" y="288" width="375" height="102"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ndk-ee-H1b">
+                                <rect key="frame" x="42" y="452" width="290" height="179"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="581970771.79329395">
+                                    <!--2019-06-11 18:32:51 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="timeDidChanged:" destination="oIZ-wU-PIh" eventType="editingDidEnd" id="PGL-vn-IDb"/>
+                                    <action selector="timeDidChanged:" destination="oIZ-wU-PIh" eventType="valueChanged" id="jc5-nV-jMz"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="lww-FD-2JM"/>
+                    </view>
+                    <connections>
+                        <outlet property="beginStop" destination="io8-HM-Mnf" id="mh4-TL-GQX"/>
+                        <outlet property="endStop" destination="edd-ef-ATx" id="GrI-98-Mi8"/>
+                        <outlet property="targetArrivalTime" destination="Ndk-ee-H1b" id="FMm-TB-ofj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d4x-vH-CBm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1269.5999999999999" y="-1091.3793103448277"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="MapTabBarIcon" width="70" height="60"/>
-        <image name="ScheduleTabBarIcon" width="70" height="61"/>
-        <image name="SettingsTabBarIcon" width="70" height="61"/>
+        <image name="MapTabBarIcon" width="23.333333969116211" height="20"/>
+        <image name="ScheduleTabBarIcon" width="23.333333969116211" height="20.333333969116211"/>
+        <image name="SettingsTabBarIcon" width="23.333333969116211" height="20.333333969116211"/>
     </resources>
 </document>

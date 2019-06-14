@@ -104,6 +104,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         func initMap(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+//            print(coordinateRegion.)
             mapView.setRegion(coordinateRegion, animated: true)
             mapView.isRotateEnabled = false;
             mapView.delegate = self;
