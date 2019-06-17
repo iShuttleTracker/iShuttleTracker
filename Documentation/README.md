@@ -1,15 +1,13 @@
 # Endpoints
 
 Data in the app is gathered from four main endpoints on the Shuttle Tracker
-website:
-
+website:  
 ```
 shuttles.rpi.edu/vehicles
                 /routes
                 /stops
                 /updates
 ```
-
 Each endpoint stores JSON data, the entries of which are summarized below.
 
 ## Vehicles
@@ -23,12 +21,12 @@ Each endpoint stores JSON data, the entries of which are summarized below.
   "tracker_id": "1831394663"
 }
 ```
-`id`: The id of the vehicle, from 1 to 11
-`name`: The name of the vehicle (ex. `Bus 95` or `Van 87`)
-`created`: The timestamp of when this vehicle entry was created
-`updated`: The timestamp of when this entry was last updated
-`enabled`: Seems to always be true
-`tracker_id`: Unknown what this represents
+`id`: The id of the vehicle, from 1 to 11  
+`name`: The name of the vehicle (ex. `Bus 95` or `Van 87`)  
+`created`: The timestamp of when this vehicle entry was created  
+`updated`: The timestamp of when this entry was last updated  
+`enabled`: Seems to always be true  
+`tracker_id`: Unknown what this represents  
 
 ## Routes
 ```
@@ -62,20 +60,20 @@ Each endpoint stores JSON data, the entries of which are summarized below.
 ```
 `id`: The id of the route (1 for West Campus, 2 for East Campus, 3 for
 Weekend/Late Night, 4 for East Inclement Weather Route, 5 for West Inclement
-Weather Route, 10 for Arch East Campus)
-`name`: The name of the route
-`description`: Appears to be always empty
+Weather Route, 10 for Arch East Campus)  
+`name`: The name of the route  
+`description`: Appears to be always empty  
 `enabled`: Whether or not this route is currently enabled (ex. typically only
-West Campus and East Campus are enabled)
-`color`: The hex color of the route outline on the map
-`width`: The width of the route outline on the map
-`stop_ids`: A list of the ids of stops in this route
-`created`: The timestamp of when this route entry was created
-`updated`: The timestamp of when this entry was last updated
+West Campus and East Campus are enabled)  
+`color`: The hex color of the route outline on the map  
+`width`: The width of the route outline on the map  
+`stop_ids`: A list of the ids of stops in this route  
+`created`: The timestamp of when this route entry was created  
+`updated`: The timestamp of when this entry was last updated  
 `points`: A list of points (a pair of `latitude` and `longitude` values) that
-make up the route
-`active`: Appears to always be true
-`schedule`: Appears to always be empty
+make up the route  
+`active`: Appears to always be true  
+`schedule`: Appears to always be empty  
 
 ## Stops
 ```
@@ -89,13 +87,13 @@ make up the route
   "description": "Shuttle stop in front of the Student Union"
 }
 ```
-`id`: The id of the stop, from 1 to 21
-`latitude`: The latitude of the stop
-`longitude`: The longitude of the stop
-`created`: The timestamp of when this stop entry was created
-`updated`: The timestamp of when this entry was last updated
-`name`: The name of the stop
-`description`: The description of where the stop is
+`id`: The id of the stop, from 1 to 21  
+`latitude`: The latitude of the stop  
+`longitude`: The longitude of the stop  
+`created`: The timestamp of when this stop entry was created  
+`updated`: The timestamp of when this entry was last updated  
+`name`: The name of the stop  
+`description`: The description of where the stop is  
 
 ## Updates
 ```
@@ -112,14 +110,14 @@ make up the route
   "route_id": null
 }
 ```
-`id`: The id of the update
-`tracker_id`: Unknown what this represents
-`latitude`: The latitude of vehicle at this update
-`longitude`: The longitude of the vehicle at this update
-`heading`: The angle of the vehicle with north at this update
-`speed`: The speed of the vehicle at this update, in km/h
-`time`: The timestamp of when this update was sent
-`created`: The timestamp of when this update was received
-`vehicle_id`: The id of the vehicle this update is for
-`route_id`: The id of the route the vehicle is on
+`id`: The id of the update  
+`tracker_id`: Unknown what this represents  
+`latitude`: The latitude of vehicle at this update  
+`longitude`: The longitude of the vehicle at this update  
+`heading`: The angle of the vehicle with north at this update  
+`speed`: The speed of the vehicle at this update, in km/h  
+`time`: The timestamp of when this update was sent  
+`created`: The timestamp of when this update was received  
+`vehicle_id`: The id of the vehicle this update is for  
+`route_id`: The id of the route the vehicle is on  
 
