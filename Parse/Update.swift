@@ -120,7 +120,7 @@ func fetchUpdates() -> Data {
 func initUpdates() {
     let data = fetchUpdates()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
-    updates.removeAll() 
+    updates.removeAll()
     for unique in json! {
         let update = Update(json:unique as! NSDictionary)
         updates.append(update!)
