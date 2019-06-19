@@ -97,7 +97,7 @@ func tryNotifyNearby() {
     }
     
     // Count down on each nearby notification timer that is still > 0
-    for (route_id, timer) in notifyForNearbyIds {
+    for (route_id, _) in notifyForNearbyIds {
         if notifyForNearbyIds[route_id]! > 0 {
             notifyForNearbyIds[route_id]! += -1
         }

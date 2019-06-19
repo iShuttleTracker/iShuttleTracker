@@ -5,7 +5,6 @@
 //  Created by Andrew Qu on 9/18/18.
 //  Copyright ¬© 2018 WTG. All rights reserved.
 //
-
 import UIKit
 import MapKit
 
@@ -13,7 +12,6 @@ import UserNotifications
 
 var shuttleNames = [Int:String]() // Stores vehicle IDs as keys and vehicle names as keys
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
-
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // The map where all the info is displayed
@@ -28,18 +26,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Keeps track of the user's location
     let locationManager = CLLocationManager()
     
+    // Set this to false to disable shuttle predictions. Currently for debugging purposes only, but should
+    // be manipulated through the settings panel in the future.
+    var predictPositions = false
+    
     // Stores the names of the currently active routes
     var items: [String] = ["All routes"]
     
     // The current annotations shown on the map
     var currentAnnotations: [MKAnnotation] = []
     
-    // The most recently received updates, checked against when seeing if there are any new updates
+    // Stores the last unique updates received, can be checked against the global updates to see if
+    // annotations should be updated
     var recentUpdates: [Update] = []
+    
+    // The last time new updates were checked for (checked every 10 seconds)
+    var lastUpdateTime: Date = Date()
+    
+    // The last time annotations were completely refreshed (refreshed every 5 minutes to remove any
+    // expired annotations)
+    var lastRefreshTime: Date = Date()
     
     // No idea what this is
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-
+    
     /**
      Displays routes on the map by adding polylines for each route
      */
@@ -81,6 +91,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         initVehicles()
         initUpdates()
+        
+        propagateUpdates()
         
         // View
         initRouteViews()
@@ -255,41 +267,96 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         newUpdates()
         
         // Crash resposible because repeated without parameters
-        _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
         
     }
     
     /**
-     Called when new updates are received to add them to recentUpdates and add new annotations to the map
+     Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */
-    func newUpdates() {
-        // Add an annotation for each new update and append it to currentAnnotations
+    func newUpdates(){
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading), route_id: update.route_id)
-            mapView.addAnnotation(shuttle)
-            currentAnnotations.append(shuttle)
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
+            updateAnnotation(shuttle: shuttle)
+            recentUpdates.append(update)
         }
-        
-        // These are now the most recent updates
-        recentUpdates = updates;
+    }
+    
+    /**
+     Estimates the current shuttle position based on how long it's been since the last update and the speed
+     the shuttle was traveling at in that update, then updates the annotations on the map.
+     */
+    func estimate() {
+        for (id, vehicle) in vehicles {
+            // Only update this vehicle if it is on a valid route
+            if vehicle.last_update.route.points.count > 0 {
+                let estimationIndex = vehicle.estimateCurrentPosition()
+                var nextIndex = estimationIndex + 1
+                if nextIndex >= vehicle.last_update.route.points.count {
+                    nextIndex = 0
+                }
+                // TODO: fix heading, doesn't seem to be calculated correctly
+                let estimationPoint = vehicle.last_update.route.points[estimationIndex]
+                let nextPoint = vehicle.last_update.route.points[nextIndex]
+                let deltaLongitude = (nextPoint.longitude - estimationPoint.longitude);
+                let y = sin(deltaLongitude) * cos(nextPoint.latitude);
+                let x = cos(estimationPoint.latitude) * sin(nextPoint.latitude) - sin(estimationPoint.latitude)
+                    * cos(nextPoint.latitude) * cos(deltaLongitude);
+                let headingRad = atan2(y, x)
+                var headingDeg = Int(headingRad * 180 / .pi)
+                headingDeg = (headingDeg + 360) % 360;
+                headingDeg = 360 - headingDeg;
+                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
+                updateAnnotation(shuttle: shuttle)
+            }
+        }
+    }
+    
+    /**
+     Updates the annotation on the map corresponding to the given shuttle, or adds a new annotation if none
+     exist with the same vehicle ID.
+     - Parameter shuttle: The shuttle to update on the map
+     */
+    func updateAnnotation(shuttle: Shuttle) {
+        for i in 0..<mapView.annotations.count {
+            if let shuttleAnnotation = mapView.annotations[i] as? Shuttle {
+                if shuttleAnnotation.vehicle_id == shuttle.vehicle_id {
+                    shuttleAnnotation.coordinate = shuttle.coordinate
+                    shuttleAnnotation.heading = shuttle.heading
+                    return
+                }
+            }
+        }
+        mapView.addAnnotation(shuttle)
     }
     
     
     /**
-     Called once per second on a timer to handle new updates. If new updates were received, all annotations are
-     removed from the map and new ones are added. This implementation has been fixed in PR #49.
+     Called on a 1-second timer to either initialize updates or estimate shuttle positions then update
+     the annotations on the map.
      */
     @objc func update() {
-        // Fetch latest updates from the datafeed
-        initUpdates()
-        if updates == recentUpdates {
-            // No change
-            return
+        // Only check for new updates if shuttle prediction is turned off or it's been over 10 seconds since
+        // the last check
+        //print(lastUpdateTime.timeIntervalSinceNow)
+        if !predictPositions || lastUpdateTime.timeIntervalSinceNow < -10 {
+            initUpdates()
+            lastUpdateTime = Date()
+            if updates != recentUpdates {
+                propagateUpdates()
+                tryNotifyTime()
+                tryNotifyNearby()
+                recentUpdates.removeAll()
+                // Clear annotations every 5 minutes in order to remove expired ones
+                if lastRefreshTime.timeIntervalSinceNow < -300 {
+                    for annotation in mapView.annotations {
+                        mapView.removeAnnotation(annotation)
+                    }
+                }
+                newUpdates()
+            }
         } else {
-            // Only remove current annotations if there are new updates
-            mapView.removeAnnotations(currentAnnotations)
-            currentAnnotations.removeAll()
-            newUpdates()
+            estimate()
         }
     }
     
@@ -321,5 +388,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         initData()
         // displayVehicles()
     }
-
+    
 }

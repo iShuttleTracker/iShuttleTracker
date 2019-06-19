@@ -5,7 +5,6 @@
 //  Created by Matt Czyr on 10/2/18.
 //  Copyright © 2018 WTG. All rights reserved.
 //
-
 var updates: [Update] = []
 
 import Foundation
@@ -87,6 +86,14 @@ struct Update: CustomStringConvertible {
         """
     }
     
+    /**
+     Gets the rotation for marker display.
+     - Returns: The rotation for display of the Vehicle represented by this Update.
+     */
+    func getRotation() -> Int {
+        return heading - 45;
+    }
+    
 }
 
 /**
@@ -120,11 +127,19 @@ func fetchUpdates() -> Data {
 func initUpdates() {
     let data = fetchUpdates()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
-    updates.removeAll() 
+    updates.removeAll()
     for unique in json! {
         let update = Update(json:unique as! NSDictionary)
-        vehicles[update!.vehicle_id]!.update(update: update!)
         updates.append(update!)
+    }
+}
+
+/**
+ Propogates each update to the respective vehicle.
+ */
+func propagateUpdates() {
+    for update in updates {
+        vehicles[update.vehicle_id]!.update(update: update)
     }
 }
 

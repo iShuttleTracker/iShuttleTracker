@@ -21,6 +21,13 @@ struct Stop: CustomStringConvertible, Equatable {
     var desc = ""
     
     /**
+     Initializes a new Stop with default values.
+     - Returns: A new Stop with default values.
+     */
+    init?() {
+    }
+    
+    /**
      Initializes a new Stop.
      - Returns: A new Stop from the data contained in the dictionary
      */
@@ -46,7 +53,6 @@ struct Stop: CustomStringConvertible, Equatable {
                 print("Unknown (key/value) pair in a stop: (\(key)/\(value))")
             }
         }
-//        print("Finished JSON initialization for stop \(self.id)")
     }
     
     var description: String {

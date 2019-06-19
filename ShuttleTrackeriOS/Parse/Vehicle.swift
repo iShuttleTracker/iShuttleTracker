@@ -45,7 +45,6 @@ struct Vehicle: CustomStringConvertible {
                 print("Unknown (key/value) pair in a vehicle: (\(key)/\(value))")
             }
         }
-//        print("Finished JSON initialization for vehicle \(self.id)")
     }
     
     /**
@@ -54,16 +53,16 @@ struct Vehicle: CustomStringConvertible {
      */
     mutating func update(update: Update) {
         last_update = update
-        let start = Point(update: last_update)
+        let start = last_update.point
         var minIndex = 0
-        var minDistance = 0.0
+        var minDistance = -1.0
         for i in 0..<last_update.route.points.count {
             if last_update.route.points[i] == start {
                 minIndex = i
                 break
             } else {
                 let distance = last_update.route.points[i].distanceFrom(p: start)
-                if distance < minDistance {
+                if distance < minDistance || minDistance < 0.0 {
                     minIndex = i
                     minDistance = distance
                 }
@@ -74,27 +73,26 @@ struct Vehicle: CustomStringConvertible {
     
     /**
      Estimates the current position of this Vehicle based on the previous Updates received.
-     - Returns: A Point corresponding to the current estimated position for this Vehicle.
+     - Returns: An index corresponding to the Point the shuttle should be at on its current route.
      */
-    func estimateCurrentPosition() -> Point {
-        // 0.621371192 is the same constant used in the web app to initially convert from
-        // KM/H to MPH when pulling from the data feed, so we're not losing any precision
-        let metersPerSecond = (last_update.speed / 0.621371192) / 3.6
-        // predictedDistance presents the distance that the shuttle would have traveled since
+    func estimateCurrentPosition() -> Int {
+        // Seems like speeds from the datafeed are actually in KM/H, not MPH
+        let metersPerSecond = last_update.speed / 3.6
+        // predictedDistance represents the distance that the shuttle would have traveled since
         // the last update if its speed remained the same
         let predictedDistance = metersPerSecond * secondsSince(update: last_update)
-        // start represents the closest point in the route to the the vehicle's actual position
-        let start = Point(update: last_update)
+        //print("Predicted distance for vehicle \(vehicle_id): \(predictedDistance)")
         var elapsedDistance = 0.0
         var index = closest_point_index
         while elapsedDistance < predictedDistance {
-            elapsedDistance += start.distanceFrom(p: last_update.route.points[index])
+            let prevIndex = index
             index += 1
             if index >= last_update.route.points.count {
                 index = 0
             }
+            elapsedDistance += last_update.route.points[index].distanceFrom(p: last_update.route.points[prevIndex])
         }
-        return last_update.route.points[index]
+        return index
     }
     
     /**
@@ -102,7 +100,7 @@ struct Vehicle: CustomStringConvertible {
      - Returns: The Vehicle's rotation for display.
      */
     func getRotation() -> Int {
-        return last_update.heading - 45;
+        return last_update.getRotation()
     }
     
     /**
@@ -113,7 +111,7 @@ struct Vehicle: CustomStringConvertible {
      */
     func convertTime(time: String) -> Date? {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.ZZZZZZ'Z'"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         return formatter.date(from: time)
     }
     
@@ -124,7 +122,24 @@ struct Vehicle: CustomStringConvertible {
      was received.
      */
     func secondsSince(update: Update) -> TimeInterval {
-        return convertTime(time: update.time)!.timeIntervalSinceNow
+        return abs(convertTime(time: convertFromUTC(date: update.time))!.timeIntervalSinceNow)
+    }
+    
+    /**
+     Converts the given date from UTC to the local time zone.
+     - Parameter date: The UTC date to convert.
+     - Returns: The date converted from UTC to the local time zone.
+     */
+    func convertFromUTC(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        let dt = dateFormatter.date(from: date)
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        
+        return dateFormatter.string(from: dt!)
     }
     
     var description:String {
