@@ -122,8 +122,16 @@ func initUpdates() {
     updates.removeAll()
     for unique in json! {
         let update = Update(json:unique as! NSDictionary)
-        vehicles[update!.vehicle_id]!.update(update: update!)
         updates.append(update!)
+    }
+}
+
+/**
+ Propogates each update to the respective vehicle.
+ */
+func propagateUpdates() {
+    for update in updates {
+        vehicles[update.vehicle_id]!.update(update: update)
     }
 }
 
