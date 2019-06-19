@@ -100,7 +100,7 @@ struct Vehicle: CustomStringConvertible {
      - Returns: The Vehicle's rotation for display.
      */
     func getRotation() -> Int {
-        return last_update.heading - 45;
+        return last_update.getRotation()
     }
     
     /**

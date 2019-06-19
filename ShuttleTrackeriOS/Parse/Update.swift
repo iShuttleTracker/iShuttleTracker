@@ -86,6 +86,14 @@ struct Update: CustomStringConvertible {
         """
     }
     
+    /**
+     Gets the rotation for marker display.
+     - Returns: The rotation for display of the Vehicle represented by this Update.
+     */
+    func getRotation() -> Int {
+        return heading - 45;
+    }
+    
 }
 
 /**

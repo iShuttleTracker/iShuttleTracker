@@ -276,7 +276,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
      */
     func newUpdates(){
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.heading))
+            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
         }
@@ -306,7 +306,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 var headingDeg = Int(headingRad * 180 / .pi)
                 headingDeg = (headingDeg + 360) % 360;
                 headingDeg = 360 - headingDeg;
-                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg)
+                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
                 updateAnnotation(shuttle: shuttle)
             }
         }
