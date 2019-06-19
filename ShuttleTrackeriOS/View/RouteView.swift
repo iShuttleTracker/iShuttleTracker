@@ -7,18 +7,27 @@
 //
 import MapKit
 
-var routeViews:[String:RouteView] = [:]
+var routeViews: [String:RouteView] = [:]
 
 class RouteView {
-    private var name: String                        // "East Campus"
-    private var id: Int                             // id is the int stored in route
-    private var routePolyLine: CustomPolyline?      // Store the polyline of current route
-    private var stopAnnotations: [MKAnnotation]?    // Store the corresponding stops
-    private var color: UIColor                      // Color
-    var isEnabled: Bool                             // Check if the route is displayed according to the web
-    var isDisplaying: Bool = false                  // Check if the route is displaying based on user input
+    
+    private var name: String // The route name, i.e. "East Campus"
+    private var id: Int // The unique route ID
+    private var routePolyLine: CustomPolyline? // The polyline of the current route
+    private var stopAnnotations: [MKAnnotation]? // The annotations of the stops on this route
+    private var color: UIColor // The color of the route as it is displayed on the map
+    var isEnabled: Bool // Whether or not the route is enabled or not, according to the datafeed
+    var isDisplaying: Bool = false // Whether or not the route should be displayed based on user input
     
 
+    /**
+     Initializes the route view
+     - Parameters:
+       - name: Name of the route
+       - id: The route ID
+       - isEnabled: Whether or not the route is enabled
+       - color: The color of the route in hexadecimal
+    */
     init(name: String, id: Int, isEnabled: Bool, color: String){
         self.name = name
         self.id = id
@@ -26,46 +35,66 @@ class RouteView {
         self.color = UIColor(hexString: color)
     }
     
+    /**
+     - Returns: The route name
+     */
     func getName() -> String {
         return name
     }
     
+    /**
+     - Returns: The route ID
+     */
     func getId() -> Int {
         return id
     }
     
+    /**
+     Sets the route polyline
+     - Parameter polyline: The polyline
+     */
     func createRoute(polyline: CustomPolyline){
         self.routePolyLine = polyline
         polyline.color = color
 
     }
     
-    func createStop(){
-        
-    }
-    
-    // The initial display function
-    func display(to mapView: MKMapView){
-        if isEnabled{
+    /**
+     Displays this route's polyline on the map
+     - Parameter mapView: The map view to display on
+     */
+    func display(to mapView: MKMapView) {
+        if isEnabled {
             mapView.addOverlay(routePolyLine!)
             isDisplaying = true
         }
     }
     
-    // Toggling routes function
+    /**
+     Toggle the route display on
+     - Parameter mapView: The map view this route is on
+     */
     func enable(to mapView: MKMapView){
         isDisplaying = true
         mapView.addOverlay(routePolyLine!)
     }
     
-    func disable(to mapView: MKMapView){
+    /**
+     Toggle the route display off
+     - Parameter mapView: The map view this route is on
+     */
+    func disable(to mapView: MKMapView) {
         //mapView.removeAnnotations(stopAnnotations!)
         isDisplaying = false
         mapView.removeOverlay(routePolyLine!)
     }
+    
 }
 
-func initRouteView(){
+/**
+ Initializes a route view from each route fetched from the datafeed
+ */
+func initRouteViews() {
     for (id, route) in routes {
         if let _ = routeViews[route.name] {
             continue

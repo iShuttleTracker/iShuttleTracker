@@ -95,8 +95,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         propagateUpdates()
         
         // View
-        initRouteView()
-        initStopView()
+        initRouteViews()
+        initStopViews()
         
         // Settings
         eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
@@ -157,8 +157,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     /**
      Regularly updates lastLocation with the user's location
      - Parameters:
-     - manager: The location manager object
-     - locations: The list of locations that the user has been seen at
+       - manager: The location manager object
+       - locations: The list of locations that the user has been seen at
      */
     func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
         lastLocation = Point(coordinate: locations.last!.coordinate)
@@ -167,8 +167,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     /**
      Location updates are not allowed
      - Parameters:
-     - manager: The location manager object
-     - error: Potential error, typically indicating that location updates are not authorized
+       - manager: The location manager object
+       - error: Potential error, typically indicating that location updates are not authorized
      */
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let error = error as? CLError, error.code == .denied {
