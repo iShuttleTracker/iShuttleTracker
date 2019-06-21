@@ -210,5 +210,33 @@ classes such as:
   index.
 
 As for the ViewController itself, the lifecycle is as such:
-
-
+```
+          viewDidLoad()               mapViewDidFinishLoadingMap(mapview)
+             /    \                         /        |       \
+            /      \                       /         |        \
+           /        \                     /          |         \
+          /          \             displayRoutes()   |    displayStops()
+  initMapView()    initData()                        |
+                     /    \                  displayVehicles()
+                    /      \                          \
+                   /        \                          \
+                  /          \                          \
+              initStops()     initRouteViews()       timer(10s)
+              initRoutes()    initStopViews()            |
+              initVehicles()                             |
+              initUpdates()                           update()
+                                                         |
+                                                         |
+                                                    initUpdates()
+                                                         |
+                                                    (new updates?)
+                                                         |
+                                                     newUpdates()
+                                                         
+```
+The key points in this lifecycle are:
+- The order that init functions are called from `initData()` are important, as
+  routes depend on stops and updates depend on vehicles.
+- `initUpdates()` is called every 10 seconds on a timer, and if the new batch
+  of updates differs from the previous, each shuttle annotation on the map is
+  updated.
