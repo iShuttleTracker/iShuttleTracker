@@ -191,3 +191,24 @@ are stored in the global `routes` dictionary [id:route], stops are stored in
 the global `stops` dictionary [id:stop] as well as in their route, and updates
 are stored in the global `updates` list as well as in their vehicle.
 
+
+# View
+
+Currently, all frontend code exists in the ViewController and a few supporting
+classes such as:
+- Shuttle: An annotation for shuttle markers displayed on the map. Stores most
+  of the same data as vehicles.
+- ShuttleArrow: overrides the default MapKit annotatation for markers, i.e. the
+  red pin. Responsible for resizing, coloring, and rotating shuttle markers.
+- RouteView: Routes to be displayed on the map, represented by a polyline.
+- StopView: An annotation for stops to be displayed on the map. Contains the
+  static function `initStopViews()`, called in ViewController's `initData()`
+  when the view loads.
+- CustomPolyline: Overrides the default MapKit polyline and allows it to be
+  recolored.
+- CustomTabBar: Overrides the default tab bar controller to change the default
+  index.
+
+As for the ViewController itself, the lifecycle is as such:
+
+
