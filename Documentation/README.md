@@ -1,3 +1,13 @@
+# Setting Up
+
+1. Install [Xcode](https://apps.apple.com/us/app/xcode/id497799835?mt=12) from
+   the Mac App Store
+2. Open XCode and select *Clone an existing project*
+3. In the search bar, enter [the project URL](https://github.com/iShuttleTracker/iShuttleTracker)
+4. Select where to clone to
+5. Done!
+
+
 # Endpoints
 
 Data in the app is gathered from four main endpoints on the Shuttle Tracker
@@ -120,4 +130,64 @@ make up the route
 `created`: The timestamp of when this update was received  
 `vehicle_id`: The id of the vehicle this update is for  
 `route_id`: The id of the route the vehicle is on  
+
+## History
+There is an additional `/history` endpoint that stores entries of all the
+update batches received for the last 30 days. The iOS app currently doesn't
+utilize historical data at all.
+
+
+# Data Parsing
+
+There are four classes that we use to represent data from endpoints: Vehicle,
+Route, Stop, and Update, as well as Point for representing pairs of latitude
+and longitude values. These four classes each have static init functions that
+are used to fetch and initialize data from the corresponding endpoint. For
+routes and stops, however, data is cached after being initialized and will not
+be fetched again until the cached data is deleted. (TODO: check for new data)
+```
+Vehicle ---> initVehicles() ---------> deserializes the data from the endpoint
+                 \                     and populates the vehicles dictionary
+                  \                    with objects
+                   \                        /
+                    ---> fetchVehicles() ---
+                   grabs the JSON data from the
+                   /vehicles endpoint
+```
+```
+Route ---> initRoutes() ---------------> deserializes the data from either
+                 \                       the endpoint or cache and populates
+              not cached                 the routes dictionary with objects
+                    \                        /
+                     ---> fetchVehicles() ---
+                   grabs the JSON data from the
+                   /routes endpoint and caches it
+```
+```
+Stop ---> initStops() ----------> deserializes the data from either the
+               \                  endpoint or the cache and populates the
+           not cached             stops dictionary with objects
+                 \                     /
+                  ---> fetchStops() ---
+                grabs the JSON data from the
+                /stops ednpoint and caches it
+```
+```
+Update ---> initUpdates(): ----------> deserializes the data from the endpoint,
+                  \                    populates the updates list with objects,
+                   \                   and propogates the updates to vehicles
+                    \                       /
+                     ---> fetchUpdates() ---
+                    grabs the JSON data from
+                    the /updates endpoint
+```
+The first three of these init fuctions (`initVehicles()`, `initRoutes()`, and
+`initStops()`) are called by `initData()` in the ViewController, which is
+called only when the view first loads. `initUpdates()` is called every 10
+seconds on a timer.
+
+Vehicles are stored in the global `vehicles` dictionary [id:vehicle], routes
+are stored in the global `routes` dictionary [id:route], stops are stored in
+the global `stops` dictionary [id:stop] as well as in their route, and updates
+are stored in the global `updates` list as well as in their vehicle.
 
