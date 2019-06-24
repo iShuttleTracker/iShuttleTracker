@@ -240,3 +240,10 @@ The key points in this lifecycle are:
 - `initUpdates()` is called every 10 seconds on a timer, and if the new batch
   of updates differs from the previous, each shuttle annotation on the map is
   updated.
+
+
+# Notifications
+
+There are two types of notifications supported by the app: scheduled
+notifications and nearby notifications.
+
