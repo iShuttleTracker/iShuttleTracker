@@ -244,6 +244,64 @@ The key points in this lifecycle are:
 
 # Notifications
 
-There are two types of notifications supported by the app: scheduled
-notifications and nearby notifications.
+There are two types of notifications supported by the app: nearby notifications
+and scheduled notifications. Both of these are dispatched via static functions
+in the NotificationHandler, `tryNotifyTime()` for scheduled notifications and
+`tryNotifyNearby()` for nearby notifications. These functions are called from
+`update()` on a 10 second timer in the view:
+```
+          displayVehicles()
+                  |
+                  |
+              timer(10s)
+                  |
+                  |
+               update()
+                /   \
+               /     \
+              /       \
+             /         \
+  tryNotifyTime()  tryNotifyNearby()
+```
+
+## Nearby
+A nearby notification is sent whenever a vehicle on a selected route comes
+within a certain distance of the user, currently 100 meters for testing
+purposes. A "selected route" is a route that is in the `notifyForNearbyIds`
+dictionary; the key is the route ID and the value is a counter that is set to
+60 after a notification is sent for that route and counts down until it reaches
+0, at which point another notification may be sent when a shuttle on that route
+enters the notify radius. (TODO: let the user select routes to receive nearby
+notifications for through the settings panel)
+
+## Scheduled
+A scheduled notification is sent 5 minutes beforehand and when the user
+should get on the shuttle to arrive at their destination on time. A scheduled
+notification is represented by a Trip, an object that stores:
+- `start`: The stop that the user wants to get on the shuttle at
+- `destination`: The stop that the user wants to get off the shuttle at
+- `getOnShuttleAt`: The time that the user should get on the shuttle at in
+  order to arrive at their destination on time. The user does not interact with
+  this value directly.
+- `arriveBy`: The time that the user wants to get off the shuttle at
+- `fiveMinuteWarning`: Whether or not the user has been given the "get on the
+  shuttle in 5 minutes" notification for this trip
+
+Trips are displayed and scheduled through the settings panel (in progress).
+Here's how it works:
+1. The user selects a start, a destination, and an arrival time through the
+   settings panel
+2. The schedule data is iterated through to find the closest time *before or
+   equal to* the selected arrival time that a shuttle on a route containing
+   both the start and destination reaches the destination. If no route exists
+   that contains both the start and destination, or a similar error occurs, the
+   user should be alerted and the trip should not be scheduled.
+3. Backtrack through the schedule data to find when the shuttle reaching at the
+   destination near the arrival time reaches the start before that. Set
+   `getOnShuttleAt` accordingly.
+4. Create the trip, store it in `notifyForTrips`, and display it in the
+   settings panel. The time on the trip will be checked every 10 seconds from
+   `tryNotifyTime()` until both the five minute warning and the precise
+   notification have been sent, at which point the trip will be removed from
+   the list and will no longer be displayed in the settings panel.
 
