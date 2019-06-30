@@ -10,9 +10,9 @@ import MapKit
 
 import UserNotifications
 
-var shuttleNames = [Int:String]() // Stores vehicle IDs as keys and vehicle names as keys
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
-class ViewController: UIViewController, CLLocationManagerDelegate {
+
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // The map where all the info is displayed
     @IBOutlet var mapView: MKMapView!
@@ -51,33 +51,29 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     
     /**
-     Displays routes on the map by adding polylines for each route
+     Initializes the stops, routes, and vehicles and adds them to the map view
      */
-    func displayRoutes() {
+    func initView() {
+        initStops();
+        initRoutes();
+        initVehicles();
+        
         for (_, route) in routeViews {
             route.display(to: mapView)
         }
-    }
-    
-    /**
-     Displays stops on the map by adding an annotation for each stop
-     */
-    func displayStops() {
+        
         for stop in stopViews {
             mapView.addAnnotation(stop)
         }
+        
+        // Uses shuttle asset instead of default marker
+        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        updateAnnotations()
     }
     
-    /**
-     Adds each enabled route to the items list
-     */
-    func refreshEnabledRoutes() {
-        // TODO: Should items get emptied before new names are appended to it?
-        for (name, route) in routeViews {
-            if route.isEnabled {
-                items.append(name)
-            }
-        }
+    func initTimer() {
+        // Crash resposible because repeated without parameters
+        _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
     }
     
     /**
@@ -131,6 +127,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         initMap(location: initialLocation)
+    }
+    
+    /**
+     Adds each enabled route to the items list
+     */
+    func refreshEnabledRoutes() {
+        // TODO: Should items get emptied before new names are appended to it?
+        for (name, route) in routeViews {
+            if route.isEnabled {
+                items.append(name)
+            }
+        }
     }
     
     /**
@@ -237,46 +245,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     /**
-     Adds an entry in notifyForNearbyIds with the given route ID.
-     - Parameter route_id: The route ID to add
-     */
-    func addRouteIDForNearbyNotification(route_id: Int) {
-        notifyForNearbyIds[route_id] = 0
-    }
-    
-    /**
-     Adds the given trip to notifyForTrips.
-     - Parameter trip: The trip to add
-     */
-    func addTripForNotification(trip: Trip) {
-        notifyForTrips.append(trip)
-    }
-    
-    
-    //initial call to get the first updates and display them
-    func displayVehicles(){
-        initStops();
-        initRoutes();
-        initVehicles();
-        for vehicle in vehicles{
-            shuttleNames[vehicle.value.id] = vehicle.value.name;
-        }
-        
-        // Uses shuttle asset instead of default marker
-        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        newUpdates()
-        
-        // Crash resposible because repeated without parameters
-        _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
-        
-    }
-    
-    /**
      Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */
-    func newUpdates(){
+    func updateAnnotations() {
         for update in updates {
-            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
+            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
         }
@@ -306,7 +279,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 var headingDeg = Int(headingRad * 180 / .pi)
                 headingDeg = (headingDeg + 360) % 360;
                 headingDeg = 360 - headingDeg;
-                let shuttle = ShuttleAnnotation(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
+                let shuttle = ShuttleAnnotation(vehicle_id: id, title: vehicles[id]!.name, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
                 updateAnnotation(shuttle: shuttle)
             }
         }
@@ -353,7 +326,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                         mapView.removeAnnotation(annotation)
                     }
                 }
-                newUpdates()
+                updateAnnotations()
             }
         } else {
             estimate()
@@ -380,13 +353,56 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     /**
-     Called after the view loads to initialize the map view and data from the datafeed
+     Called after the view loads to initialize the map view and data
      */
     override func viewDidLoad() {
         super.viewDidLoad()
         initMapView()
         initData()
-        // displayVehicles()
+    }
+    
+    /**
+     Called after the map view finishes loading to initialize the view and timer
+     */
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        initView()
+        initTimer()
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? ColorPolyline {
+            let renderer = MKPolylineRenderer(overlay: polyline)
+            renderer.strokeColor = polyline.color
+            renderer.lineWidth = CGFloat(routes[polyline.route_id!]!.width)
+            return renderer
+        }
+        
+        return MKOverlayRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // Don't want to show a custom image if the annotation is the user's location.
+        guard annotation is StopAnnotation else {
+            return nil
+        }
+        
+        // Overwrite default stop icon
+        let annotationIdentifier = "AnnotationIdentifier"
+        var annotationView: MKAnnotationView?
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        } else {
+            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView = av
+        }
+        if let annotationView = annotationView {
+            annotationView.canShowCallout = true
+            annotationView.image = UIImage(named: "StopIcon")?.imageWithSize(size:CGSize(width: 10, height: 10))
+        }
+        
+        return annotationView
     }
     
 }

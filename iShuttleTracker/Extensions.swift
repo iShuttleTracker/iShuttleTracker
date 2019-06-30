@@ -9,65 +9,6 @@
 import Foundation
 import MapKit
 
-extension ViewController: MKMapViewDelegate {
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        displayVehicles()
-        displayRoutes()
-        displayStops()
-    }
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? ColorPolyline {
-            let renderer = MKPolylineRenderer(overlay: polyline)
-            renderer.strokeColor = polyline.color
-            renderer.lineWidth = 2
-            return renderer
-        }
-        
-        return MKOverlayRenderer()
-    }
-    
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        /**
-         
-         Overwrite the default stop behavior by using a custom asset
-         
-         */
-        // Don't want to show a custom image if the annotation is the user's location.
-        guard annotation is StopAnnotation else {
-            return nil
-        }
-        
-        // Better to make this class property
-        let annotationIdentifier = "AnnotationIdentifier"
-        
-        var annotationView: MKAnnotationView?
-        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) {
-            annotationView = dequeuedAnnotationView
-            annotationView?.annotation = annotation
-        }
-        else {
-            let av = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            av.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            annotationView = av
-        }
-        
-        if let annotationView = annotationView {
-            annotationView.canShowCallout = true
-            annotationView.image = UIImage(named: "StopIcon")?.imageWithSize(size:CGSize(width: 10, height: 10))
-        }
-        
-        
-        
-        return annotationView
-    }
-    
-    
-}
-
 // Resize the given image
 extension UIImage {
     

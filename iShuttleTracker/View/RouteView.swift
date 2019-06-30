@@ -59,7 +59,7 @@ class RouteView {
     func createRoute(polyline: ColorPolyline){
         self.routePolyLine = polyline
         polyline.color = color
-
+        polyline.route_id = id
     }
     
     /**

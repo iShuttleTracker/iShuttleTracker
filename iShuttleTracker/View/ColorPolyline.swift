@@ -13,5 +13,6 @@ import MapKit
  Wrapper around MKPolyline that allows polylines to be colored.
  */
 class ColorPolyline: MKPolyline {
+    var route_id: Int?
     var color: UIColor?
 }
