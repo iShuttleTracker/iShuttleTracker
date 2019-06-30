@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+ Represents a trip that the user has scheduled to be notified for, specified by a starting
+ point, a destination, and an arrival time. Once these three values have been selected, the
+ schedule data is iterated through to find what time the user should get on the shuttle at.
+ */
 struct Trip {
     
     var start: Stop

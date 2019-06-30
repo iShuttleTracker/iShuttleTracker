@@ -9,11 +9,14 @@ import MapKit
 
 var routeViews: [String:RouteView] = [:]
 
+/**
+ Represents a route to be displayed on the map.
+ */
 class RouteView {
     
     private var name: String // The route name, i.e. "East Campus"
     private var id: Int // The unique route ID
-    private var routePolyLine: CustomPolyline? // The polyline of the current route
+    private var routePolyLine: ColorPolyline? // The polyline of the current route
     private var stopAnnotations: [MKAnnotation]? // The annotations of the stops on this route
     private var color: UIColor // The color of the route as it is displayed on the map
     var isEnabled: Bool // Whether or not the route is enabled or not, according to the datafeed
@@ -53,7 +56,7 @@ class RouteView {
      Sets the route polyline
      - Parameter polyline: The polyline
      */
-    func createRoute(polyline: CustomPolyline){
+    func createRoute(polyline: ColorPolyline){
         self.routePolyLine = polyline
         polyline.color = color
 
@@ -103,7 +106,7 @@ func initRouteViews() {
         for point in route.points{
             locations.append(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
         }
-        let polyline = CustomPolyline(coordinates: &locations, count: locations.count)
+        let polyline = ColorPolyline(coordinates: &locations, count: locations.count)
         let newRoute = RouteView(name: route.name, id: id, isEnabled: route.enabled, color: route.color)
         newRoute.createRoute(polyline: polyline)
         routeViews[route.name] = newRoute

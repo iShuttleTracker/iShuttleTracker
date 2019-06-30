@@ -8,6 +8,10 @@
 
 import Foundation
 
+/**
+ Represents a time by stripping the day/month/year from a date object and storing only the
+ hour and minute.
+ */
 class Time: Comparable, Equatable, CustomStringConvertible {
     
     var hour : Int

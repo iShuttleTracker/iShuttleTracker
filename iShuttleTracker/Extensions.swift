@@ -18,7 +18,7 @@ extension ViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? CustomPolyline {
+        if let polyline = overlay as? ColorPolyline {
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.strokeColor = polyline.color
             renderer.lineWidth = 2
@@ -37,7 +37,7 @@ extension ViewController: MKMapViewDelegate {
          
          */
         // Don't want to show a custom image if the annotation is the user's location.
-        guard annotation is StopView else {
+        guard annotation is StopAnnotation else {
             return nil
         }
         

@@ -263,7 +263,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         
         // Uses shuttle asset instead of default marker
-        mapView.register(ShuttleArrow.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         newUpdates()
         
         // Crash resposible because repeated without parameters
@@ -276,7 +276,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
      */
     func newUpdates(){
         for update in updates {
-            let shuttle = Shuttle(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
+            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
         }
@@ -306,7 +306,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 var headingDeg = Int(headingRad * 180 / .pi)
                 headingDeg = (headingDeg + 360) % 360;
                 headingDeg = 360 - headingDeg;
-                let shuttle = Shuttle(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
+                let shuttle = ShuttleAnnotation(vehicle_id: id, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
                 updateAnnotation(shuttle: shuttle)
             }
         }
@@ -317,9 +317,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
      exist with the same vehicle ID.
      - Parameter shuttle: The shuttle to update on the map
      */
-    func updateAnnotation(shuttle: Shuttle) {
+    func updateAnnotation(shuttle: ShuttleAnnotation) {
         for i in 0..<mapView.annotations.count {
-            if let shuttleAnnotation = mapView.annotations[i] as? Shuttle {
+            if let shuttleAnnotation = mapView.annotations[i] as? ShuttleAnnotation {
                 if shuttleAnnotation.vehicle_id == shuttle.vehicle_id {
                     shuttleAnnotation.coordinate = shuttle.coordinate
                     shuttleAnnotation.heading = shuttle.heading
@@ -344,8 +344,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             lastUpdateTime = Date()
             if updates != recentUpdates {
                 propagateUpdates()
-                tryNotifyTime()
-                tryNotifyNearby()
+                handleScheduledNotifications()
+                handleNearbyNotifications()
                 recentUpdates.removeAll()
                 // Clear annotations every 5 minutes in order to remove expired ones
                 if lastRefreshTime.timeIntervalSinceNow < -300 {

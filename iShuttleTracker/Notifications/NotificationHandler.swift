@@ -24,7 +24,7 @@ var notifyForNearbyIds: [Int:Int] = [:]
  Notifies the user that they should get on the shuttle now in order to reach the
  stop they want to be at by a specified time.
  */
-func tryNotifyTime() {
+func handleScheduledNotifications() {
     let time = Time()
     for i in 0..<notifyForTrips.count {
         if (!notifyForTrips[i].fiveMinuteWarning && notifyForTrips[i].getOnShuttleAt.secondsSince(time: time) >= 300) {
@@ -69,7 +69,7 @@ func tryNotifyTime() {
  Notifies the user if there are any shuttles within a 100 meter radius on the route
  that the user chose to be notified for.
  */
-func tryNotifyNearby() {
+func handleNearbyNotifications() {
     for (_, vehicle) in vehicles {
         if notifyForNearbyIds.keys.contains(vehicle.last_update.route_id) {
             // Check if a notification has already been sent for a shuttle on this route

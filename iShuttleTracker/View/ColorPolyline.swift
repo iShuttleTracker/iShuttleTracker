@@ -9,6 +9,9 @@
 import UIKit
 import MapKit
 
-class CustomPolyline: MKPolyline {
+/**
+ Wrapper around MKPolyline that allows polylines to be colored.
+ */
+class ColorPolyline: MKPolyline {
     var color: UIColor?
 }

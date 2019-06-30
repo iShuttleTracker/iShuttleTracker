@@ -11,16 +11,16 @@ import MapKit
 import UIKit
 
 /**
- Class responsible for overriding the default MapKit annotation of the red pin
+ Responsible for overriding the default MapKit annotation of the red pin.
  
  Uses a UIImage that is declared in the Shuttle object, rotates the heading field, increases the
  size of the image slightly, and sets the color to the route color
  */
-class ShuttleArrow: MKAnnotationView {
+class ShuttleAnnotationView: MKAnnotationView {
     
     override var annotation: MKAnnotation? {
         willSet {
-            guard let shuttle = newValue as? Shuttle else { return }
+            guard let shuttle = newValue as? ShuttleAnnotation else { return }
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)
             rightCalloutAccessoryView = UIButton(type: .detailDisclosure)

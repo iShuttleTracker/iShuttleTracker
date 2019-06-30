@@ -9,9 +9,12 @@
 import UIKit
 import MapKit
 
-var stopViews: [StopView] = []
+var stopViews: [StopAnnotation] = []
 
-class StopView: NSObject, MKAnnotation {
+/**
+ Represents stops on the map.
+ */
+class StopAnnotation: NSObject, MKAnnotation {
     
     var title: String? // The title of this stop
     var coordinate: CLLocationCoordinate2D // The stop's coordinate
@@ -37,6 +40,6 @@ class StopView: NSObject, MKAnnotation {
 func initStopViews() {
     for (_, stop) in stops {
         let coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
-        stopViews.append(StopView(title: stop.name, coordinate: coordinate))
+        stopViews.append(StopAnnotation(title: stop.name, coordinate: coordinate))
     }
 }

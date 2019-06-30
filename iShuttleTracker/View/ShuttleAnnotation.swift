@@ -9,7 +9,10 @@
 import Foundation
 import MapKit
 
-class Shuttle : NSObject, MKAnnotation {
+/**
+ Represents a shuttle marker on the map.
+ */
+class ShuttleAnnotation : NSObject, MKAnnotation {
     
     let title: String?
     let vehicle_id: Int
@@ -55,9 +58,5 @@ class Shuttle : NSObject, MKAnnotation {
     var imageName: String? {
         return "Shuttle"
     }
-    
-    
-    
-    
-    
+
 }

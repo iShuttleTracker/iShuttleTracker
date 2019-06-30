@@ -8,7 +8,11 @@
 
 import UIKit
 
-class CustomTabBar: UITabBarController {
+/**
+ Wrapper around UITabBarController that sets the default index in a standard three-entry
+ tab bar to the middle element.
+ */
+class CenteredTabBar: UITabBarController {
     
     @IBInspectable var defaultIndex: Int = 1
     

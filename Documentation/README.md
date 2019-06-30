@@ -196,17 +196,17 @@ are stored in the global `updates` list as well as in their vehicle.
 
 Currently, all frontend code exists in the ViewController and a few supporting
 classes such as:
-- Shuttle: An annotation for shuttle markers displayed on the map. Stores most
-  of the same data as vehicles.
-- ShuttleArrow: overrides the default MapKit annotatation for markers, i.e. the
-  red pin. Responsible for resizing, coloring, and rotating shuttle markers.
+- ShuttleAnnotation: An annotation for shuttle markers displayed on the map.
+  Stores most of the same data as vehicles.
+- ShuttleAnnotationView: overrides the default MapKit annotatation for markers,
+  i.e. the red pin. Responsible for resizing, coloring, and rotating shuttle markers.
 - RouteView: Routes to be displayed on the map, represented by a polyline.
-- StopView: An annotation for stops to be displayed on the map. Contains the
-  static function `initStopViews()`, called in ViewController's `initData()`
+- StopAnnotation: An annotation for stops to be displayed on the map. Contains
+  the static function `initStopViews()`, called in ViewController's `initData()`
   when the view loads.
-- CustomPolyline: Overrides the default MapKit polyline and allows it to be
+- ColorPolyline: Overrides the default MapKit polyline and allows it to be
   recolored.
-- CustomTabBar: Overrides the default tab bar controller to change the default
+- CenteredTabBar: Overrides the default tab bar controller to change the default
   index.
 
 As for the ViewController itself, the lifecycle is as such:
@@ -246,22 +246,22 @@ The key points in this lifecycle are:
 
 There are two types of notifications supported by the app: nearby notifications
 and scheduled notifications. Both of these are dispatched via static functions
-in the NotificationHandler, `tryNotifyTime()` for scheduled notifications and
-`tryNotifyNearby()` for nearby notifications. These functions are called from
-`update()` on a 10 second timer in the view:
+in the NotificationHandler, `handleScheduledNotifications()` for scheduled
+notifications and  `handleNearbyNotifications()` for nearby notifications.
+These functions are called from `update()` on a 10 second timer in the view:
 ```
-          displayVehicles()
-                  |
-                  |
-              timer(10s)
-                  |
-                  |
-               update()
-                /   \
-               /     \
-              /       \
-             /         \
-  tryNotifyTime()  tryNotifyNearby()
+                  displayVehicles()
+                          |
+                          |
+                      timer(10s)
+                          |
+                          |
+                       update()
+                       /     \
+                      /       \
+                     /         \
+                    /           \
+handleNearbyNotifications()  tryScheduledNotifications()
 ```
 
 ## Nearby
@@ -301,7 +301,7 @@ Here's how it works:
    `getOnShuttleAt` accordingly.
 4. Create the trip, store it in `notifyForTrips`, and display it in the
    settings panel. The time on the trip will be checked every 10 seconds from
-   `tryNotifyTime()` until both the five minute warning and the precise
-   notification have been sent, at which point the trip will be removed from
-   the list and will no longer be displayed in the settings panel.
+   `handleScheduledNotifications()` until both the five minute warning and
+   the precise notification have been sent, at which point the trip will be removed
+   from the list and will no longer be displayed in the settings panel.
 
