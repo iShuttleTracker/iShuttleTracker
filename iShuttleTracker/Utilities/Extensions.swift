@@ -3,20 +3,19 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Andrew Qu on 2/15/19.
-//  Copyright ¬© 2019 WTG. All rights reserved.
+//  Copyright ¬© 2019 iShuttleTracker. All rights reserved.
 //
 
 import Foundation
 import MapKit
 
-// Resize the given image
 extension UIImage {
     
     /**
-     - Parameters: size - CGSize object to resize .this.
-     
+     Resizes the image to the given size.
+     - Parameter size: CGSize object to resize this to
      */
-    func imageWithSize(size:CGSize) -> UIImage {
+    func imageWithSize(size: CGSize) -> UIImage {
         var scaledImageRect = CGRect.zero;
         
         let aspectWidth:CGFloat = size.width / self.size.width;
@@ -38,6 +37,10 @@ extension UIImage {
         return scaledImage!;
     }
     
+    /**
+     Recolors the image to the given color.
+     - Parameter color1: UIColor object to recolor to.
+     */
     func imageWithColor(color1: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         color1.setFill()
@@ -58,7 +61,8 @@ extension UIImage {
     }
     
     /**
-     - Parameters: radians - Float of amount of rotation to do for .this.
+     Rotates the image by the given amount.
+     - Parameter radians: Radians to rotate the image by.
      */
     func rotate(radians: Float) -> UIImage? {
         var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
@@ -81,10 +85,14 @@ extension UIImage {
         
         return newImage
     }
+    
 }
 
-// Convert hex string into UIColor
 extension UIColor {
+    
+    /**
+     Converts a hex string to a UIColor
+     */
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
@@ -102,4 +110,5 @@ extension UIColor {
         let blue  = CGFloat(b) / 255.0
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
+    
 }

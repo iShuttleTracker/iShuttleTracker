@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOSTests
 //
 //  Created by Andrew Qu on 9/18/18.
-//  Copyright © 2018 WTG. All rights reserved.
+//  Copyright © 2018 iShuttleTracker. All rights reserved.
 //
 
 import XCTest

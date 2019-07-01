@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Beiqi Zou on 3/18/19.
-//  Copyright © 2019 WTG. All rights reserved.
+//  Copyright © 2019 iShuttleTracker. All rights reserved.
 //
 
 import UIKit

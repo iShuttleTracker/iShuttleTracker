@@ -3,7 +3,7 @@
 //  ShuttleTrackeriOS
 //
 //  Created by Matt Czyr on 2/13/19.
-//  Copyright © 2019 WTG. All rights reserved.
+//  Copyright © 2019 iShuttleTracker. All rights reserved.
 //
 
 import Foundation
