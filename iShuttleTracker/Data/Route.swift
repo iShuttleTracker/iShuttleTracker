@@ -43,7 +43,7 @@ struct Route: CustomStringConvertible {
      */
     init?(json: NSDictionary) {
         // Need to add the points to the route
-        var pointsList:[Point] = [];
+        var pointsList:[Point] = []
         for (key, value) in json {
             switch key as? NSString {
             case "id":
@@ -149,6 +149,7 @@ func initRoutes() {
     let dataString = !fileExists(filename: file) ? fetchRoutes() : readJSON(filename: file)
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    routes.removeAll()
     for unique in json! {
         let route = Route(json:unique as! NSDictionary)
         routes[route!.id] = route!

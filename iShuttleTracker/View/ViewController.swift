@@ -31,7 +31,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var predictPositions = false
     
     // Stores the names of the currently active routes
-    var items: [String] = ["All routes"]
+    var activeRouteNames: [String] = ["All routes"]
     
     // The current annotations shown on the map
     var currentAnnotations: [MKAnnotation] = []
@@ -71,8 +71,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         updateAnnotations()
     }
     
+    /**
+     Initializes the timer that updates vehicle annotations and handles notifications
+     */
     func initTimer() {
-        // Crash resposible because repeated without parameters
         _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
     }
     
@@ -84,7 +86,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // Data
         initStops()
         initRoutes()
-        
         initVehicles()
         initUpdates()
         
@@ -136,111 +137,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // TODO: Should items get emptied before new names are appended to it?
         for (name, route) in routeViews {
             if route.isEnabled {
-                items.append(name)
+                activeRouteNames.append(name)
             }
-        }
-    }
-    
-    /**
-     Checks whether the user has authorized location usage and if so starts updating the user's location
-     */
-    func startReceivingLocationChanges() {
-        let authorizationStatus = CLLocationManager.authorizationStatus()
-        if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
-            // User has not authorized access to location information
-            return
-        }
-        // Do not start services that aren't available
-        if !CLLocationManager.locationServicesEnabled() {
-            // Location services is not available
-            return
-        }
-        // Configure and start the service
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.distanceFilter = 10.0  // In meters
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
-    }
-    
-    /**
-     Regularly updates lastLocation with the user's location
-     - Parameters:
-       - manager: The location manager object
-       - locations: The list of locations that the user has been seen at
-     */
-    func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
-        lastLocation = Point(coordinate: locations.last!.coordinate)
-    }
-    
-    /**
-     Location updates are not allowed
-     - Parameters:
-       - manager: The location manager object
-       - error: Potential error, typically indicating that location updates are not authorized
-     */
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        if let error = error as? CLError, error.code == .denied {
-            // Location updates are not authorized.
-            manager.stopUpdatingLocation()
-            return
-        }
-    }
-    
-    /**
-     Called when the east route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func eastRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled east route on")
-            //            showRoute(name: "east")
-        } else {
-            print("Toggled east route off")
-            //            hideRoute(name: "east")
-        }
-    }
-    
-    /**
-     Called when the west route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func westRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled west route on")
-            //            showRoute(name: "west")
-        } else {
-            print("Toggled west route off")
-            //            hideRoute(name: "west")
-        }
-    }
-    
-    /**
-     Called when the nearby notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func nearbyNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled nearby notifications on")
-            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
-            //       panel visible. It should be hidden if this switch is toggled off.
-        } else {
-            print("Toggled nearby notifications off")
-            // TODO: Hide the "Nearby Notifications" section.
-        }
-    }
-    
-    /**
-     Called when the scheduled notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func scheduledNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled scheduled notifications on")
-            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
-            //       settings panel visible. It should be hidden if the switch is toggled off.
-        } else {
-            print("Toggled scheduled notifications off")
-            // TODO: Hide the "Scheduled Trips" section.
         }
     }
     
@@ -305,8 +203,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     
     /**
-     Called on a 1-second timer to either initialize updates or estimate shuttle positions then update
-     the annotations on the map.
+     Called on a 1-second timer to update the shuttle annotations on the map. If there are
+     no new updates and shuttle predictions are on, shuttle annotations will be updated with
+     estimated positions.
      */
     @objc func update() {
         // Only check for new updates if shuttle prediction is turned off or it's been over 10 seconds since
@@ -317,8 +216,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             lastUpdateTime = Date()
             if updates != recentUpdates {
                 propagateUpdates()
-                handleScheduledNotifications()
-                handleNearbyNotifications()
+                NotificationHandler.getInstance().handleScheduledNotifications()
+                NotificationHandler.getInstance().handleNearbyNotifications()
                 recentUpdates.removeAll()
                 // Clear annotations every 5 minutes in order to remove expired ones
                 if lastRefreshTime.timeIntervalSinceNow < -300 {
@@ -334,7 +233,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     /**
-     Requests access to the user's location when the app is in use
+     Upon first opening the app, requests access to the user's location when the app is in use
      */
     func requestLocationAccess() {
         let status = CLLocationManager.authorizationStatus()
@@ -349,6 +248,109 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             
         default:
             CLLocationManager().requestWhenInUseAuthorization()
+        }
+    }
+    
+    /**
+     Checks whether the user has authorized location usage, and if so, starts updating the user's location
+     */
+    func startReceivingLocationChanges() {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus != .authorizedWhenInUse && authorizationStatus != .authorizedAlways {
+            // User has not authorized access to location information
+            return
+        }
+        // Do not start services that aren't available
+        if !CLLocationManager.locationServicesEnabled() {
+            // Location services is not available
+            return
+        }
+        // Configure and start the service
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 10.0  // In meters
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+    }
+    
+    /**
+     Regularly updates lastLocation with the user's location
+     - Parameters:
+     - manager: The location manager object
+     - locations: The list of locations that the user has been seen at
+     */
+    func locationManager(_ manager: CLLocationManager,  didUpdateLocations locations: [CLLocation]) {
+        lastLocation = Point(coordinate: locations.last!.coordinate)
+    }
+    
+    /**
+     Location updates are not allowed
+     - Parameters:
+     - manager: The location manager object
+     - error: Potential error, typically indicating that location updates are not authorized
+     */
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let error = error as? CLError, error.code == .denied {
+            // Location updates are not authorized.
+            manager.stopUpdatingLocation()
+            return
+        }
+    }
+    
+    /**
+     Called when the east route switch is toggled on or off from the settings panel
+     - Parameter routeSwitch: The switch after being toggled
+     */
+    @IBAction func eastRouteChanged(routeSwitch: UISwitch) {
+        if routeSwitch.isOn {
+            print("Toggled east route on")
+            //            showRoute(name: "east")
+        } else {
+            print("Toggled east route off")
+            //            hideRoute(name: "east")
+        }
+    }
+    
+    /**
+     Called when the west route switch is toggled on or off from the settings panel
+     - Parameter routeSwitch: The switch after being toggled
+     */
+    @IBAction func westRouteChanged(routeSwitch: UISwitch) {
+        if routeSwitch.isOn {
+            print("Toggled west route on")
+            //            showRoute(name: "west")
+        } else {
+            print("Toggled west route off")
+            //            hideRoute(name: "west")
+        }
+    }
+    
+    /**
+     Called when the nearby notifications switch is toggled on or off from the settings panel
+     - Parameter notificationSwitch: The switch after being toggled
+     */
+    @IBAction func nearbyNotificationsChanged(notificationSwitch: UISwitch) {
+        if notificationSwitch.isOn {
+            print("Toggled nearby notifications on")
+            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
+            //       panel visible. It should be hidden if this switch is toggled off.
+        } else {
+            print("Toggled nearby notifications off")
+            // TODO: Hide the "Nearby Notifications" section.
+        }
+    }
+    
+    /**
+     Called when the scheduled notifications switch is toggled on or off from the settings panel
+     - Parameter notificationSwitch: The switch after being toggled
+     */
+    @IBAction func scheduledNotificationsChanged(notificationSwitch: UISwitch) {
+        if notificationSwitch.isOn {
+            print("Toggled scheduled notifications on")
+            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
+            //       settings panel visible. It should be hidden if the switch is toggled off.
+        } else {
+            print("Toggled scheduled notifications off")
+            // TODO: Hide the "Scheduled Trips" section.
         }
     }
     

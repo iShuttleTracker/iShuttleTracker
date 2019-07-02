@@ -110,6 +110,7 @@ func initStops() {
     let dataString = !fileExists(filename: file) ? fetchStops() : readJSON(filename: file)
     let data = dataString.data(using: .utf8)!
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    stops.removeAll()
     for unique in json! {
         let stop = Stop(json:unique as! NSDictionary)
         for (id, route) in routes {

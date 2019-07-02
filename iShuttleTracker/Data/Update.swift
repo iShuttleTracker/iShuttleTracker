@@ -34,7 +34,7 @@ struct Update: CustomStringConvertible {
      Initializes a new Update.
      - Returns: A new Update from the data contained in the dictionary
      */
-    init?(json: NSDictionary){
+    init?(json: NSDictionary) {
         for (key, value) in json {
             switch key as? NSString {
             case "id":

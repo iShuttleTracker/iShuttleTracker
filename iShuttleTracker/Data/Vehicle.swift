@@ -186,6 +186,7 @@ func fetchVehicles() -> Data {
 func initVehicles() {
     let data = fetchVehicles()
     let json = try? JSONSerialization.jsonObject(with: data, options: []) as! NSArray
+    vehicles.removeAll()
     for unique in json! {
         let vehicle = Vehicle(json:unique as! NSDictionary)
         vehicles[vehicle!.id] = vehicle
