@@ -73,7 +73,7 @@ struct Point: Equatable, CustomStringConvertible {
         return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
     }
     
-    var description:String {
+    var description: String {
         return """
         (latitude \(self.latitude), longitude \(self.longitude))\n
         """

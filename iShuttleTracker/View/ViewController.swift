@@ -54,9 +54,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      Initializes the stops, routes, and vehicles and adds them to the map view
      */
     func initView() {
-        initStops();
-        initRoutes();
-        initVehicles();
+        initStops()
+        initRoutes()
+        initVehicles()
         
         for (_, route) in routeViews {
             route.display(to: mapView)
@@ -115,16 +115,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         func initMap(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             mapView.setRegion(coordinateRegion, animated: true)
-            mapView.isRotateEnabled = false;
-            mapView.delegate = self;
+            mapView.isRotateEnabled = false
+            mapView.delegate = self
             // Makes the map minimalistic
             mapView.mapType = .mutedStandard
             // Do these even work?
-            mapView.showsUserLocation = true;
-            mapView.showsBuildings = false;
-            mapView.showsCompass = false;
-            mapView.showsTraffic = false;
-            mapView.showsPointsOfInterest = false;
+            mapView.showsUserLocation = true
+            mapView.showsBuildings = false
+            mapView.showsCompass = false
+            mapView.showsTraffic = false
+            mapView.showsPointsOfInterest = false
         }
         
         initMap(location: initialLocation)
@@ -172,7 +172,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 let deltaLongitude = (nextPoint.longitude - estimationPoint.longitude);
                 let y = sin(deltaLongitude) * cos(nextPoint.latitude);
                 let x = cos(estimationPoint.latitude) * sin(nextPoint.latitude) - sin(estimationPoint.latitude)
-                    * cos(nextPoint.latitude) * cos(deltaLongitude);
+                    * cos(nextPoint.latitude) * cos(deltaLongitude)
                 let headingRad = atan2(y, x)
                 var headingDeg = Int(headingRad * 180 / .pi)
                 headingDeg = (headingDeg + 360) % 360;

@@ -43,7 +43,7 @@ struct Route: CustomStringConvertible {
      */
     init?(json: NSDictionary) {
         // Need to add the points to the route
-        var pointsList:[Point] = []
+        var pointsList: [Point] = []
         for (key, value) in json {
             switch key as? NSString {
             case "id":

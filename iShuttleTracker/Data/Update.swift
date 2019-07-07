@@ -71,7 +71,7 @@ struct Update: CustomStringConvertible {
         //print("Finished JSON initialization for update \(self.id)")
     }
     
-    var description:String {
+    var description: String {
         return """
         ID: \(self.id)
         Tracker ID: \(self.tracker_id)
@@ -143,9 +143,8 @@ func propagateUpdates() {
     }
 }
 
-extension Update:Equatable{
+extension Update: Equatable{
     static func == (lhs: Update, rhs: Update) -> Bool {
-        return
-            lhs.id == rhs.id
+        return lhs.id == rhs.id
     }
 }
