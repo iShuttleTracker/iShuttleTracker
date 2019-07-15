@@ -1,0 +1,18 @@
+//
+//  CustomPolyline.swift
+//  ShuttleTrackeriOS
+//
+//  Created by Beiqi Zou on 2/13/19.
+//  Copyright © 2019 iShuttleTracker. All rights reserved.
+//
+
+import UIKit
+import MapKit
+
+/**
+ Wrapper around MKPolyline that allows polylines to be colored.
+ */
+class ColorPolyline: MKPolyline {
+    var route_id: Int?
+    var color: UIColor?
+}
