@@ -147,7 +147,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      */
     func updateAnnotations() {
         for update in updates {
-            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
+            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, update_time: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id, estimation: false)
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
         }
@@ -175,9 +175,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     * cos(nextPoint.latitude) * cos(deltaLongitude)
                 let headingRad = atan2(y, x)
                 var headingDeg = Int(headingRad * 180 / .pi)
-                headingDeg = (headingDeg + 360) % 360;
-                headingDeg = 360 - headingDeg;
-                let shuttle = ShuttleAnnotation(vehicle_id: id, title: vehicles[id]!.name, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
+                headingDeg = (headingDeg + 360) % 360
+                headingDeg = 360 - headingDeg
+                let shuttle = ShuttleAnnotation(vehicle_id: id, title: vehicles[id]!.name, update_time: dateToString(date: Date()), coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id, estimation: true)
                 updateAnnotation(shuttle: shuttle)
             }
         }
@@ -194,6 +194,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 if shuttleAnnotation.vehicle_id == shuttle.vehicle_id {
                     shuttleAnnotation.coordinate = shuttle.coordinate
                     shuttleAnnotation.heading = shuttle.heading
+                    shuttleAnnotation.estimation = shuttle.estimation
                     return
                 }
             }

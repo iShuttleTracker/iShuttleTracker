@@ -15,6 +15,7 @@
 		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
 		551B8788220CF48D00576E58 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8787220CF48D00576E58 /* Time.swift */; };
 		551B878E2214E93A00576E58 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B878D2214E93A00576E58 /* Trip.swift */; };
+		55539B0922DD4ADB00E7C8A3 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55539B0822DD4ADB00E7C8A3 /* DateUtils.swift */; };
 		55AD5A0522B965C0002C362A /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD5A0422B965C0002C362A /* Update.swift */; };
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A4216708BC00BBC615 /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataUtils.swift */; };
@@ -71,6 +72,7 @@
 		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		551B8787220CF48D00576E58 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		551B878D2214E93A00576E58 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		55539B0822DD4ADB00E7C8A3 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		55AD5A0422B965C0002C362A /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				92954A1C221720D1000AD318 /* Extensions.swift */,
 				551B8787220CF48D00576E58 /* Time.swift */,
 				551B878D2214E93A00576E58 /* Trip.swift */,
+				55539B0822DD4ADB00E7C8A3 /* DateUtils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 			files = (
 				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
+				55539B0922DD4ADB00E7C8A3 /* DateUtils.swift in Sources */,
 				383157AB2240247D009FB2D4 /* CenteredTabBar.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleAnnotationView.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataUtils.swift in Sources */,
