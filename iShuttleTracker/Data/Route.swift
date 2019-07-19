@@ -16,7 +16,7 @@ let west_inclement_weather_id = 5
 
 var routes: [Int:Route] = [:]
 
-struct Route: CustomStringConvertible {
+struct Route: CustomStringConvertible, Equatable {
     
     var id = 0
     var name = ""
@@ -108,6 +108,10 @@ struct Route: CustomStringConvertible {
         Updated: \(self.updated)
         Width: \(self.width)
         """
+    }
+    
+    static func == (lhs: Route, rhs: Route) -> Bool {
+        return lhs.id == rhs.id
     }
     
 }

@@ -11,6 +11,7 @@
 		383157AB2240247D009FB2D4 /* CenteredTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* CenteredTabBar.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopAnnotation.swift */; };
 		389F1BFB22147C2A002ACE9F /* ColorPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* ColorPolyline.swift */; };
+		5503D83D22E23BFE005637A7 /* StopOnRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5503D83C22E23BFE005637A7 /* StopOnRoute.swift */; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
 		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
 		551B8788220CF48D00576E58 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8787220CF48D00576E58 /* Time.swift */; };
@@ -68,6 +69,7 @@
 		383157AA2240247D009FB2D4 /* CenteredTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredTabBar.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotation.swift; sourceTree = "<group>"; };
 		389F1BFA22147C2A002ACE9F /* ColorPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPolyline.swift; sourceTree = "<group>"; };
+		5503D83C22E23BFE005637A7 /* StopOnRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopOnRoute.swift; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		551B8787220CF48D00576E58 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				551B8787220CF48D00576E58 /* Time.swift */,
 				551B878D2214E93A00576E58 /* Trip.swift */,
 				55539B0822DD4ADB00E7C8A3 /* DateUtils.swift */,
+				5503D83C22E23BFE005637A7 /* StopOnRoute.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopAnnotation.swift in Sources */,
+				5503D83D22E23BFE005637A7 /* StopOnRoute.swift in Sources */,
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,

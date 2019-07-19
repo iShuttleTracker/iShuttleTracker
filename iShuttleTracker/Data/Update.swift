@@ -9,7 +9,7 @@ var updates: [Update] = []
 
 import Foundation
 
-struct Update: CustomStringConvertible {
+struct Update: CustomStringConvertible, Equatable {
     
     var id = 0
     var tracker_id = ""
@@ -94,6 +94,10 @@ struct Update: CustomStringConvertible {
         return heading - 45;
     }
     
+    static func == (lhs: Update, rhs: Update) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
 }
 
 /**
@@ -140,11 +144,5 @@ func initUpdates() {
 func propagateUpdates() {
     for update in updates {
         vehicles[update.vehicle_id]!.update(update: update)
-    }
-}
-
-extension Update: Equatable{
-    static func == (lhs: Update, rhs: Update) -> Bool {
-        return lhs.id == rhs.id
     }
 }
