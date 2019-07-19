@@ -96,6 +96,29 @@ struct Vehicle: CustomStringConvertible {
     }
     
     /**
+     Estimates how long it will take this Vehicle to reach the given Point, depending on its
+     current velocity.
+     - Parameters:
+       - position: The position the Vehicle needs to reach
+     - Returns: An estimation of how long it will take this Vehicle to reach the Point, in seconds
+     */
+    func secondsUntilReachesPosition(position: Point) -> Double {
+        let metersPerSecond = last_update.speed / 3.6
+        var seconds = 0.0
+        var index = closest_point_index
+        while last_update.route.points[index] != position {
+            let prevIndex = index
+            index += 1
+            if index >= last_update.route.points.count {
+                index = 0
+            }
+            seconds += last_update.route.points[index].distanceFrom(p: last_update.route.points[prevIndex]) / metersPerSecond
+        }
+        
+        return seconds
+    }
+    
+    /**
      Gets the rotation for marker display.
      - Returns: The Vehicle's rotation for display.
      */
