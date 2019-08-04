@@ -39,7 +39,7 @@ class StopAnnotation: NSObject, MKAnnotation {
      - Returns: locationName
      */
     var subtitle: String? {
-        var sub = "boiugvikv"
+        var sub = ""
         for (_, route) in routes {
             if route.enabled {
                 // TODO: Change this to look at schedule data instead of calculating
