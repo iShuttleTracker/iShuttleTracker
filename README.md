@@ -6,7 +6,7 @@ smooth shuttle movement and precise ETAs, notifications for nearby shuttles
 and scheduled trips, dynamic schedule display, and a settings panel to toggle
 views.
 
-[Link to Documentation](https://github.com/quuu/ShuttleTrackeriOS/blob/master/Documentation/README.md)
+[Link to Documentation](https://github.com/iShuttleTracker/iShuttleTracker/tree/master/Documentation)
 
 ## Summer 2019 Goals
 ### Notifications
@@ -42,6 +42,8 @@ views.
 ### Extras
 - [ ] VR/AR
 - [ ] Bus button
+
+[Link to Progress Report](https://github.com/iShuttleTracker/iShuttleTracker/blob/master/progress.md)
 
 ## Spring 2019 Accomplishments
 - [x] Rewrite frontend to be dynamic (i.e. infinite routes and vehicles)
