@@ -54,7 +54,24 @@ class StopAnnotation: NSObject, MKAnnotation {
                     }
                 }
                 if lowestETA > -1.0 {
-                    sub += "\(route.name) ETA: \(Int(lowestETA)) seconds\n"
+                    let eta = Int(lowestETA)
+                    let minutes = Int(eta / 60)
+                    let seconds = eta % 60
+                    var etaString = ""
+                    if minutes > 0 {
+                        etaString += "\(minutes) minute"
+                        if minutes > 1 {
+                            etaString += "s"
+                        }
+                    }
+                    if seconds > 0 {
+                        etaString += "\(seconds) second"
+                        if seconds > 1 {
+                            etaString += "s"
+                        }
+                    }
+                    etaString += "\n"
+                    sub += "\(route.name) ETA: " + etaString
                 }
             }
         }
