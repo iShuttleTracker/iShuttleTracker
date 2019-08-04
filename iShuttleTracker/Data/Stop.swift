@@ -131,7 +131,7 @@ func initStops() {
         for (id, route) in routes {
             if route.stop_ids.contains(stop!.id) {
                 routes[id]!.stops[stop!.id] = stop
-                calculateClosestStop(route: routes[id]!, stop: stop!)
+                calculateClosestStop(route: route, stop: stop!)
             }
         }
         stops[stop!.id] = stop

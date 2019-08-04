@@ -56,12 +56,7 @@ class ShuttleAnnotation : NSObject, MKAnnotation {
         }
         return "Last updated at " + time.longDescription
     }
-    
-    /**
-     - TODO:
-     Add to this method to support different colors of shuttles
-     Or look into coloring the actual uiimage
-     */
+
     var imageName: String? {
         return "Shuttle"
     }

@@ -110,6 +110,14 @@ struct Route: CustomStringConvertible, Equatable {
         """
     }
     
+    func hasStop(stop: Stop) -> Bool {
+        return hasStop(stop_id: stop.id)
+    }
+    
+    func hasStop(stop_id: Int) -> Bool {
+        return stop_ids.contains(stop_id)
+    }
+    
     static func == (lhs: Route, rhs: Route) -> Bool {
         return lhs.id == rhs.id
     }

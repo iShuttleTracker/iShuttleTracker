@@ -96,6 +96,21 @@ struct Vehicle: CustomStringConvertible {
     }
     
     /**
+     Estimates how long it will take this Vehicle to reach the given Stop, depending on its
+     current velocity.
+     - Parameter stop: The stop the vehicle needs to reach
+     - Returns: An estimation of how long it will take this Vehicle to reach the Stop, in seconds,
+     or -1.0 if the stop is not on this vehicle's route
+     */
+    func secondsUntilReachesStop(stop: Stop) -> Double {
+        if last_update.route.hasStop(stop: stop) {
+            let stopOnRoute: StopOnRoute = StopOnRoute(stop: stop, route: last_update.route)
+            return secondsUntilReachesPosition(position: last_update.route.points[closestPointIndexToStopOnRoute[stopOnRoute]!])
+        }
+        return -1.0
+    }
+    
+    /**
      Estimates how long it will take this Vehicle to reach the given Point, depending on its
      current velocity.
      - Parameters:
