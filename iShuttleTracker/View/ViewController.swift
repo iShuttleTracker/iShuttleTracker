@@ -110,8 +110,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      */
     func initMapView() {
         // Sets the origin of the map
-        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788)
-        let regionRadius: CLLocationDistance = 2000
+        let initialLocation = CLLocation(latitude: 42.731228, longitude: -73.675352)
+        let regionRadius: CLLocationDistance = 2200
         
         func initMap(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
@@ -377,7 +377,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if let polyline = overlay as? ColorPolyline {
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.strokeColor = polyline.color
-            renderer.lineWidth = CGFloat(routes[polyline.route_id!]!.width)
+            renderer.lineWidth = CGFloat(routes[polyline.route_id!]!.width / 2)
             return renderer
         }
         
@@ -407,6 +407,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let coordinate = CLLocationCoordinate2DMake(mapView.region.center.latitude, mapView.region.center.longitude)
+        var span = mapView.region.span
+        if span.latitudeDelta > 0.043 { // Max area shown
+            span = MKCoordinateSpan(latitudeDelta: 0.043, longitudeDelta: 0.043)
+        }
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated:true)
     }
     
 }
