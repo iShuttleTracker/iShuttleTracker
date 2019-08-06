@@ -109,8 +109,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      Initializes the map view
      */
     func initMapView() {
-        // Sets the origin of the map
-        let initialLocation = CLLocation(latitude: 42.731228, longitude: -73.675352)
+        // Set the origin of the map with relation to the currently active routes,
+        // should be around (42.731228, -73.675352)
+        let initialLocation = calculateCenterLocation()
         let regionRadius: CLLocationDistance = 2200
         
         func initMap(location: CLLocation) {
@@ -118,7 +119,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             mapView.setRegion(coordinateRegion, animated: true)
             mapView.isRotateEnabled = false
             mapView.delegate = self
-            // Makes the map minimalistic
             mapView.mapType = .mutedStandard
             // Do these even work?
             mapView.showsUserLocation = true
@@ -129,6 +129,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         
         initMap(location: initialLocation)
+    }
+    
+    func calculateCenterLocation() -> CLLocation {
+        var minLatitude = 90.0
+        var maxLatitude = -90.0
+        
+        var minLongitude = 180.0
+        var maxLongitude = -180.0
+        
+        for (_, route) in routes {
+            if route.enabled {
+                for point in route.points {
+                    if point.latitude < minLatitude {
+                        minLatitude = point.latitude
+                    }
+                    if point.latitude > maxLatitude {
+                        maxLatitude = point.latitude
+                    }
+                    if point.longitude < minLongitude {
+                        minLongitude = point.longitude
+                    }
+                    if point.longitude > maxLongitude {
+                        maxLongitude = point.longitude
+                    }
+                }
+            }
+        }
+        let centerLatitude = (minLatitude + maxLatitude) / 2
+        let centerLongitude = (minLongitude + maxLongitude) / 2
+        return CLLocation(latitude: centerLatitude, longitude: centerLongitude)
     }
     
     /**
@@ -361,8 +391,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        initMapView()
+        //initMapView()
         initData()
+        initMapView()
     }
     
     /**

@@ -63,6 +63,9 @@ class StopAnnotation: NSObject, MKAnnotation {
                         if minutes > 1 {
                             etaString += "s"
                         }
+                        if seconds > 0 {
+                            etaString += " "
+                        }
                     }
                     if seconds > 0 {
                         etaString += "\(seconds) second"

@@ -91,7 +91,7 @@ struct Update: CustomStringConvertible, Equatable {
      - Returns: The rotation for display of the Vehicle represented by this Update.
      */
     func getRotation() -> Int {
-        return heading - 45;
+        return heading
     }
     
     static func == (lhs: Update, rhs: Update) -> Bool {
