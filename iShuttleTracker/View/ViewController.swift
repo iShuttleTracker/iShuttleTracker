@@ -69,7 +69,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // Uses shuttle asset instead of default marker
         mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        updateAnnotations()
+        updateShuttleAnnotations()
     }
     
     /**
@@ -176,7 +176,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     /**
      Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */
-    func updateAnnotations() {
+    func updateShuttleAnnotations() {
         for update in updates {
             let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, update_time: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id, estimation: false)
             updateAnnotation(shuttle: shuttle)
@@ -254,10 +254,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 // Clear annotations every 5 minutes in order to remove expired ones
                 if lastRefreshTime.timeIntervalSinceNow < -300 {
                     for annotation in mapView.annotations {
-                        mapView.removeAnnotation(annotation)
+                        if annotation is ShuttleAnnotation {
+                            mapView.removeAnnotation(annotation)
+                        }
                     }
                 }
-                updateAnnotations()
+                updateShuttleAnnotations()
             }
         } else {
             estimate()
