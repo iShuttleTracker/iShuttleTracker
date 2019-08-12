@@ -55,21 +55,15 @@ class StopAnnotation: NSObject, MKAnnotation {
                 }
                 if lowestETA > -1.0 {
                     let eta = Int(lowestETA)
-                    let minutes = Int(eta / 60)
+                    var minutes = Int(eta / 60)
                     let seconds = eta % 60
+                    if seconds > 30 {
+                        minutes += 1
+                    }
                     var etaString = ""
                     if minutes > 0 {
                         etaString += "\(minutes) minute"
                         if minutes > 1 {
-                            etaString += "s"
-                        }
-                        if seconds > 0 {
-                            etaString += " "
-                        }
-                    }
-                    if seconds > 0 {
-                        etaString += "\(seconds) second"
-                        if seconds > 1 {
                             etaString += "s"
                         }
                     }
