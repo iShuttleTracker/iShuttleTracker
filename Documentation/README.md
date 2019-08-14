@@ -211,57 +211,69 @@ classes such as:
 
 As for the ViewController itself, the lifecycle is as such:
 ```
-          viewDidLoad()               mapViewDidFinishLoadingMap(mapview)
-             /    \                         /        |       \
-            /      \                       /         |        \
-           /        \                     /          |         \
-          /          \             displayRoutes()   |    displayStops()
-  initMapView()    initData()                        |
-                     /    \                  displayVehicles()
-                    /      \                          \
-                   /        \                          \
-                  /          \                          \
-              initStops()     initRouteViews()       timer(10s)
-              initRoutes()    initStopViews()            |
-              initVehicles()                             |
-              initUpdates()                           update()
-                                                         |
-                                                         |
-                                                    initUpdates()
-                                                         |
-                                                    (new updates?)
-                                                         |
-                                                     newUpdates()
-                                                         
+                    viewDidLoad()               mapViewDidFinishLoadingMap(mapview)
+                     /   |   \                          /               \
+                    /    |    \                        /                 \
+                   /     |     \                registerViews()    initAnnotations()
+                  /      |      \                                         |
+                 / initMapView() \                                        |
+                /                 \                               updateAnnotations()
+            initData()        initTimer()
+            /   |   \               \
+           /    |    \           timer(1s)
+          /     |     \               \
+ initStops()    | initRouteViews()  update()
+ initRoutes()   | initStopViews()       \
+ initVehicles() |                 lastUpdateTime > 10?
+ initVehicles() |                     /        \
+ initUpdates()  |                    no        yes
+                |                   /            \
+       propagateUpdates()  predictPositions?  initUpdates()
+                               /      \            \
+                              no      yes           \
+                                       |      updates != recentUpdates?
+                                   estimate()    /          \
+                                                no          yes
+                                                            / \
+                                                           /   \
+                                                          /     \
+                                           propagateUpdates()  updateAnnotations()
 ```
 The key points in this lifecycle are:
 - The order that init functions are called from `initData()` are important, as
   routes depend on stops and updates depend on vehicles.
-- `initUpdates()` is called every 10 seconds on a timer, and if the new batch
-  of updates differs from the previous, each shuttle annotation on the map is
-  updated.
+- `update()` is called on a 1 second timer, and `initUpdates()` is called every
+  10 seconds from this function. If the new updates differ from the old updates,
+  the updates are propagated and all shuttle annotations are updated on the map.
+  If shuttle predictions are turned on and it's been less than 10 seconds since
+  the last batch of updates were received, `estimate()` is called.
 
 
 # Notifications
 
 There are two types of notifications supported by the app: nearby notifications
-and scheduled notifications. Both of these are dispatched via static functions
-in the NotificationHandler, `handleScheduledNotifications()` for scheduled
+and scheduled notifications. Both of these are dispatched via the
+NotificationHandler instance: `handleScheduledNotifications()` for scheduled
 notifications and  `handleNearbyNotifications()` for nearby notifications.
-These functions are called from `update()` on a 10 second timer in the view:
+These functions are called from `update()` on a 1 second timer in the view:
 ```
                   displayVehicles()
                           |
                           |
-                      timer(10s)
+                      timer(1s)
                           |
                           |
                        update()
                        /     \
-                      /       \
-                     /         \
-                    /           \
-handleNearbyNotifications()  tryScheduledNotifications()
+                      /  handleScheduledNotifications()
+                     /
+                   ...
+                   /
+         updates != recentUpdates?
+             /        \
+            no        yes
+                        \
+             handleNearbyNotifications() 
 ```
 
 ## Nearby
@@ -304,4 +316,35 @@ Here's how it works:
    `handleScheduledNotifications()` until both the five minute warning and
    the precise notification have been sent, at which point the trip will be removed
    from the list and will no longer be displayed in the settings panel.
+
+
+# Shuttle Prediction
+
+`Vehicle` objects' `estimateCurrentPosition()` function can be used to estimate
+where the vehicle would currently be, represented by a point index on the
+vehicle's route, based on its last recorded velocity and time since its
+position was last updated. The algorithm operates as follows:
+1. The shuttle's last recorded speed is converted from km/h to m/s
+2. The m/s speed is multiplied by the time elapsed since the last update was
+   received to find the distance the shuttle would have travelled if it
+   continued at the same speed
+3. The shuttle is snapped to the closest point on the route to its actual
+   latitude and longitude position. This is the starting point.
+4. From the starting point, each successive point is iterated over and the
+   distance from the last point to that point is added to a running tally. Once
+   the elapsed distance exceeds the predicted distance, the last point index is
+   returned.
+
+There are a few key assumptions made by this algorithm that contribute to its
+unreliability:
+- The shuttle's velocity does not change between updates. This is obviously not
+  true.
+- The true path between each point in a route is a straight line. This is not
+  necessarily true, but this will not influence things much for a well-drawn
+  route.
+- Points in route data are in order. This has not been proven to be true or
+  false.
+
+The algorithm could be significantly improved by removing these assumptions,
+potentially by looking at historical data in the `/history` endpoint.
 
