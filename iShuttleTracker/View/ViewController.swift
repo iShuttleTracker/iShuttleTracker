@@ -163,6 +163,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let centerLatitude = (minLatitude + maxLatitude) / 2
         let centerLongitude = (minLongitude + maxLongitude) / 2
         return CLLocation(latitude: centerLatitude, longitude: centerLongitude)
+    }
+    
     func initAnnotations() {
         for (_, route) in routeViews {
             route.display(to: mapView)
@@ -172,7 +174,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             mapView.addAnnotation(stop)
         }
         
-        updateAnnotations()
+        updateShuttleAnnotations()
     }
     
     func registerViews() {
@@ -412,7 +414,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        //initMapView()
+        initMapView()
         initData()
         initTimer()
     }
