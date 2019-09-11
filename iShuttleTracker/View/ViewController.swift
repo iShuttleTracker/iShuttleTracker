@@ -163,6 +163,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let centerLatitude = (minLatitude + maxLatitude) / 2
         let centerLongitude = (minLongitude + maxLongitude) / 2
         return CLLocation(latitude: centerLatitude, longitude: centerLongitude)
+    func initAnnotations() {
+        for (_, route) in routeViews {
+            route.display(to: mapView)
+        }
+        
+        for stop in stopViews {
+            mapView.addAnnotation(stop)
+        }
+        
+        updateAnnotations()
+    }
+    
+    func registerViews() {
+        // Uses shuttle asset instead of default marker
+        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
     
     /**
@@ -252,7 +267,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             lastUpdateTime = Date()
             if updates != recentUpdates {
                 propagateUpdates()
-                NotificationHandler.getInstance().handleScheduledNotifications()
                 NotificationHandler.getInstance().handleNearbyNotifications()
                 recentUpdates.removeAll()
                 // Clear annotations every 5 minutes in order to remove expired ones
@@ -268,6 +282,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         } else {
             estimate()
         }
+        NotificationHandler.getInstance().handleScheduledNotifications()
     }
     
     /**
@@ -399,15 +414,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         super.viewDidLoad()
         //initMapView()
         initData()
-        initMapView()
+        initTimer()
     }
     
     /**
      Called after the map view finishes loading to initialize the view and timer
      */
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        initView()
-        initTimer()
+        registerViews()
+        initAnnotations()
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
