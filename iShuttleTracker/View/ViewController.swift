@@ -12,6 +12,14 @@ import UserNotifications
 
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
+// Set this to true to enable shuttle predictions. Currently for debugging purposes, should be manipulated
+// through the settings panel in the future.
+var predictPositions = false
+
+// Set this to true to enable shuttle ETAs on stop annotation subtitles. Currently for debugging purposes,
+// should be manipulated through the settings panel in the future once ETAs are more reliable.
+var predictETAs = false
+
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // The map where all the info is displayed
@@ -25,10 +33,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     // Keeps track of the user's location
     let locationManager = CLLocationManager()
-    
-    // Set this to false to disable shuttle predictions. Currently for debugging purposes only, but should
-    // be manipulated through the settings panel in the future.
-    var predictPositions = false
     
     // Stores the names of the currently active routes
     var activeRouteNames: [String] = ["All routes"]
@@ -67,8 +71,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         
         // Uses shuttle asset instead of default marker
+        mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        updateAnnotations()
+        updateShuttleAnnotations()
     }
     
     /**
@@ -108,16 +113,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
      Initializes the map view
      */
     func initMapView() {
-        // Sets the origin of the map
-        let initialLocation = CLLocation(latitude: 42.7302, longitude: -73.6788)
-        let regionRadius: CLLocationDistance = 2000
+        // Set the origin of the map with relation to the currently active routes,
+        // should be around (42.731228, -73.675352)
+        let initialLocation = calculateCenterLocation()
+        let regionRadius: CLLocationDistance = 2200
         
         func initMap(location: CLLocation) {
             let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
             mapView.setRegion(coordinateRegion, animated: true)
             mapView.isRotateEnabled = false
             mapView.delegate = self
-            // Makes the map minimalistic
             mapView.mapType = .mutedStandard
             // Do these even work?
             mapView.showsUserLocation = true
@@ -130,6 +135,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         initMap(location: initialLocation)
     }
     
+    func calculateCenterLocation() -> CLLocation {
+        var minLatitude = 90.0
+        var maxLatitude = -90.0
+        
+        var minLongitude = 180.0
+        var maxLongitude = -180.0
+        
+        for (_, route) in routes {
+            if route.enabled {
+                for point in route.points {
+                    if point.latitude < minLatitude {
+                        minLatitude = point.latitude
+                    }
+                    if point.latitude > maxLatitude {
+                        maxLatitude = point.latitude
+                    }
+                    if point.longitude < minLongitude {
+                        minLongitude = point.longitude
+                    }
+                    if point.longitude > maxLongitude {
+                        maxLongitude = point.longitude
+                    }
+                }
+            }
+        }
+        let centerLatitude = (minLatitude + maxLatitude) / 2
+        let centerLongitude = (minLongitude + maxLongitude) / 2
+        return CLLocation(latitude: centerLatitude, longitude: centerLongitude)
+    }
+    
     func initAnnotations() {
         for (_, route) in routeViews {
             route.display(to: mapView)
@@ -139,7 +174,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             mapView.addAnnotation(stop)
         }
         
-        updateAnnotations()
+        updateShuttleAnnotations()
     }
     
     func registerViews() {
@@ -162,9 +197,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     /**
      Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */
-    func updateAnnotations() {
+    func updateShuttleAnnotations() {
         for update in updates {
-            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, locationName: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id)
+            let shuttle = ShuttleAnnotation(vehicle_id: update.vehicle_id, title: vehicles[update.vehicle_id]!.name, update_time: update.time, coordinate: CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude), heading: Int(update.getRotation()), route_id: update.route_id, estimation: false)
             updateAnnotation(shuttle: shuttle)
             recentUpdates.append(update)
         }
@@ -192,9 +227,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     * cos(nextPoint.latitude) * cos(deltaLongitude)
                 let headingRad = atan2(y, x)
                 var headingDeg = Int(headingRad * 180 / .pi)
-                headingDeg = (headingDeg + 360) % 360;
-                headingDeg = 360 - headingDeg;
-                let shuttle = ShuttleAnnotation(vehicle_id: id, title: vehicles[id]!.name, locationName: "Estimation", coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id)
+                headingDeg = (headingDeg + 360) % 360
+                headingDeg = 360 - headingDeg
+                let shuttle = ShuttleAnnotation(vehicle_id: id, title: vehicles[id]!.name, update_time: dateToString(date: Date()), coordinate: CLLocationCoordinate2D(latitude: estimationPoint.latitude, longitude: estimationPoint.longitude), heading: headingDeg, route_id: vehicle.last_update.route_id, estimation: true)
                 updateAnnotation(shuttle: shuttle)
             }
         }
@@ -211,6 +246,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 if shuttleAnnotation.vehicle_id == shuttle.vehicle_id {
                     shuttleAnnotation.coordinate = shuttle.coordinate
                     shuttleAnnotation.heading = shuttle.heading
+                    shuttleAnnotation.estimation = shuttle.estimation
                     return
                 }
             }
@@ -238,10 +274,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 // Clear annotations every 5 minutes in order to remove expired ones
                 if lastRefreshTime.timeIntervalSinceNow < -300 {
                     for annotation in mapView.annotations {
-                        mapView.removeAnnotation(annotation)
+                        if annotation is ShuttleAnnotation {
+                            mapView.removeAnnotation(annotation)
+                        }
                     }
                 }
-                updateAnnotations()
+                updateShuttleAnnotations()
             }
         } else {
             estimate()
@@ -393,7 +431,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if let polyline = overlay as? ColorPolyline {
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.strokeColor = polyline.color
-            renderer.lineWidth = CGFloat(routes[polyline.route_id!]!.width)
+            renderer.lineWidth = CGFloat(routes[polyline.route_id!]!.width / 2)
             return renderer
         }
         
@@ -423,6 +461,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
         
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let coordinate = CLLocationCoordinate2DMake(mapView.region.center.latitude, mapView.region.center.longitude)
+        var span = mapView.region.span
+        if span.latitudeDelta > 0.043 { // Max area shown
+            span = MKCoordinateSpan(latitudeDelta: 0.043, longitudeDelta: 0.043)
+        }
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated:true)
     }
     
 }

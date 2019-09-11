@@ -10,6 +10,9 @@ import Foundation
 
 var stops: [Int:Stop] = [:]
 
+// Stores which point is closest to each stop on each route
+var closestPointIndexToStopOnRoute: [StopOnRoute:Int] = [:]
+
 struct Stop: CustomStringConvertible, Equatable {
     
     var id = 0
@@ -101,6 +104,18 @@ func fetchStops() -> String {
     return stopsData
 }
 
+func calculateClosestStop(route: Route, stop: Stop) {
+    let stopOnRoute: StopOnRoute = StopOnRoute(stop: stop, route: route)
+    var minDistance = -1.0
+    for i in 0..<route.points.count {
+        let distance = route.points[i].distanceFrom(latitude: stop.latitude, longitude: stop.longitude)
+        if minDistance == -1.0 || distance < minDistance {
+            closestPointIndexToStopOnRoute[stopOnRoute] = i
+            minDistance = distance
+        }
+    }
+}
+
 /**
  Initializes stops from stops.json if it exists, otherwise will
  call fetchStops() fetch stop data and writes it to stops.json.
@@ -116,6 +131,7 @@ func initStops() {
         for (id, route) in routes {
             if route.stop_ids.contains(stop!.id) {
                 routes[id]!.stops[stop!.id] = stop
+                calculateClosestStop(route: route, stop: stop!)
             }
         }
         stops[stop!.id] = stop

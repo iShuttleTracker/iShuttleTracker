@@ -16,7 +16,7 @@ class Time: Comparable, Equatable, CustomStringConvertible {
     
     var hour : Int
     var minute: Int
-    private let secondsSinceBeginningOfDay: Int
+    var second: Int
     
     /**
      Creates a Time from the current Date.
@@ -33,13 +33,25 @@ class Time: Comparable, Equatable, CustomStringConvertible {
         return  "\(formattedHour):\(formattedMinute) \(amOrPm)"
     }
     
+    var longDescription: String {
+        let amOrPm = hour >= 12 ? "PM" : "AM"
+        let formattedHour = hour % 12
+        let formattedMinute = String(format: "%02d", minute)
+        let formattedSecond = String(format: "%02d", second)
+        return  "\(formattedHour):\(formattedMinute):\(formattedSecond) \(amOrPm)"
+    }
+    
+    var secondsSinceBeginningOfDay: Int {
+        return hour * 3600 + minute * 60 + second
+    }
+    
     /**
      Returns the number of seconds that have elapsed since the given time
      - Parameter time: The time to check againsr
      - Returns: The number of seconds since the given time
     */
     func secondsSince(time: Time) -> Int {
-        return time.secondsSinceBeginningOfDay - secondsSinceBeginningOfDay
+        return (time.hour * 3600 + time.minute * 60 + time.second) - (hour * 3600 + minute * 60 + second)
     }
     
     /**
@@ -48,13 +60,10 @@ class Time: Comparable, Equatable, CustomStringConvertible {
      */
     init(date: Date) {
         let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.hour, .minute], from: date)
-        
-        // Calculate the seconds since the beggining of the day
-        let dateSeconds = dateComponents.hour! * 3600 + dateComponents.minute! * 60
-        secondsSinceBeginningOfDay = dateSeconds
+        let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: date)
         hour = dateComponents.hour!
         minute = dateComponents.minute!
+        second = dateComponents.second!
     }
     
     /**
@@ -64,12 +73,10 @@ class Time: Comparable, Equatable, CustomStringConvertible {
        - minute: The minute for the new Time
      - Returns: A new Time with the specified hours and minutes.
      */
-    init(_ hour: Int, _ minute: Int) {
-        // Calculate the seconds since the beggining of the day
-        let dateSeconds = hour * 3600 + minute * 60
-        secondsSinceBeginningOfDay = dateSeconds
+    init(hour: Int, minute: Int, second: Int) {
         self.hour = hour
         self.minute = minute
+        self.second = second
     }
     
     /**

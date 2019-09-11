@@ -96,50 +96,49 @@ struct Vehicle: CustomStringConvertible {
     }
     
     /**
+     Estimates how long it will take this Vehicle to reach the given Stop, depending on its
+     current velocity.
+     - Parameter stop: The stop the vehicle needs to reach
+     - Returns: An estimation of how long it will take this Vehicle to reach the Stop, in seconds,
+     or -1.0 if the stop is not on this vehicle's route
+     */
+    func secondsUntilReachesStop(stop: Stop) -> Double {
+        if last_update.route.hasStop(stop: stop) {
+            let stopOnRoute: StopOnRoute = StopOnRoute(stop: stop, route: last_update.route)
+            return secondsUntilReachesPosition(position: last_update.route.points[closestPointIndexToStopOnRoute[stopOnRoute]!])
+        }
+        return -1.0
+    }
+    
+    /**
+     Estimates how long it will take this Vehicle to reach the given Point, depending on its
+     current velocity.
+     - Parameters:
+       - position: The position the Vehicle needs to reach
+     - Returns: An estimation of how long it will take this Vehicle to reach the Point, in seconds
+     */
+    func secondsUntilReachesPosition(position: Point) -> Double {
+        let metersPerSecond = last_update.speed / 3.6
+        var seconds = 0.0
+        var index = closest_point_index
+        while last_update.route.points[index] != position {
+            let prevIndex = index
+            index += 1
+            if index >= last_update.route.points.count {
+                index = 0
+            }
+            seconds += last_update.route.points[index].distanceFrom(p: last_update.route.points[prevIndex]) / metersPerSecond
+        }
+        
+        return seconds
+    }
+    
+    /**
      Gets the rotation for marker display.
      - Returns: The Vehicle's rotation for display.
      */
     func getRotation() -> Int {
         return last_update.getRotation()
-    }
-    
-    /**
-     Converts a time represented by a String to a Date.
-     - Parameter time: The time to convert, in the form "yyyy-MM-dd'T'HH:mm:ss.ZZZZZZ'Z'".
-     - Returns: A Date object representing the given String time, or nil if the String does not represent
-     a properly formatted time.
-     */
-    func convertTime(time: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        return formatter.date(from: time)
-    }
-    
-    /**
-     Returns the amount of time that has passed since the given Update was received.
-     - Parameter update: The update to return the time since.
-     - Returns: A TimeInterval (Double) representing the amount of time in seconds since the update
-     was received.
-     */
-    func secondsSince(update: Update) -> TimeInterval {
-        return abs(convertTime(time: convertFromUTC(date: update.time))!.timeIntervalSinceNow)
-    }
-    
-    /**
-     Converts the given date from UTC to the local time zone.
-     - Parameter date: The UTC date to convert.
-     - Returns: The date converted from UTC to the local time zone.
-     */
-    func convertFromUTC(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        
-        let dt = dateFormatter.date(from: date)
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        
-        return dateFormatter.string(from: dt!)
     }
     
     var description:String {

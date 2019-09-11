@@ -16,7 +16,7 @@ let west_inclement_weather_id = 5
 
 var routes: [Int:Route] = [:]
 
-struct Route: CustomStringConvertible {
+struct Route: CustomStringConvertible, Equatable {
     
     var id = 0
     var name = ""
@@ -108,6 +108,18 @@ struct Route: CustomStringConvertible {
         Updated: \(self.updated)
         Width: \(self.width)
         """
+    }
+    
+    func hasStop(stop: Stop) -> Bool {
+        return hasStop(stop_id: stop.id)
+    }
+    
+    func hasStop(stop_id: Int) -> Bool {
+        return stop_ids.contains(stop_id)
+    }
+    
+    static func == (lhs: Route, rhs: Route) -> Bool {
+        return lhs.id == rhs.id
     }
     
 }

@@ -9,7 +9,7 @@ var updates: [Update] = []
 
 import Foundation
 
-struct Update: CustomStringConvertible {
+struct Update: CustomStringConvertible, Equatable {
     
     var id = 0
     var tracker_id = ""
@@ -91,7 +91,11 @@ struct Update: CustomStringConvertible {
      - Returns: The rotation for display of the Vehicle represented by this Update.
      */
     func getRotation() -> Int {
-        return heading - 45;
+        return heading
+    }
+    
+    static func == (lhs: Update, rhs: Update) -> Bool {
+        return lhs.id == rhs.id
     }
     
 }
@@ -140,11 +144,5 @@ func initUpdates() {
 func propagateUpdates() {
     for update in updates {
         vehicles[update.vehicle_id]!.update(update: update)
-    }
-}
-
-extension Update: Equatable{
-    static func == (lhs: Update, rhs: Update) -> Bool {
-        return lhs.id == rhs.id
     }
 }

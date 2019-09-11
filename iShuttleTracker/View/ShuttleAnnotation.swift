@@ -18,9 +18,10 @@ class ShuttleAnnotation : NSObject, MKAnnotation {
     let vehicle_id: Int
     let route_id: Int
     let vehicle_name: String?
-    let locationName: String
+    @objc dynamic var estimation: Bool
     @objc dynamic var heading: Int
     @objc dynamic var coordinate: CLLocationCoordinate2D
+    @objc dynamic var update_time: String
     
     /**
      Constructor for a shuttle object to be displayed on the map
@@ -30,14 +31,15 @@ class ShuttleAnnotation : NSObject, MKAnnotation {
        - coordinate: Where the marker should be
        - heading: Amount to rotate the shuttle marker by
      */
-    init(vehicle_id: Int, title: String, locationName: String, coordinate: CLLocationCoordinate2D, heading: Int, route_id: Int) {
+    init(vehicle_id: Int, title: String, update_time: String, coordinate: CLLocationCoordinate2D, heading: Int, route_id: Int, estimation: Bool) {
         self.vehicle_id = vehicle_id
         self.title = title
         self.route_id = route_id
         self.vehicle_name = " "
-        self.locationName = locationName
+        self.update_time = update_time
         self.coordinate = coordinate
         self.heading = heading
+        self.estimation = estimation
         
         super.init()
     }
@@ -47,14 +49,14 @@ class ShuttleAnnotation : NSObject, MKAnnotation {
      - Returns: locationName
      */
     var subtitle: String? {
-        return locationName
+        let date: Date = stringToDate(date: convertFromUTC(date: update_time))!
+        let time: Time = Time(date: date)
+        if estimation {
+            return "Estimation (last updated at " + time.longDescription + ")"
+        }
+        return "Last updated at " + time.longDescription
     }
-    
-    /**
-     - TODO:
-     Add to this method to support different colors of shuttles
-     Or look into coloring the actual uiimage
-     */
+
     var imageName: String? {
         return "Shuttle"
     }
