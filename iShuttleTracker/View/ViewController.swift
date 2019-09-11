@@ -12,6 +12,14 @@ import UserNotifications
 
 var lastLocation: Point? = nil // The most up-to-date location we have of the user
 
+// Set this to true to enable shuttle predictions. Currently for debugging purposes, should be manipulated
+// through the settings panel in the future.
+var predictPositions = false
+
+// Set this to true to enable shuttle ETAs on stop annotation subtitles. Currently for debugging purposes,
+// should be manipulated through the settings panel in the future once ETAs are more reliable.
+var predictETAs = false
+
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     // The map where all the info is displayed
@@ -25,10 +33,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     // Keeps track of the user's location
     let locationManager = CLLocationManager()
-    
-    // Set this to false to disable shuttle predictions. Currently for debugging purposes only, but should
-    // be manipulated through the settings panel in the future.
-    var predictPositions = false
     
     // Stores the names of the currently active routes
     var activeRouteNames: [String] = ["All routes"]

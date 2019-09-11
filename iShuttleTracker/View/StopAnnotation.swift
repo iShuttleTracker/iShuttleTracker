@@ -39,40 +39,43 @@ class StopAnnotation: NSObject, MKAnnotation {
      - Returns: locationName
      */
     var subtitle: String? {
-        var sub = ""
-        for (_, route) in routes {
-            if route.enabled {
-                // TODO: Change this to look at schedule data instead of calculating
-                //       seconds for each shuttle
-                var lowestETA = -1.0
-                for (_, vehicle) in vehicles {
-                    if vehicle.last_update.route.hasStop(stop_id: stop_id) {
-                        let secondsAway = vehicle.secondsUntilReachesStop(stop: stops[stop_id]!)
-                        if secondsAway < lowestETA || lowestETA == -1.0 {
-                            lowestETA = secondsAway
+        if predictETAs {
+            var sub = ""
+            for (_, route) in routes {
+                if route.enabled {
+                    // TODO: Change this to look at schedule data instead of calculating
+                    //       seconds for each shuttle
+                    var lowestETA = -1.0
+                    for (_, vehicle) in vehicles {
+                        if vehicle.last_update.route.hasStop(stop_id: stop_id) {
+                            let secondsAway = vehicle.secondsUntilReachesStop(stop: stops[stop_id]!)
+                            if secondsAway < lowestETA || lowestETA == -1.0 {
+                                lowestETA = secondsAway
+                            }
                         }
                     }
-                }
-                if lowestETA > -1.0 {
-                    let eta = Int(lowestETA)
-                    var minutes = Int(eta / 60)
-                    let seconds = eta % 60
-                    if seconds > 30 {
-                        minutes += 1
-                    }
-                    var etaString = ""
-                    if minutes > 0 {
-                        etaString += "\(minutes) minute"
-                        if minutes > 1 {
-                            etaString += "s"
+                    if lowestETA > -1.0 {
+                        let eta = Int(lowestETA)
+                        var minutes = Int(eta / 60)
+                        let seconds = eta % 60
+                        if seconds > 30 {
+                            minutes += 1
                         }
+                        var etaString = ""
+                        if minutes > 0 {
+                            etaString += "\(minutes) minute"
+                            if minutes > 1 {
+                                etaString += "s"
+                            }
+                        }
+                        etaString += "\n"
+                        sub += "\(route.name) ETA: " + etaString
                     }
-                    etaString += "\n"
-                    sub += "\(route.name) ETA: " + etaString
                 }
             }
+            return sub
         }
-        return sub
+        return nil
     }
     
 }
