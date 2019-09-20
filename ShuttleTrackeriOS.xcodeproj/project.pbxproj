@@ -3,19 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1149D61C22C4620C0006C67D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 1149D61B22C4620C0006C67D /* Podfile */; };
+		1157221522BD54EF0006DF48 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1157221422BD54EF0006DF48 /* Time.swift */; };
+		1157221922BD55A30006DF48 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1157221822BD55A30006DF48 /* Trip.swift */; };
 		115866CA22AADECA0026455E /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115866C922AADECA0026455E /* Notification.swift */; };
+		11A4314222E2349E008C107C /* 630AM-3PM.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11A4313E22E2349E008C107C /* 630AM-3PM.csv */; };
+		11A4314322E2349E008C107C /* 245PM-1115PM.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11A4313F22E2349E008C107C /* 245PM-1115PM.csv */; };
+		11A4314422E2349E008C107C /* 430PM-830PM.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11A4314022E2349E008C107C /* 430PM-830PM.csv */; };
+		11A4314522E2349E008C107C /* 8AM-430PM.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11A4314122E2349E008C107C /* 8AM-430PM.csv */; };
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
 		383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* CustomTabBar.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopView.swift */; };
 		389F1BFB22147C2A002ACE9F /* CustomPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */; };
 		551344E32163098A009618D0 /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551344E22163098A009618D0 /* Vehicle.swift */; };
-		551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8784220CA47F00576E58 /* NotificationHandler.swift */; };
-		551B8788220CF48D00576E58 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B8787220CF48D00576E58 /* Time.swift */; };
-		551B878E2214E93A00576E58 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551B878D2214E93A00576E58 /* Trip.swift */; };
 		55BB269E2166C28000BBC615 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB269D2166C28000BBC615 /* Stop.swift */; };
 		55BB26A2216705BF00BBC615 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A1216705BF00BBC615 /* Update.swift */; };
 		55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB26A3216708BC00BBC615 /* DataHandler.swift */; };
@@ -42,6 +46,7 @@
 		92A3623A21519BF800B7B33B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623921519BF800B7B33B /* Assets.xcassets */; };
 		92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92A3623B21519BF800B7B33B /* LaunchScreen.storyboard */; };
 		92A3624821519BF800B7B33B /* ShuttleTrackeriOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A3624721519BF800B7B33B /* ShuttleTrackeriOSTests.swift */; };
+		F4B53999B7E7DE5032E7F687 /* Pods_ShuttleTrackeriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E6A66BEE1CB11DAF69F0416 /* Pods_ShuttleTrackeriOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,18 +80,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		061E289C5DFE96F86563ED34 /* Pods-ShuttleTrackeriOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShuttleTrackeriOS.release.xcconfig"; path = "Target Support Files/Pods-ShuttleTrackeriOS/Pods-ShuttleTrackeriOS.release.xcconfig"; sourceTree = "<group>"; };
+		1149D61B22C4620C0006C67D /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		1157221422BD54EF0006DF48 /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		1157221822BD55A30006DF48 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		115866C922AADECA0026455E /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		11A4313E22E2349E008C107C /* 630AM-3PM.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "630AM-3PM.csv"; path = "schedule/East Schedules/630AM-3PM.csv"; sourceTree = SOURCE_ROOT; };
+		11A4313F22E2349E008C107C /* 245PM-1115PM.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "245PM-1115PM.csv"; path = "schedule/East Schedules/245PM-1115PM.csv"; sourceTree = SOURCE_ROOT; };
+		11A4314022E2349E008C107C /* 430PM-830PM.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "430PM-830PM.csv"; path = "schedule/East Schedules/430PM-830PM.csv"; sourceTree = SOURCE_ROOT; };
+		11A4314122E2349E008C107C /* 8AM-430PM.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "8AM-430PM.csv"; path = "schedule/East Schedules/8AM-430PM.csv"; sourceTree = SOURCE_ROOT; };
+		2EAB70F99079F19C4485814E /* Pods-ShuttleTrackeriOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShuttleTrackeriOS.debug.xcconfig"; path = "Target Support Files/Pods-ShuttleTrackeriOS/Pods-ShuttleTrackeriOS.debug.xcconfig"; sourceTree = "<group>"; };
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		383157AA2240247D009FB2D4 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopView.swift; sourceTree = "<group>"; };
 		389F1BFA22147C2A002ACE9F /* CustomPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPolyline.swift; sourceTree = "<group>"; };
 		551344E22163098A009618D0 /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
-		551B8784220CA47F00576E58 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
-		551B8787220CF48D00576E58 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		551B878D2214E93A00576E58 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		55BB269D2166C28000BBC615 /* Stop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		55BB26A1216705BF00BBC615 /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		55BB26A3216708BC00BBC615 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		5E6A66BEE1CB11DAF69F0416 /* Pods_ShuttleTrackeriOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShuttleTrackeriOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84F0CC1722B188570027EB02 /* weekendLN.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = weekendLN.csv; path = schedule/weekendLN.csv; sourceTree = SOURCE_ROOT; };
 		84F0CC1822B188570027EB02 /* SuW.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SuW.csv; path = schedule/SuW.csv; sourceTree = SOURCE_ROOT; };
 		84F0CC1922B188570027EB02 /* MFW.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MFW.csv; path = schedule/MFW.csv; sourceTree = SOURCE_ROOT; };
@@ -123,6 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B53999B7E7DE5032E7F687 /* Pods_ShuttleTrackeriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +156,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1157221222BD53510006DF48 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		1157221322BD54B70006DF48 /* Utilites */ = {
+			isa = PBXGroup;
+			children = (
+				1157221422BD54EF0006DF48 /* Time.swift */,
+				1157221822BD55A30006DF48 /* Trip.swift */,
+			);
+			path = Utilites;
+			sourceTree = "<group>";
+		};
 		386CFB7E221615CA001FE9B7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,26 +195,13 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		551B8786220CF45E00576E58 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				551B8787220CF48D00576E58 /* Time.swift */,
-				551B878D2214E93A00576E58 /* Trip.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		55EC50AC21FBC30C0067EB8C /* Notifications */ = {
-			isa = PBXGroup;
-			children = (
-				551B8784220CA47F00576E58 /* NotificationHandler.swift */,
-			);
-			path = Notifications;
-			sourceTree = "<group>";
-		};
 		84E2312222612350006DF8DA /* schedule */ = {
 			isa = PBXGroup;
 			children = (
+				11A4314122E2349E008C107C /* 8AM-430PM.csv */,
+				11A4313F22E2349E008C107C /* 245PM-1115PM.csv */,
+				11A4314022E2349E008C107C /* 430PM-830PM.csv */,
+				11A4313E22E2349E008C107C /* 630AM-3PM.csv */,
 				84F0CC1C22B188570027EB02 /* CustomCollectionViewCell.swift */,
 				84F0CC1B22B188570027EB02 /* CustomCollectionViewController.swift */,
 				84F0CC1A22B188570027EB02 /* CustomCollectionViewLayout.swift */,
@@ -200,6 +216,15 @@
 			);
 			name = schedule;
 			path = s;
+			sourceTree = "<group>";
+		};
+		91DF69AA153C13F4B5915B4D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2EAB70F99079F19C4485814E /* Pods-ShuttleTrackeriOS.debug.xcconfig */,
+				061E289C5DFE96F86563ED34 /* Pods-ShuttleTrackeriOS.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		9217F39E21644762008C847A /* Parse */ = {
@@ -226,15 +251,14 @@
 		92A3622621519BF700B7B33B = {
 			isa = PBXGroup;
 			children = (
-
+				1149D61B22C4620C0006C67D /* Podfile */,
 				84E2312222612350006DF8DA /* schedule */,
-				551B8786220CF45E00576E58 /* Utilities */,
-				55EC50AC21FBC30C0067EB8C /* Notifications */,
-        
 				92A359EF21670DFD00DB3E2B /* Documentation */,
 				92A3623121519BF700B7B33B /* ShuttleTrackeriOS */,
 				92A3624621519BF800B7B33B /* ShuttleTrackeriOSTests */,
 				92A3623021519BF700B7B33B /* Products */,
+				91DF69AA153C13F4B5915B4D /* Pods */,
+				A540469860B42A46649B25BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -251,8 +275,8 @@
 		92A3623121519BF700B7B33B /* ShuttleTrackeriOS */ = {
 			isa = PBXGroup;
 			children = (
-				551B8786220CF45E00576E58 /* Utilities */,
-				55EC50AC21FBC30C0067EB8C /* Notifications */,
+				1157221322BD54B70006DF48 /* Utilites */,
+				1157221222BD53510006DF48 /* Notification */,
 				9217F39E21644762008C847A /* Parse */,
 				386CFB7E221615CA001FE9B7 /* View */,
 				92A3623421519BF700B7B33B /* ViewController.swift */,
@@ -275,6 +299,14 @@
 			path = ShuttleTrackeriOSTests;
 			sourceTree = "<group>";
 		};
+		A540469860B42A46649B25BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E6A66BEE1CB11DAF69F0416 /* Pods_ShuttleTrackeriOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -282,11 +314,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92A3625721519BF800B7B33B /* Build configuration list for PBXNativeTarget "ShuttleTrackeriOS" */;
 			buildPhases = (
+				EB56B638540684E5D1C3F4A2 /* [CP] Check Pods Manifest.lock */,
 				92A3622B21519BF700B7B33B /* Sources */,
 				92A3622C21519BF700B7B33B /* Frameworks */,
 				92A3622D21519BF700B7B33B /* Resources */,
 				38F700D2215340D9005D3607 /* Embed Frameworks */,
 				38F700D3215340F0005D3607 /* ShellScript */,
+				88B42DA42F95C4066B543AFA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -390,12 +424,17 @@
 				84F0CC2C22B188580027EB02 /* MFE.csv in Resources */,
 				84F0CC2A22B188580027EB02 /* weekendE.csv in Resources */,
 				84F0CC2222B188580027EB02 /* weekendLN.csv in Resources */,
+				11A4314422E2349E008C107C /* 430PM-830PM.csv in Resources */,
+				11A4314322E2349E008C107C /* 245PM-1115PM.csv in Resources */,
 				92A3623D21519BF800B7B33B /* LaunchScreen.storyboard in Resources */,
 				92A3623A21519BF800B7B33B /* Assets.xcassets in Resources */,
 				84F0CC2422B188580027EB02 /* MFW.csv in Resources */,
+				11A4314222E2349E008C107C /* 630AM-3PM.csv in Resources */,
 				84F0CC2822B188580027EB02 /* MFEP.csv in Resources */,
 				84F0CC2B22B188580027EB02 /* SaW.csv in Resources */,
 				92A3623821519BF700B7B33B /* Main.storyboard in Resources */,
+				1149D61C22C4620C0006C67D /* Podfile in Resources */,
+				11A4314522E2349E008C107C /* 8AM-430PM.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +473,45 @@
 			shellScript = "
 ";
 		};
+		88B42DA42F95C4066B543AFA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ShuttleTrackeriOS/Pods-ShuttleTrackeriOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ShuttleTrackeriOS/Pods-ShuttleTrackeriOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShuttleTrackeriOS/Pods-ShuttleTrackeriOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB56B638540684E5D1C3F4A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ShuttleTrackeriOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -442,14 +520,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				115866CA22AADECA0026455E /* Notification.swift in Sources */,
-				551B878E2214E93A00576E58 /* Trip.swift in Sources */,
 				380F719122138EE900F35728 /* RouteView.swift in Sources */,
+				1157221522BD54EF0006DF48 /* Time.swift in Sources */,
 				84F0CC2722B188580027EB02 /* CustomCollectionViewCell.swift in Sources */,
+				1157221922BD55A30006DF48 /* Trip.swift in Sources */,
 				383157AB2240247D009FB2D4 /* CustomTabBar.swift in Sources */,
 				9217B4922214AD1900EBBB39 /* ShuttleArrow.swift in Sources */,
 				925C73AA2215BBAE00E77A14 /* ShuttleDisplay.swift in Sources */,
 				55BB26A4216708BC00BBC615 /* DataHandler.swift in Sources */,
-				551B8788220CF48D00576E58 /* Time.swift in Sources */,
 				928A17AD215C0CE800A862B2 /* Point.swift in Sources */,
 				92A3623521519BF700B7B33B /* ViewController.swift in Sources */,
 				386CFB7C22160D76001FE9B7 /* StopView.swift in Sources */,
@@ -458,7 +536,6 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
-				551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */,
 				84F0CC2922B188580027EB02 /* schedule.swift in Sources */,
 				9217B49022135E9400EBBB39 /* Shuttle.swift in Sources */,
 				92A3623321519BF700B7B33B /* AppDelegate.swift in Sources */,
@@ -636,6 +713,7 @@
 		};
 		92A3625821519BF800B7B33B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EAB70F99079F19C4485814E /* Pods-ShuttleTrackeriOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -650,7 +728,6 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wtg.ShuttleTrackeriOS;
-
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -659,6 +736,7 @@
 		};
 		92A3625921519BF800B7B33B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 061E289C5DFE96F86563ED34 /* Pods-ShuttleTrackeriOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -673,7 +751,6 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wtg.ShuttleTrackeriOS;
-
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

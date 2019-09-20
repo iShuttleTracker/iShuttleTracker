@@ -111,3 +111,10 @@ func initStops() {
     }
 }
 
+extension Stop:Equatable{
+    static func == (lhs: Stop, rhs: Stop) -> Bool {
+        return
+            lhs.id == rhs.id
+    }
+}
+
