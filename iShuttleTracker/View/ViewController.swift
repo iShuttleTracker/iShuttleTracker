@@ -26,8 +26,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     @IBOutlet var mapView: MKMapView!
     
     // Switches in the settings panel
-    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
-    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
     @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
     @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
     
@@ -100,9 +98,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         initRouteViews()
         initStopViews()
         
-        // Settings
-        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
-        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
         nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
         scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
         
@@ -348,34 +343,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Location updates are not authorized.
             manager.stopUpdatingLocation()
             return
-        }
-    }
-    
-    /**
-     Called when the east route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func eastRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled east route on")
-            //            showRoute(name: "east")
-        } else {
-            print("Toggled east route off")
-            //            hideRoute(name: "east")
-        }
-    }
-    
-    /**
-     Called when the west route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func westRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled west route on")
-            //            showRoute(name: "west")
-        } else {
-            print("Toggled west route off")
-            //            hideRoute(name: "west")
         }
     }
     
