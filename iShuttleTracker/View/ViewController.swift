@@ -25,10 +25,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     // The map where all the info is displayed
     @IBOutlet var mapView: MKMapView!
     
-    // Switches in the settings panel
-    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
-    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
-    
     // Keeps track of the user's location
     let locationManager = CLLocationManager()
     
@@ -97,9 +93,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         // View
         initRouteViews()
         initStopViews()
-        
-        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
-        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
         
         refreshEnabledRoutes()
     }
@@ -343,36 +336,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Location updates are not authorized.
             manager.stopUpdatingLocation()
             return
-        }
-    }
-    
-    /**
-     Called when the nearby notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func nearbyNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled nearby notifications on")
-            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
-            //       panel visible. It should be hidden if this switch is toggled off.
-        } else {
-            print("Toggled nearby notifications off")
-            // TODO: Hide the "Nearby Notifications" section.
-        }
-    }
-    
-    /**
-     Called when the scheduled notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func scheduledNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled scheduled notifications on")
-            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
-            //       settings panel visible. It should be hidden if the switch is toggled off.
-        } else {
-            print("Toggled scheduled notifications off")
-            // TODO: Hide the "Scheduled Trips" section.
         }
     }
     
