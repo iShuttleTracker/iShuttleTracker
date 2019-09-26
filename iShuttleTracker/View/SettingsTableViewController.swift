@@ -9,60 +9,93 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
+    // Route Views
+    @IBOutlet weak var westCampusView: UIView!
+    @IBOutlet weak var eastCampusView: UIView!
+    @IBOutlet weak var weekendLateNightView: UIView!
+    @IBOutlet weak var eastWeatherView: UIView!
+    @IBOutlet weak var westWeatherView: UIView!
+    @IBOutlet weak var eastArchView: UIView!
     
+    // Switches
     @IBOutlet weak var eastCampusSwitch: UISwitch!
     @IBOutlet weak var westCampusSwitch: UISwitch!
+    @IBOutlet weak var weekendLateNightSwitch: UISwitch!
+    @IBOutlet weak var eastWeatherSwitch: UISwitch!
+    @IBOutlet weak var westWeatherSwitch: UISwitch!
+    @IBOutlet weak var archEastSwitch: UISwitch!
+    
     let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "map") as! ViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        eastCampusSwitch.setOn(true, animated: false)
-        westCampusSwitch.setOn(true, animated: false)
+        initButtons()
     }
     
-    /**
-    Called when the east route switch is toggled on or off from the settings panel
-    - Parameter routeSwitch: The switch after being toggled
-    */
+    func initButtons() {
+        for route in routeViews.values {
+            if !route.isEnabled {
+                switch route.getId() {
+                case 1:
+                    westCampusView.isHidden = true
+                case 3:
+                    weekendLateNightView.isHidden = true
+                case 4:
+                    eastWeatherView.isHidden = true
+                case 5:
+                    westWeatherView.isHidden = true
+                case 10:
+                    eastArchView.isHidden = true
+                case 15:
+                    eastCampusView.isHidden = true
+                default:
+                    continue
+                }
+            }
+        }
+    }
+    
+    func routeSwitchPressed(uiSwitch: UISwitch, id: Int) {
+        
+        if !uiSwitch.isOn {
+            for routeView in routeViews.values {
+                if routeView.getId() == id {
+                    //routeView.disable(to: mapViewController.mapView)
+                    print("hide")
+                    return
+                }
+            }
+        } else {
+            for routeView in routeViews.values {
+                if routeView.getId() == id {
+                    //routeView.display(to: mapViewController.mapView)
+                    print("show")
+                    return
+               }
+            }
+        }
+        
+    }
+    
     @IBAction func eastCampusSwitchPressed(_ sender: Any) {
-        if !eastCampusSwitch.isOn {
-            for routeView in routeViews.values {
-                if routeView.getName() == "East Campus" {
-                    //routeView.disable(to: mapViewController.mapView)
-                    return
-                }
-            }
-        } else {
-            for routeView in routeViews.values {
-                if routeView.getName() == "East Campus" {
-                    //routeView.display(to: mapViewController.mapView)
-                    return
-                }
-            }
-        }
+        routeSwitchPressed(uiSwitch: eastCampusSwitch, id: 15)
     }
     
-    /**
-    Called when the west route switch is toggled on or off from the settings panel
-    - Parameter routeSwitch: The switch after being toggled
-    */
     @IBAction func westCampusSwitchPressed(_ sender: Any) {
-        if !westCampusSwitch.isOn {
-            for routeView in routeViews.values {
-                if routeView.getName() == "West Campus" {
-                    //routeView.disable(to: mapViewController.mapView)
-                    return
-                }
-            }
-        } else {
-            for routeView in routeViews.values {
-                if routeView.getName() == "West Campus" {
-                    //routeView.display(to: mapViewController.mapView)
-                    return
-                }
-            }
-        }
+        routeSwitchPressed(uiSwitch: westCampusSwitch, id: 15)
     }
     
-
+    @IBAction func weekendLateNightSwitchPressed(_ sender: Any) {
+        routeSwitchPressed(uiSwitch: weekendLateNightSwitch, id: 3)
+    }
+    @IBAction func eastWeatherSwitchPressed(_ sender: Any) {
+        routeSwitchPressed(uiSwitch: eastWeatherSwitch, id: 4)
+    }
+    @IBAction func westWeatherSwitchPressed(_ sender: Any) {
+        routeSwitchPressed(uiSwitch: westWeatherSwitch, id: 5)
+    }
+    
+    @IBAction func eastArchSwitchPressed(_ sender: Any) {
+        routeSwitchPressed(uiSwitch: archEastSwitch, id: 15)
+    }
 }
