@@ -82,14 +82,8 @@ class RouteView {
         mapView.addOverlay(routePolyLine!)
     }
     
-    /**
-     Toggle the route display off
-     - Parameter mapView: The map view this route is on
-     */
-    func disable(to mapView: MKMapView) {
-        //mapView.removeAnnotations(stopAnnotations!)
-        isDisplaying = false
-        mapView.removeOverlay(routePolyLine!)
+    func getPolyLine() -> ColorPolyline {
+        return routePolyLine!
     }
     
 }

@@ -182,6 +182,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        refreshRouteViews()
+    }
+    
+    func refreshRouteViews() {
+        for route in routeViews.values {
+            if route.isEnabled && !hiddenRoutes.contains(route.getId()) {
+                mapView.addOverlay(route.getPolyLine())
+            } else if route.isEnabled && hiddenRoutes.contains(route.getId()) {
+                mapView.removeOverlay(route.getPolyLine())
+            }
+        }
+    }
+    
     /**
      Updates the existing annotations on the map or adds new ones corresponding to the current updates.
      */

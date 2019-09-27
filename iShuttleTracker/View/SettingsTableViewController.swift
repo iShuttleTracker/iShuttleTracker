@@ -7,6 +7,8 @@
 
 import UIKit
 
+var hiddenRoutes = Set<Int>()
+
 class SettingsTableViewController: UITableViewController {
 
     // Route Views
@@ -25,8 +27,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var westWeatherSwitch: UISwitch!
     @IBOutlet weak var archEastSwitch: UISwitch!
     
-    let mapViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "map") as! ViewController
-
     override func viewDidLoad() {
         super.viewDidLoad()
         initButtons()
@@ -60,7 +60,7 @@ class SettingsTableViewController: UITableViewController {
         if !uiSwitch.isOn {
             for routeView in routeViews.values {
                 if routeView.getId() == id {
-                    //routeView.disable(to: mapViewController.mapView)
+                    hiddenRoutes.insert(id)
                     print("hide")
                     return
                 }
@@ -68,7 +68,7 @@ class SettingsTableViewController: UITableViewController {
         } else {
             for routeView in routeViews.values {
                 if routeView.getId() == id {
-                    //routeView.display(to: mapViewController.mapView)
+                    hiddenRoutes.remove(id)
                     print("show")
                     return
                }
@@ -82,7 +82,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBAction func westCampusSwitchPressed(_ sender: Any) {
-        routeSwitchPressed(uiSwitch: westCampusSwitch, id: 15)
+        routeSwitchPressed(uiSwitch: westCampusSwitch, id: 1)
     }
     
     @IBAction func weekendLateNightSwitchPressed(_ sender: Any) {
@@ -96,6 +96,6 @@ class SettingsTableViewController: UITableViewController {
     }
     
     @IBAction func eastArchSwitchPressed(_ sender: Any) {
-        routeSwitchPressed(uiSwitch: archEastSwitch, id: 15)
+        routeSwitchPressed(uiSwitch: archEastSwitch, id: 10)
     }
 }
