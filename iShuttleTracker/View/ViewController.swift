@@ -51,6 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     /**
      Initializes the stops, routes, and vehicles and adds them to the map view
      */
+    /*
     func initView() {
         initStops()
         initRoutes()
@@ -64,11 +65,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             mapView.addAnnotation(stop)
         }
         
-        // Uses shuttle asset instead of default marker
-        mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        updateShuttleAnnotations()
     }
+     */
     
     /**
      Initializes the timer that updates vehicle annotations and handles notifications
@@ -91,8 +89,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         propagateUpdates()
         
         // View
-        initRouteViews()
         initStopViews()
+        initRouteViews()
+        
+        // Uses shuttle asset instead of default marker
+        mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        updateShuttleAnnotations()
         
         refreshEnabledRoutes()
     }
@@ -156,10 +159,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     func initAnnotations() {
         for (_, route) in routeViews {
             route.display(to: mapView)
-        }
-        
-        for stop in stopViews {
-            mapView.addAnnotation(stop)
+            mapView.addAnnotations(route.getStops())
         }
         
         updateShuttleAnnotations()
@@ -190,8 +190,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         for route in routeViews.values {
             if route.isEnabled && !hiddenRoutes.contains(route.getId()) {
                 mapView.addOverlay(route.getPolyLine())
+                mapView.addAnnotations(route.getStops())
             } else if route.isEnabled && hiddenRoutes.contains(route.getId()) {
                 mapView.removeOverlay(route.getPolyLine())
+                mapView.removeAnnotations(route.getStops())
             }
         }
     }
