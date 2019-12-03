@@ -17,7 +17,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var weekendLateNightView: UIView!
     @IBOutlet weak var eastWeatherView: UIView!
     @IBOutlet weak var westWeatherView: UIView!
-    @IBOutlet weak var eastArchView: UIView!
     
     // Switches
     @IBOutlet weak var eastCampusSwitch: UISwitch!
@@ -25,7 +24,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var weekendLateNightSwitch: UISwitch!
     @IBOutlet weak var eastWeatherSwitch: UISwitch!
     @IBOutlet weak var westWeatherSwitch: UISwitch!
-    @IBOutlet weak var archEastSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +42,6 @@ class SettingsTableViewController: UITableViewController {
                     eastWeatherView.isHidden = true
                 case 5:
                     westWeatherView.isHidden = true
-                case 10:
-                    eastArchView.isHidden = true
                 case 15:
                     eastCampusView.isHidden = true
                 default:
@@ -93,9 +89,5 @@ class SettingsTableViewController: UITableViewController {
     }
     @IBAction func westWeatherSwitchPressed(_ sender: Any) {
         routeSwitchPressed(uiSwitch: westWeatherSwitch, id: 5)
-    }
-    
-    @IBAction func eastArchSwitchPressed(_ sender: Any) {
-        routeSwitchPressed(uiSwitch: archEastSwitch, id: 10)
     }
 }
