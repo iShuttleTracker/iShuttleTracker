@@ -17,7 +17,7 @@ class RouteView {
     private var name: String // The route name, i.e. "East Campus"
     private var id: Int // The unique route ID
     private var routePolyLine: ColorPolyline? // The polyline of the current route
-    private var stopAnnotations: [MKAnnotation]? // The annotations of the stops on this route
+    private var stopAnnotations: [MKAnnotation] // The annotations of the stops on this route
     private var color: UIColor // The color of the route as it is displayed on the map
     var isEnabled: Bool // Whether or not the route is enabled or not, according to the datafeed
     var isDisplaying: Bool = false // Whether or not the route should be displayed based on user input
@@ -36,6 +36,7 @@ class RouteView {
         self.id = id
         self.isEnabled = isEnabled
         self.color = UIColor(hexString: color)
+        self.stopAnnotations = []
     }
     
     /**
@@ -82,14 +83,16 @@ class RouteView {
         mapView.addOverlay(routePolyLine!)
     }
     
-    /**
-     Toggle the route display off
-     - Parameter mapView: The map view this route is on
-     */
-    func disable(to mapView: MKMapView) {
-        //mapView.removeAnnotations(stopAnnotations!)
-        isDisplaying = false
-        mapView.removeOverlay(routePolyLine!)
+    func getPolyLine() -> ColorPolyline {
+        return routePolyLine!
+    }
+
+    func getStops() -> [MKAnnotation] {
+        return stopAnnotations
+    }
+    
+    func addStop(stop: MKAnnotation) {
+        stopAnnotations.append(stop)
     }
     
 }
@@ -109,6 +112,11 @@ func initRouteViews() {
         let polyline = ColorPolyline(coordinates: &locations, count: locations.count)
         let newRoute = RouteView(name: route.name, id: id, isEnabled: route.enabled, color: route.color)
         newRoute.createRoute(polyline: polyline)
+        for stop in stopViews {
+            if route.stop_ids.contains(stop.stop_id) {
+                newRoute.addStop(stop: stop)
+            }
+        }
         routeViews[route.name] = newRoute
     }
 }

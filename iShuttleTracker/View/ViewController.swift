@@ -25,12 +25,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     // The map where all the info is displayed
     @IBOutlet var mapView: MKMapView!
     
-    // Switches in the settings panel
-    @IBOutlet var eastRouteSwitch: UISwitch! = UISwitch()
-    @IBOutlet var westRouteSwitch: UISwitch! = UISwitch()
-    @IBOutlet var nearbyNotificationsSwitch: UISwitch! = UISwitch()
-    @IBOutlet var scheduledNotificationsSwitch: UISwitch! = UISwitch()
-    
     // Keeps track of the user's location
     let locationManager = CLLocationManager()
     
@@ -57,6 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     /**
      Initializes the stops, routes, and vehicles and adds them to the map view
      */
+    /*
     func initView() {
         initStops()
         initRoutes()
@@ -70,11 +65,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             mapView.addAnnotation(stop)
         }
         
-        // Uses shuttle asset instead of default marker
-        mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-        updateShuttleAnnotations()
     }
+     */
     
     /**
      Initializes the timer that updates vehicle annotations and handles notifications
@@ -97,14 +89,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         propagateUpdates()
         
         // View
-        initRouteViews()
         initStopViews()
+        initRouteViews()
         
-        // Settings
-        eastRouteSwitch.addTarget(self, action: #selector(eastRouteChanged), for: UIControl.Event.valueChanged)
-        westRouteSwitch.addTarget(self, action: #selector(westRouteChanged), for: UIControl.Event.valueChanged)
-        nearbyNotificationsSwitch.addTarget(self, action: #selector(nearbyNotificationsChanged), for: UIControl.Event.valueChanged)
-        scheduledNotificationsSwitch.addTarget(self, action: #selector(scheduledNotificationsChanged), for: UIControl.Event.valueChanged)
+        // Uses shuttle asset instead of default marker
+        mapView.register(StopAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(ShuttleAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        updateShuttleAnnotations()
         
         refreshEnabledRoutes()
     }
@@ -168,10 +159,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     func initAnnotations() {
         for (_, route) in routeViews {
             route.display(to: mapView)
-        }
-        
-        for stop in stopViews {
-            mapView.addAnnotation(stop)
+            mapView.addAnnotations(route.getStops())
         }
         
         updateShuttleAnnotations()
@@ -190,6 +178,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         for (name, route) in routeViews {
             if route.isEnabled {
                 activeRouteNames.append(name)
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        refreshRouteViews()
+    }
+    
+    func refreshRouteViews() {
+        for route in routeViews.values {
+            if route.isEnabled && !hiddenRoutes.contains(route.getId()) {
+                mapView.addOverlay(route.getPolyLine())
+                mapView.addAnnotations(route.getStops())
+            } else if route.isEnabled && hiddenRoutes.contains(route.getId()) {
+                mapView.removeOverlay(route.getPolyLine())
+                mapView.removeAnnotations(route.getStops())
             }
         }
     }
@@ -348,64 +352,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Location updates are not authorized.
             manager.stopUpdatingLocation()
             return
-        }
-    }
-    
-    /**
-     Called when the east route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func eastRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled east route on")
-            //            showRoute(name: "east")
-        } else {
-            print("Toggled east route off")
-            //            hideRoute(name: "east")
-        }
-    }
-    
-    /**
-     Called when the west route switch is toggled on or off from the settings panel
-     - Parameter routeSwitch: The switch after being toggled
-     */
-    @IBAction func westRouteChanged(routeSwitch: UISwitch) {
-        if routeSwitch.isOn {
-            print("Toggled west route on")
-            //            showRoute(name: "west")
-        } else {
-            print("Toggled west route off")
-            //            hideRoute(name: "west")
-        }
-    }
-    
-    /**
-     Called when the nearby notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func nearbyNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled nearby notifications on")
-            // TODO: Toggling this switch on should make the "Nearby Notifications" section of the settings
-            //       panel visible. It should be hidden if this switch is toggled off.
-        } else {
-            print("Toggled nearby notifications off")
-            // TODO: Hide the "Nearby Notifications" section.
-        }
-    }
-    
-    /**
-     Called when the scheduled notifications switch is toggled on or off from the settings panel
-     - Parameter notificationSwitch: The switch after being toggled
-     */
-    @IBAction func scheduledNotificationsChanged(notificationSwitch: UISwitch) {
-        if notificationSwitch.isOn {
-            print("Toggled scheduled notifications on")
-            // TODO: Toggling this switch on should make the "Scheduled Trip Notifications" section of the
-            //       settings panel visible. It should be hidden if the switch is toggled off.
-        } else {
-            print("Toggled scheduled notifications off")
-            // TODO: Hide the "Scheduled Trips" section.
         }
     }
     

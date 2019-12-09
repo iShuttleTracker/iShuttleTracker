@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0739E01F23970F8C007DD628 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0739E01E23970F8C007DD628 /* SettingsTableViewController.swift */; };
 		380F719122138EE900F35728 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380F719022138EE900F35728 /* RouteView.swift */; };
 		383157AB2240247D009FB2D4 /* CenteredTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383157AA2240247D009FB2D4 /* CenteredTabBar.swift */; };
 		386CFB7C22160D76001FE9B7 /* StopAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386CFB7B22160D76001FE9B7 /* StopAnnotation.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0739E01E23970F8C007DD628 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		380F719022138EE900F35728 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		383157AA2240247D009FB2D4 /* CenteredTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredTabBar.swift; sourceTree = "<group>"; };
 		386CFB7B22160D76001FE9B7 /* StopAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAnnotation.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				92A3623421519BF700B7B33B /* ViewController.swift */,
 				9217B48F22135E9400EBBB39 /* ShuttleAnnotation.swift */,
+				0739E01E23970F8C007DD628 /* SettingsTableViewController.swift */,
 				9217B4912214AD1900EBBB39 /* ShuttleAnnotationView.swift */,
 				380F719022138EE900F35728 /* RouteView.swift */,
 				386CFB7B22160D76001FE9B7 /* StopAnnotation.swift */,
@@ -426,6 +429,7 @@
 				928A17AB215C0B7F00A862B2 /* Route.swift in Sources */,
 				92954A1D221720D1000AD318 /* Extensions.swift in Sources */,
 				551344E32163098A009618D0 /* Vehicle.swift in Sources */,
+				0739E01F23970F8C007DD628 /* SettingsTableViewController.swift in Sources */,
 				55AD5A0522B965C0002C362A /* Update.swift in Sources */,
 				551B8785220CA47F00576E58 /* NotificationHandler.swift in Sources */,
 				9217B49022135E9400EBBB39 /* ShuttleAnnotation.swift in Sources */,
@@ -609,7 +613,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YF49BFK2ZP;
+				DEVELOPMENT_TEAM = 4EYT69DQQF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -632,7 +636,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YF49BFK2ZP;
+				DEVELOPMENT_TEAM = 4EYT69DQQF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
