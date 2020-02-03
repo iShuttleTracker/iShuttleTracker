@@ -26,7 +26,7 @@ func dateToString(date: Date) -> String {
  */
 func stringToDate(date: String) -> Date? {
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
     return formatter.date(from: date)
 }
 
@@ -37,22 +37,5 @@ func stringToDate(date: String) -> Date? {
  was received.
  */
 func secondsSince(update: Update) -> TimeInterval {
-    return abs(stringToDate(date: convertFromUTC(date: update.time))!.timeIntervalSinceNow)
-}
-
-/**
- Converts the given date from UTC to the local time zone.
- - Parameter date: The UTC date to convert.
- - Returns: The date converted from UTC to the local time zone.
- */
-func convertFromUTC(date: String) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-    
-    let dt = dateFormatter.date(from: date)
-    dateFormatter.timeZone = TimeZone.current
-    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    
-    return dateFormatter.string(from: dt!)
+    return abs(stringToDate(date: update.time)!.timeIntervalSinceNow)
 }

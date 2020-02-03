@@ -49,7 +49,7 @@ class ShuttleAnnotation : NSObject, MKAnnotation {
      - Returns: locationName
      */
     var subtitle: String? {
-        let date: Date = stringToDate(date: convertFromUTC(date: update_time))!
+        let date: Date = stringToDate(date: update_time)!
         let time: Time = Time(date: date)
         if estimation {
             return "Estimation (last updated at " + time.longDescription + ")"
