@@ -10,17 +10,17 @@ import Foundation
 /**
  Converts a time represented by a Date to a String.
  - Parameter date: The date to convert
- - Returns: A String of the format "yyyy-MM-dd'T'HH:mm:ss'Z'" representing the given Date time
+ - Returns: A String of the format "yyyy-MM-dd'T'HH:mm:ssZZZZZ" representing the given Date time
  */
 func dateToString(date: Date) -> String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
     return formatter.string(from: date)
 }
 
 /**
  Converts a time represented by a String to a Date.
- - Parameter date: The date to convert, in the form "yyyy-MM-dd'T'HH:mm:ss'Z'".
+ - Parameter date: The date to convert, in the form "yyyy-MM-dd'T'HH:mm:ssZZZZZ".
  - Returns: A Date object representing the given String time, or nil if the String does not represent
             a properly formatted time.
  */
