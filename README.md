@@ -8,42 +8,22 @@ views.
 
 [Link to Documentation](https://github.com/iShuttleTracker/iShuttleTracker/tree/master/Documentation)
 
-## Summer 2019 Goals
-### Notifications
-- [ ] Add interface to schedule trips through
-- [ ] Switch nearby notification units from meters to minutes
-- [ ] Look into keeping track of nearby shuttles and sending notifications when
-  the app is in the background
-
-### Shuttle Prediction
-- [ ] Rework the algorithm to be more reliable, possibly using machine learning
-- [ ] Use the algorithm to make ETA predictions for shuttles and display these
-  over stops when a shuttle is selected
-- [ ] Look into constantly updating position of shuttle markers on the map
-
-### Schedule
-- [ ] Finish the dynamic schedule display
-
-### Settings Panel
-- [ ] Finish the settings panel backend, making switches and buttons functional
-- [ ] Display scheduled trips in the main settings panel and add a new panel to
-  schedule trips through
-
-### Tests
-- [ ] Add unit tests to verify that the frontend and backend are working as
-  intended
-
-### Refactoring
-- [ ] Refactor the entire project to use MVC pattern or alternative
-
-### Deployment
-- [ ] Get iShuttleTracker on the App Store
-
-### Extras
-- [ ] VR/AR
-- [ ] Bus button
-
-[Link to Progress Report](https://github.com/iShuttleTracker/iShuttleTracker/blob/master/progress.md)
+## Summer 2019 Accomplishments
+- [x] Add a UI to schedule trips through for scheduled notifications
+- [x] Make nearby notifications more user-friendly in the information they
+      provide
+- [x] Look into keeping track of nearby shuttles and sending notifications when
+      the app is in the background (didn't turn out to be feasible)
+- [x] Write an ETA algorithm to make predictions on when shuttles will reach
+      destinations and display these on stop annotations
+- [x] Look into ways to improve the shuttle prediction algorithm
+- [x] Automatically center map on all active routes
+- [x] Color shuttle markers dynamically based on the route they are on
+- [x] Update app icon to match the Shuttle Tracker color scheme and add it to
+      the loading screen
+- [x] Refactor and reorganize the project
+- [x] Write detailed documentation with all the information one needs to get
+      started
 
 ## Spring 2019 Accomplishments
 - [x] Rewrite frontend to be dynamic (i.e. infinite routes and vehicles)
