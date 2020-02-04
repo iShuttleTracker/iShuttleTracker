@@ -8,6 +8,9 @@ views.
 
 [Link to Documentation](https://github.com/iShuttleTracker/iShuttleTracker/tree/master/Documentation)
 
+## Fall 2019 Accomplishments
+- [x] Added switches to toggle routes on and off
+
 ## Summer 2019 Accomplishments
 - [x] Add a UI to schedule trips through for scheduled notifications
 - [x] Make nearby notifications more user-friendly in the information they
